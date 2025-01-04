@@ -19,37 +19,87 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
+   /* Controllers */
+   private final XboxController driver = new XboxController(0);
+   private final XboxController shooter = new XboxController(1);
 
-  // Replace with CommandPS4Controller or CommandJoystick if needed
-  private final CommandXboxController m_driverController =
-      new CommandXboxController(OperatorConstants.kDriverControllerPort);
+   /* Drive Controls */
+   private final int translationAxis = XboxController.Axis.kLeftY.value;
+   private final int strafeAxis = XboxController.Axis.kLeftX.value;
+   private final int rotationAxis = XboxController.Axis.kRightX.value;
+
+   /* Driver Buttons */
+   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kA.value);
+
+   /* Subsystems */
+   private final Swerve s_Swerve = new Swerve()
+   private Limelight limelight;
+   private Vision vision;
+
+
+  /* Commands */
+  private LimelightCmd limelightCmd;
+
+
+  private Autos autos;
+  private SendableChooser<Command> chooser;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-    // Configure the trigger bindings
-    configureBindings();
+
+    limelight = new Limelight();
+    limelightCmd = new LimelightCmd(limelight);
+    limelight.setDefaultCommand(limelightCmd);
+    
+    s_Swerve.setDefaultCommand(
+        new TeleopSwerve(
+            s_Swerve, 
+            () -> -driver.getRawAxis(translationAxis), 
+            () -> -driver.getRawAxis(strafeAxis), 
+            () -> -driver.getRawAxis(rotationAxis), 
+            () -> false,
+            driver, limelight
+        )
+    );
+
+    autos = new Autos(s_Swerve, autoIntakeAndShooter, intake, s_Swerve);
+    chooser = new SendableChooser<>();
+
+    configureButtonBindings();
+    configureAutoSelector();
+
   }
 
-  /**
-   * Use this method to define your trigger->command mappings. Triggers can be created via the
-   * {@link Trigger#Trigger(java.util.function.BooleanSupplier)} constructor with an arbitrary
-   * predicate, or via the named factories in {@link
-   * edu.wpi.first.wpilibj2.command.button.CommandGenericHID}'s subclasses for {@link
-   * CommandXboxController Xbox}/{@link edu.wpi.first.wpilibj2.command.button.CommandPS4Controller
-   * PS4} controllers or {@link edu.wpi.first.wpilibj2.command.button.CommandJoystick Flight
-   * joysticks}.
-   */
-  private void configureBindings() {
-    // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_exampleSubsystem::exampleCondition)
-        .onTrue(new ExampleCommand(m_exampleSubsystem));
+  private void configureButtonBindings() {
+    /* Driver Buttons */
+    zeroGyro.onTrue(new InstantCommand(() -> s_Swerve.zeroHeading()));
+}
 
-    // Schedule `exampleMethodCommand` when the Xbox controller's B button is pressed,
-    // cancelling on release.
-    m_driverController.b().whileTrue(m_exampleSubsystem.exampleMethodCommand());
-  }
+private void configureAutoSelector() {
+
+  /* - Example from 2024 - 
+  chooser.setDefaultOption("shoot & do nothing", autoIntakeAndShooter.autoShoot());
+
+  chooser.addOption("forward 2m", new exampleAuto(s_Swerve));
+
+  chooser.addOption("1note shorter side", autos.a1);
+  chooser.addOption("1note middle", autos.a2);
+  chooser.addOption("1note longer side", autos.a3);
+
+  chooser.addOption("2note shorter side", autos.two1);
+  chooser.addOption("2note middle", autos.two2);
+  chooser.addOption("2note longer side", autos.two3);
+
+  chooser.addOption("choose this", autos.g);
+  chooser.addOption("3note short side", autos.note3);
+
+  chooser.addOption("2note for use with spyder", autos.notetemp);
+
+
+  SmartDashboard.putData(chooser);
+  */
+}
+
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -58,6 +108,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
-    return Autos.exampleAuto(m_exampleSubsystem);
+    return chooser.getSelected();
+  }
+
+  public void autonomousPeriodic() {
+    
   }
 }
