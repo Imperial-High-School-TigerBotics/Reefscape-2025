@@ -21,7 +21,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.IntakeAndShooter;
 import frc.robot.subsystems.Swerve;
 
 public class Autos {
@@ -39,7 +38,7 @@ public class Autos {
     
 
 
-    public Autos(Swerve swerve, AutoController autoController, IntakeAndShooter intake, Swerve s_Swerve) {
+    public Autos(Swerve swerve, Swerve s_Swerve) {
         AutoBuilder.configureHolonomic(
             swerve::getPose, // Robot pose supplier
             swerve::setPose, // Method to reset odometry (will be called if your auto has a starting pose)

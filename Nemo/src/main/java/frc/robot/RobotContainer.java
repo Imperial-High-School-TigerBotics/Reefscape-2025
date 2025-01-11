@@ -5,12 +5,21 @@
 package frc.robot;
 
 import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.Autos;
-import frc.robot.commands.ExampleCommand;
-import frc.robot.subsystems.ExampleSubsystem;
+import frc.robot.autos.AutoController;
+import frc.robot.autos.Autos;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import frc.robot.commands.LimelightCmd;
+import frc.robot.commands.TeleopSwerve;
+import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Vision;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -62,7 +71,7 @@ public class RobotContainer {
         )
     );
 
-    autos = new Autos(s_Swerve, autoIntakeAndShooter, intake, s_Swerve);
+    autos = new Autos(s_Swerve, s_Swerve);
     chooser = new SendableChooser<>();
 
     configureButtonBindings();
