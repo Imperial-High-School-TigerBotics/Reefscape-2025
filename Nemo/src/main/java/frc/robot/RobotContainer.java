@@ -32,7 +32,7 @@ public class RobotContainer {
    private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kA.value);
 
    /* Subsystems */
-   private final Swerve s_Swerve = new Swerve()
+   private final Swerve s_Swerve = new Swerve();
    private Limelight limelight;
    private Vision vision;
 
