@@ -7,7 +7,7 @@ package frc.robot;
 import java.util.ArrayList;
 
 import com.ctre.phoenix6.hardware.TalonFX;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
+import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveModule.DriveRequestType;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
@@ -51,6 +51,10 @@ public final class Constants {
         public static final double XOffset = 0.635;
         public static final double YOffset = 0;
         public static final double ZOffset = -0.8382;
+    }
+
+    public static class SpeedScaleFactors {
+        public static final double autoTurnSpeed = 0.27;
     }
 
     public static class PositionalConstants {
