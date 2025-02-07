@@ -29,7 +29,7 @@ public class SwerveModule {
     private TalonFX mAngleMotor;
     private TalonFX mDriveMotor;
     private CoreCANcoder angleEncoder;
-    private CTREConfigs ctreConfigs;
+    private CTREConfigs ctreConfigs = new CTREConfigs();
 
     private final SimpleMotorFeedforward driveFeedForward = new SimpleMotorFeedforward(Constants.Swerve.driveKS, Constants.Swerve.driveKV, Constants.Swerve.driveKA);
 
