@@ -71,10 +71,15 @@ public class SwerveModule {
         return talons;
     }
 
+    public void updateDashboard() {
+        SmartDashboard.putNumber("Swerve Module " + moduleNumber + " CANcoder Angle", getCANcoder().getDegrees());
+    }
+
     public void setDesiredState(SwerveModuleState desiredState, boolean isOpenLoop) {
         desiredState = SwerveModuleState.optimize(desiredState, getState().angle); 
         mAngleMotor.setControl(anglePosition.withPosition(desiredState.angle.getRotations()));
         setSpeed(desiredState, isOpenLoop);
+        updateDashboard();
     }
 
     private void setSpeed(SwerveModuleState desiredState, boolean isOpenLoop) {
