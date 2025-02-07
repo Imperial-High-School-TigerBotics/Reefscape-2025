@@ -71,7 +71,7 @@ public class RobotContainer {
         )
     );
 
-    autos = new Autos(s_Swerve, s_Swerve);
+    //autos = new Autos(s_Swerve, s_Swerve);
     chooser = new SendableChooser<>();
 
     configureButtonBindings();

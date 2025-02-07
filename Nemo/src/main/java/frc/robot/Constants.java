@@ -11,6 +11,8 @@ import com.ctre.phoenix6.mechanisms.swerve.LegacySwerveModule.DriveRequestType;
 import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -149,9 +151,9 @@ public final class Constants {
       /* Module Specific Constants */
       /* Front Left Module - Module 0 */
       public static final class Mod1 { //done
-          public static final int driveMotorID = 6;
-          public static final int angleMotorID = 4;
-          public static final int canCoderID = 5;
+          public static final int driveMotorID = 7;
+          public static final int angleMotorID = 16;
+          public static final int canCoderID = 20;
           public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offset0);
           public static final SwerveModuleConstants constants = 
               new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -159,9 +161,9 @@ public final class Constants {
 
       /* Front Right Module - Module 1 */
       public static final class Mod0 { //done
-          public static final int driveMotorID = 9;
-          public static final int angleMotorID = 7;
-          public static final int canCoderID = 8;
+          public static final int driveMotorID = 4;
+          public static final int angleMotorID = 3;
+          public static final int canCoderID = 11;
           public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offset1);
           public static final SwerveModuleConstants constants = 
               new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -169,9 +171,9 @@ public final class Constants {
       
       /* Back Left Module - Module 2 */
       public static final class Mod3 { //done
-          public static final int driveMotorID = 3;
-          public static final int angleMotorID = 1;
-          public static final int canCoderID = 2;
+          public static final int driveMotorID = 1;
+          public static final int angleMotorID = 14;
+          public static final int canCoderID = 21;
           public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offset2);
           public static final SwerveModuleConstants constants = 
               new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -179,9 +181,9 @@ public final class Constants {
 
       /* Back Right Module - Module 3 */
       public static final class Mod2 { //done
-          public static final int driveMotorID = 12;
-          public static final int angleMotorID = 10;
-          public static final int canCoderID = 11;
+          public static final int driveMotorID = 10;
+          public static final int angleMotorID = 12;
+          public static final int canCoderID = 9;
           public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offset3);
           public static final SwerveModuleConstants constants = 
               new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -202,6 +204,10 @@ public final class Constants {
       public static final TrapezoidProfile.Constraints kThetaControllerConstraints =
           new TrapezoidProfile.Constraints(
               kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
+
+     public static final PPHolonomicDriveController kDriveController = new PPHolonomicDriveController(new PIDConstants(0.1,0.01,0),new PIDConstants(0.2,0,0));
   }
+
+  //public static final int elevatorMotor = ,
 
 }

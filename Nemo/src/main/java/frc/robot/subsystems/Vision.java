@@ -17,6 +17,7 @@ public class Vision extends SubsystemBase {
 
     private Swerve swerve;
     private SwerveDrivePoseEstimator poseEstimator;
+    private Pose2d estimatedPosition;
     
     public Vision(Swerve swerve) {
         LimelightHelpers.SetRobotOrientation("", swerve.gyro.getYaw().getValueAsDouble(), 0, 0, 0, 0, 0);
@@ -46,6 +47,11 @@ public class Vision extends SubsystemBase {
         SmartDashboard.putNumber("vision estimatex", poseEstimator.getEstimatedPosition().getX());
         SmartDashboard.putNumber("vision estimatey", poseEstimator.getEstimatedPosition().getY());
         //SmartDashboard.putNumber("vision !!!", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
+        estimatedPosition = poseEstimator.getEstimatedPosition();
+    }
+
+    public Pose2d getPoseEstimation() {
+        return estimatedPosition == null ? swerve.getPose() : estimatedPosition;
     }
 
 }

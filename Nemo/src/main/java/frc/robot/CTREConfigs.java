@@ -23,10 +23,10 @@ public final class CTREConfigs {
         swerveAngleFXConfig.ClosedLoopGeneral.ContinuousWrap = true;
         
         /* Current Limiting */
-        swerveAngleFXConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.Swerve.angleEnableCurrentLimit;
-        swerveAngleFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.Swerve.angleCurrentLimit;
-        swerveAngleFXConfig.CurrentLimits.SupplyCurrentThreshold = Constants.Swerve.angleCurrentThreshold;
-        swerveAngleFXConfig.CurrentLimits.SupplyTimeThreshold = Constants.Swerve.angleCurrentThresholdTime;
+        swerveAngleFXConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.Swerve.angleEnableCurrentLimit; //enables supplycurrentlimit
+        swerveAngleFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.Swerve.angleCurrentLimit; //Max SupplyCurrentLimit
+        swerveAngleFXConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.Swerve.angleCurrentThreshold; //Minimum SuplyCurrentLimit
+        swerveAngleFXConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.Swerve.angleCurrentThresholdTime; //Duration of Supply Current at max until it needs to drop to the Lower Limit
 
         /* PID Config */
         swerveAngleFXConfig.Slot0.kP = Constants.Swerve.angleKP;
@@ -44,8 +44,8 @@ public final class CTREConfigs {
         /* Current Limiting */
         swerveDriveFXConfig.CurrentLimits.SupplyCurrentLimitEnable = Constants.Swerve.driveEnableCurrentLimit;
         swerveDriveFXConfig.CurrentLimits.SupplyCurrentLimit = Constants.Swerve.driveCurrentLimit;
-        swerveDriveFXConfig.CurrentLimits.SupplyCurrentThreshold = Constants.Swerve.driveCurrentThreshold;
-        swerveDriveFXConfig.CurrentLimits.SupplyTimeThreshold = Constants.Swerve.driveCurrentThresholdTime;
+        swerveDriveFXConfig.CurrentLimits.SupplyCurrentLowerLimit = Constants.Swerve.driveCurrentThreshold; //Lower Limit can't be higher than Current Limit which needs to be changed 
+        swerveDriveFXConfig.CurrentLimits.SupplyCurrentLowerTime = Constants.Swerve.driveCurrentThresholdTime; //Time must be adjusted for the duration of the Lowered Limittation of the supply current 
         swerveDriveFXConfig.CurrentLimits.StatorCurrentLimitEnable = true;
         swerveDriveFXConfig.CurrentLimits.StatorCurrentLimit = Constants.Swerve.driveStatorCurrentLimit;
 

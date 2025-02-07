@@ -6,9 +6,10 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 import com.pathplanner.lib.path.PathPlannerPath;
-import com.pathplanner.lib.util.HolonomicPathFollowerConfig;
-import com.pathplanner.lib.util.PIDConstants;
-import com.pathplanner.lib.util.ReplanningConfig;
+import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.auto.AutoBuilder.TriFunction;
 
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -19,9 +20,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine.Config;
 import frc.robot.Constants;
+import frc.robot.LimelightHelpers.PoseEstimate;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Vision;
 
 public class Autos {
     /*
@@ -37,38 +42,38 @@ public class Autos {
     public PathPlannerAuto Example_Path;
     
 
+    public static final PPHolonomicDriveController kDriveController = new PPHolonomicDriveController(new PIDConstants(0.1,0,0),new PIDConstants(0.2,0,0));
 
-    public Autos(Swerve swerve, Swerve s_Swerve) {
-        AutoBuilder.configureHolonomic(
-            swerve::getPose, // Robot pose supplier
-            swerve::setPose, // Method to reset odometry (will be called if your auto has a starting pose)
-            swerve::getChassisSpeeds, // ChassisSpeeds supplier. MUST BE ROBOT RELATIVE
-            swerve::drive, // Method that will drive the robot given ROBOT RELATIVE ChassisSpeeds
-            new HolonomicPathFollowerConfig( // HolonomicPathFollowerConfig, this should likely live in your Constants class
-                new PIDConstants(0.1, 0.0, 0.0), // Translation PID constants
-                new PIDConstants(0.2, 0.0, 0.0), // Rotation PID constants
-                4.4, // Max module speed, in m/s
-                0.431, // Drive base radius in meters. Distance from robot center to furthest module.
-                new ReplanningConfig() // Default path replanning config. See the API for the options here
-            ),
-            () -> {
-              // Boolean supplier that controls when the path will be mirrored for the red alliance
-              // This will flip the path being followed to the red side of the field.
-              // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
-              
-              var alliance = DriverStation.getAlliance();
-              if (alliance.isPresent()) {
-                  return alliance.get() == DriverStation.Alliance.Red;
-                }
-                return false;
-            },
-            swerve // Reference to this subsystem to set requirements
-        );
+ /* public Autos(Swerve swerve, AutoController autoController, Swerve s_Swerve, Vision vision) {
+    
+    AutoBuilder.configure(
+      vision::getPoseEstimation,
+      swerve::setPose,
+      swerve::getChassisSpeeds,
+      swerve::drive, 
+      kDriveController, 
+    
+
+      () -> {
+        // Boolean supplier that controls when the path will be mirrored for the red alliance
+        // This will flip the path being followed to the red side of the field.
+        // THE ORIGIN WILL REMAIN ON THE BLUE SIDE
+
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent()) {
+          return alliance.get() == DriverStation.Alliance.Red;
+        }
+        return false;
+      },
+      this // Reference to this subsystem to set requirements
+);
+          } */
+
 
         // ex: NamedCommands.registerCommand("autoShoot", autoController.autoShoot());
 
         
-    }
+    
 
     public Command getCurrentAuto() {
 
