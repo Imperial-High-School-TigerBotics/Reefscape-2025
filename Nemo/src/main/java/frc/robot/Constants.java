@@ -12,6 +12,7 @@ import com.ctre.phoenix6.signals.InvertedValue;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import com.pathplanner.lib.config.PIDConstants;
+import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
 
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -65,14 +66,19 @@ public final class Constants {
       public static final double min_rope_encoder_value = 0.0;
       public static final double max_rope_encoder_value = 0.0;
       public static final double allowed_rope_length = max_rope_encoder_value - min_rope_encoder_value;
+
+      public static final double arm_encoder_offset = 0.0;
+      public static final double arm_clockwise_rotation_encoderCap = 0.0;
+      public static final double arm_counterclockwise_rotation_encoderCap = 0.0;
+      public static final double arm_rest_encoderPosition = 0.0;
     }
 
 
     public static final class Swerve {
-      public static final int pigeonID = 0;
+      public static final int pigeonID = 49;
 
       public static final COTSTalonFXSwerveConstants chosenModule = 
-      COTSTalonFXSwerveConstants.SDS.MK4i.Falcon500(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
+      COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
 
       /* Drivetrain Constants */
       public static final double trackWidth = Units.inchesToMeters(24.25); // 20.966
@@ -143,47 +149,47 @@ public final class Constants {
       public static final NeutralModeValue driveNeutralMode = NeutralModeValue.Brake;
 
       //cancoder offsets
-      public static final double offset0 = -87.890625;
-      public static final double offset1 = 4.306641;
-      public static final double offset2 = -114.169922;
-      public static final double offset3 = 38.232422;
+      public static final double offset0 = 75.234375;
+      public static final double offset1 = 11.513672;
+      public static final double offset2 = 108.193359;
+      public static final double offset3 = -58.710938;
 
       /* Module Specific Constants */
       /* Front Left Module - Module 0 */
-      public static final class Mod1 { //done
-          public static final int driveMotorID = 16;
-          public static final int angleMotorID = 7;
-          public static final int canCoderID = 20;
+      public static final class Mod0 { //done
+          public static final int driveMotorID = 1;
+          public static final int angleMotorID = 3;
+          public static final int canCoderID = 2;
           public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offset0);
           public static final SwerveModuleConstants constants = 
               new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
       }
 
       /* Front Right Module - Module 1 */
-      public static final class Mod0 { //done
-          public static final int driveMotorID = 3;
-          public static final int angleMotorID = 4;
-          public static final int canCoderID = 11;
+      public static final class Mod1 { //done
+          public static final int driveMotorID = 4;
+          public static final int angleMotorID = 6;
+          public static final int canCoderID = 5;
           public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offset1);
           public static final SwerveModuleConstants constants = 
               new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
       }
       
       /* Back Left Module - Module 2 */
-      public static final class Mod3 { //done
-          public static final int driveMotorID = 14;
-          public static final int angleMotorID = 1;
-          public static final int canCoderID = 21;
+      public static final class Mod2 { //done
+          public static final int driveMotorID = 7;
+          public static final int angleMotorID = 9;
+          public static final int canCoderID = 8;
           public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offset2);
           public static final SwerveModuleConstants constants = 
               new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
       }
 
       /* Back Right Module - Module 3 */
-      public static final class Mod2 { //done
-          public static final int driveMotorID = 12;
-          public static final int angleMotorID = 10;
-          public static final int canCoderID = 9;
+      public static final class Mod3 { //done
+          public static final int driveMotorID = 10;
+          public static final int angleMotorID = 12;
+          public static final int canCoderID = 11;
           public static final Rotation2d angleOffset = Rotation2d.fromDegrees(offset3);
           public static final SwerveModuleConstants constants = 
               new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -208,6 +214,56 @@ public final class Constants {
      public static final PPHolonomicDriveController kDriveController = new PPHolonomicDriveController(new PIDConstants(0.1,0.01,0),new PIDConstants(0.2,0,0));
   }
 
+  public static final class ElevatorConstants {
+    public static final int elevatorMotor1ID = 66;
+    public static final int elevatorMotor2ID = 68;
+
+    public static final int elevatorCoderID = 69;
+
+    public static final double elevatorMotor1speed = 0.5;
+    public static final double elevatorMotor2speed = 0.5;
+  }
+
+  public static final class ArmConstants {
+    public static final int ArmRotator = 0;
+    public static final int BallIntake = 1;
+    public static final int CoralIntake = 2;
+
+    public static double BallIntakeSpeed = 0.5;
+    public static double CoralIntakeSpeed = 0.5;
+
+    public static boolean ArmRotatorReversed = false;
+    public static boolean BallIntakeReversed = false;
+    public static boolean CoralIntakeReversed = false;
+  }
+
+
+  public static final RobotConfig CONFIG;
+public static RobotConfig config;
+
+  static {
+      RobotConfig configTemp;
+      try {
+          configTemp = RobotConfig.fromGUISettings();
+      } catch (Exception e) {
+          // Handle exception as needed
+          e.printStackTrace();
+          configTemp = null; // or provide a default configuration umm
+      }
+      CONFIG = configTemp;
+  }
+
   //public static final int elevatorMotor = ,
 
+//old code
+//* { // Load the RobotConfig from the GUI settings. You should probably
+          // store this in your Constants file
+         // RobotConfig config;
+          //try{
+         //   config = RobotConfig.fromGUISettings();
+         // } catch (Exception e) {
+        //    // Handle exception as needed
+       //     e.printStackTrace();
+       //  }
+  //  }/
 }

@@ -19,4 +19,19 @@ public class AutoController {
     public Command wait(double seconds) {
         return new WaitCommand(seconds);
     }
+
+    public Command autoShoot() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'autoShoot'");
+    }
+
+    public Command readyShooter() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'readyShooter'");
+    }
+
+    public Command robotIsAtShootPoint() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'robotIsAtShootPoint'");
+    }
 }

@@ -14,6 +14,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.LimelightCmd;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Limelight;
@@ -86,27 +87,13 @@ public class RobotContainer {
 
 private void configureAutoSelector() {
 
-  /* - Example from 2024 - 
-  chooser.setDefaultOption("shoot & do nothing", autoIntakeAndShooter.autoShoot());
+  
 
-  chooser.addOption("forward 2m", new exampleAuto(s_Swerve));
 
-  chooser.addOption("1note shorter side", autos.a1);
-  chooser.addOption("1note middle", autos.a2);
-  chooser.addOption("1note longer side", autos.a3);
-
-  chooser.addOption("2note shorter side", autos.two1);
-  chooser.addOption("2note middle", autos.two2);
-  chooser.addOption("2note longer side", autos.two3);
-
-  chooser.addOption("choose this", autos.g);
-  chooser.addOption("3note short side", autos.note3);
-
-  chooser.addOption("2note for use with spyder", autos.notetemp);
+  chooser.setDefaultOption("2note for use with spyder", s_Swerve.a1);
 
 
   SmartDashboard.putData(chooser);
-  */
 }
 
 
