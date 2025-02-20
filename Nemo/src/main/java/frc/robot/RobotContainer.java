@@ -21,6 +21,8 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
 
+import frc.robot.commands.RevCoder_TestCmd;
+import frc.robot.subsystems.RevCoder_test;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -45,10 +47,13 @@ public class RobotContainer {
    private final Swerve s_Swerve = new Swerve();
    private Limelight limelight;
    private Vision vision;
+   private RevCoder_test revCoderTest;
 
 
   /* Commands */
   private LimelightCmd limelightCmd;
+
+  private final RevCoder_TestCmd revCoderTestCmd = new RevCoder_TestCmd(revCoderTest);
 
 
   private Autos autos;
