@@ -11,28 +11,10 @@ public class RevCoder_test extends SubsystemBase {
     }
 
     public void updateDashboard() {
-        SmartDashboard.putNumber("RevCoder Distance", getDistance());
         SmartDashboard.putNumber("RevCoder Absolute Position", getAbsolutePosition());
-        SmartDashboard.putNumber("RevCoder Frequency", getFrequency());
-    }
-
-    public double getDistance() {
-        return encoder.getDistance();
     }
 
     public double getAbsolutePosition() {
-        return encoder.getAbsolutePosition();
-    }
-
-    public void reset() {
-        encoder.reset();
-    }
-
-    public double getFrequency() {
-        return encoder.getFrequency();
-    }
-    
-    public boolean isConnected() {
-        return encoder.isConnected();
+        return encoder.get();
     }
 }
