@@ -1,6 +1,9 @@
-import edu.wpi.first.wpilibj2.command.CommandBase;
+package frc.robot.commands;
 
-public class RevCoder_TestCmd extends CommandBase {
+import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.RevCoder_test;
+
+public class RevCoder_TestCmd extends Command {
     private final RevCoder_test revCoderTest;
 
     public RevCoder_TestCmd(RevCoder_test revCoderTest) {
@@ -10,7 +13,6 @@ public class RevCoder_TestCmd extends CommandBase {
 
     @Override
     public void initialize() {
-        revCoderTest.reset();
     }
 
     @Override
