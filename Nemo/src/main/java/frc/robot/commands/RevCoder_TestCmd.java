@@ -12,6 +12,10 @@ public class RevCoder_TestCmd extends Command {
     }
 
     @Override
+    public void initialize() {
+    }
+
+    @Override
     public void execute() {
         revCoderTest.updateDashboard();
     }

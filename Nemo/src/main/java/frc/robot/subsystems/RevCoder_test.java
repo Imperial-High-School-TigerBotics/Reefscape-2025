@@ -13,10 +13,20 @@ public class RevCoder_test extends SubsystemBase {
     }
 
     public void updateDashboard() {
+        SmartDashboard.putNumber("RevCoder Revolutions", revolutions());
+        SmartDashboard.putNumber("RevCoder Degrees", getDegrees());
         SmartDashboard.putNumber("RevCoder Absolute Position", getAbsolutePosition());
     }
 
     public double getAbsolutePosition() {
         return encoder.get();
+    }
+
+    public double getDegrees(){
+        return encoder.get() * 360;
+    }
+
+    public double revolutions(){
+        return Math.floor(encoder.get() * 360);
     }
 }

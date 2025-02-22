@@ -8,6 +8,7 @@ import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -19,13 +20,16 @@ public class Arm extends SubsystemBase{
     private SparkMax CoralIntake;
 
     private PIDController ArmRotatorPID;
+    private DutyCycleEncoder ArmEncoder;
 
-    double RotatorPos;
+    public double RotatorPos;
 
     public Arm(Limelight aprilTagDetection) {
         ArmRotator = new TalonFX(Constants.ArmConstants.ArmRotator);
         ArmRotator.setNeutralMode(NeutralModeValue.Brake);
         ArmRotatorPID = new PIDController(0,0,0);
+
+        ArmEncoder = new DutyCycleEncoder(Constants.ArmConstants.ArmEncoder);
 
         BallIntake = new SparkMax(Constants.ArmConstants.BallIntake, MotorType.kBrushless);
         CoralIntake = new SparkMax(Constants.ArmConstants.CoralIntake, MotorType.kBrushless);

@@ -20,6 +20,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import frc.lib.util.COTSTalonFXSwerveConstants;
@@ -232,6 +233,8 @@ public final class Constants {
     public static final int ArmRotator = 0;
     public static final int BallIntake = 1;
     public static final int CoralIntake = 2;
+
+    public static final int ArmEncoder = 1; //TODO: change this
 
     public static double BallIntakeSpeed = 0.5;
     public static double CoralIntakeSpeed = 0.5;
