@@ -9,12 +9,12 @@ public class RevCoder_test extends SubsystemBase {
     private final DutyCycleEncoder encoder;
 
     public RevCoder_test() {
+        SmartDashboard.putNumber("RevCoder Revolutions", revolutions());
+        SmartDashboard.putNumber("RevCoder Degrees", getDegrees());
         encoder = new DutyCycleEncoder(Constants.TestConstants.kTestEncoderChannel);
     }
 
     public void updateDashboard() {
-        SmartDashboard.putNumber("RevCoder Revolutions", revolutions());
-        SmartDashboard.putNumber("RevCoder Degrees", getDegrees());
         SmartDashboard.putNumber("RevCoder Absolute Position", getAbsolutePosition());
     }
 
