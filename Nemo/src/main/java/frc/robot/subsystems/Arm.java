@@ -15,14 +15,14 @@ public class Arm extends SubsystemBase{
     private SparkMax BallIntake;
     private SparkMax CoralIntake;
 
-    private DutyCycleEncoder Arm_encoder;
+    private DutyCycleEncoder ArmEncoder;
 
     public Arm(Limelight aprilTagDetection) {
         ArmRotator = new SparkMax(Constants.ArmConstants.ArmRotator, MotorType.kBrushless);
         BallIntake = new SparkMax(Constants.ArmConstants.BallIntake, MotorType.kBrushless);
         CoralIntake = new SparkMax(Constants.ArmConstants.CoralIntake, MotorType.kBrushless);
 
-        Arm_encoder = new DutyCycleEncoder(Constants.ArmConstants.ArmEncoder);
+        ArmEncoder = new DutyCycleEncoder(Constants.ArmConstants.ArmEncoder);
     }
 
     private double applyDeadzone(double value, double deadzone) {
