@@ -12,12 +12,36 @@ public class ArmCmd extends Command{
 
     private XboxController xbox;
 
-    public ArmCmd(Arm arm, XboxController xbox) {
-        this.arm = arm;
-        addRequirements(this.arm);
-
-        this.xbox = xbox;
-    }
-
+    @Override 
+    public void initialize() {}
     
+    @Override
+    public void execute() {
+        if (DriverStation.isTeleop()) {
+            if (xbox.getYButtonPressed()) {
+                arm.BallIntakeIn();
+            } else if (xbox.getYButtonReleased()) {
+                arm.BallIntakeStop();
+            }
+
+            if (xbox.getBButtonPressed()) {
+                arm.BallIntakeOut();
+            } else if (xbox.getBButtonReleased()) {
+                arm.BallIntakeStop();
+            }
+
+            if (xbox.getXButtonPressed()) {
+                arm.CoralIntakeIn();
+            } else if (xbox.getXButtonReleased()) {
+                arm.CoralIntakeStop();
+            }
+
+            if (xbox.getAButtonPressed()) {
+                arm.CoralIntakeOut();
+            } else if (xbox.getAButtonReleased()) {
+                arm.CoralIntakeStop();
+            }
+
+        }
+    }
 }

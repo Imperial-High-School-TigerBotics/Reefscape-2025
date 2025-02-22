@@ -38,7 +38,7 @@ public class ElevatorCmd extends Command{
             SmartDashboard.putNumber("Elevator Coder Pos", elevator.getElevatorCoderPos());
 
             if (!autoShooter) {
-                double axis = xbox.getRawAxis(0);
+                double axis = xbox.getRawAxis(1);
                 elevator.ElevatorPos += MathUtil.applyDeadband(axis, .1) * 0.1;
                 elevator.nextElevatorPID();
             }
@@ -46,4 +46,10 @@ public class ElevatorCmd extends Command{
             elevator.nextElevatorPID();
         }
     }
+
+    @Override 
+    public void end(boolean interrupted) {
+        elevator.ElevatorPos = Constants.PositionalConstants.min_rope_encoder_value;
+    }
+
 }

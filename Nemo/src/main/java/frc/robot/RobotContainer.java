@@ -17,12 +17,13 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.LimelightCmd;
 import frc.robot.commands.TeleopSwerve;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
-
 import frc.robot.commands.RevCoder_TestCmd;
 import frc.robot.subsystems.RevCoder_test;
+
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -48,13 +49,12 @@ public class RobotContainer {
    private Limelight limelight;
    private Vision vision;
    private RevCoder_test revCoderTest;
-
+   private Elevator elevator;
 
   /* Commands */
   private LimelightCmd limelightCmd;
 
   private final RevCoder_TestCmd revCoderTestCmd = new RevCoder_TestCmd(revCoderTest);
-
 
   private Autos autos;
   private SendableChooser<Command> chooser;
@@ -113,6 +113,6 @@ private void configureAutoSelector() {
   }
 
   public void autonomousPeriodic() {
-    
+    elevator.nextElevatorPID();
   }
 }

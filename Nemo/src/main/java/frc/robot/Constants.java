@@ -235,6 +235,7 @@ public final class Constants {
 
     public static double BallIntakeSpeed = 0.5;
     public static double CoralIntakeSpeed = 0.5;
+    public static double ArmRotatorSpeed = 0.5;
 
     public static boolean ArmRotatorReversed = false;
     public static boolean BallIntakeReversed = false;
