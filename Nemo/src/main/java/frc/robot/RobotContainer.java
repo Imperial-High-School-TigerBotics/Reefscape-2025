@@ -33,7 +33,7 @@ import frc.robot.subsystems.RevCoder_test;
 public class RobotContainer {
    /* Controllers */
    private final XboxController driver = new XboxController(0);
-   private final XboxController shooter = new XboxController(1);
+   private final XboxController operator = new XboxController(1);
 
    /* Drive Controls */
    private final int translationAxis = XboxController.Axis.kLeftY.value;
@@ -53,7 +53,7 @@ public class RobotContainer {
   /* Commands */
   private LimelightCmd limelightCmd;
 
-  private final RevCoder_TestCmd revCoderTestCmd = new RevCoder_TestCmd(revCoderTest);
+  private RevCoder_TestCmd revCoderTestCmd;
 
 
   private Autos autos;
@@ -65,6 +65,10 @@ public class RobotContainer {
     limelight = new Limelight();
     limelightCmd = new LimelightCmd(limelight);
     limelight.setDefaultCommand(limelightCmd);
+
+    revCoderTest = new RevCoder_test();
+    revCoderTestCmd = new RevCoder_TestCmd(revCoderTest);
+    revCoderTest.setDefaultCommand(revCoderTestCmd);
     
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
