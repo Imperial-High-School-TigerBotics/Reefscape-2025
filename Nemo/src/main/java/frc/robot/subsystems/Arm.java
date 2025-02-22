@@ -4,6 +4,7 @@ import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.apriltag.AprilTagDetection;
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -14,11 +15,14 @@ public class Arm extends SubsystemBase{
     private SparkMax BallIntake;
     private SparkMax CoralIntake;
 
+    private DutyCycleEncoder Arm_encoder;
+
     public Arm(Limelight aprilTagDetection) {
         ArmRotator = new SparkMax(Constants.ArmConstants.ArmRotator, MotorType.kBrushless);
         BallIntake = new SparkMax(Constants.ArmConstants.BallIntake, MotorType.kBrushless);
         CoralIntake = new SparkMax(Constants.ArmConstants.CoralIntake, MotorType.kBrushless);
 
+        Arm_encoder = new DutyCycleEncoder(Constants.ArmConstants.ArmEncoder);
     }
 
     private double applyDeadzone(double value, double deadzone) {
