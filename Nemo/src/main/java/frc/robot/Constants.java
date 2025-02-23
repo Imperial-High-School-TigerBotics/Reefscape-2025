@@ -38,6 +38,7 @@ public final class Constants {
 
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int shooterController = 1;
   }
 
   public static class TestConstants{
@@ -234,7 +235,7 @@ public final class Constants {
     public static final int CoralIntake = 2;
 
     public static final int ArmEncoder = 1; //TODO: change this
-    
+
     public static double ArmRestPos = 0.0;
 
     public static double BallIntakeSpeed = 0.5;

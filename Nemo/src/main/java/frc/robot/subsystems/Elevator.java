@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -17,6 +18,9 @@ public class Elevator extends SubsystemBase{
 
     private PIDController elevatorMotor1PID;
     private PIDController elevatorMotor2PID;
+
+    DigitalInput limitSwitchTop = new DigitalInput(0);
+    DigitalInput limitSwitchBottom = new DigitalInput(1);
 
     public double ElevatorPos;
 
@@ -63,6 +67,23 @@ public class Elevator extends SubsystemBase{
         elevatorMotor1.set(setValue);
     }
 
+    public void LimitSwitchCap() {
+    if (limitSwitchTop.get() && limitSwitchBottom.get()) {
+        if (limitSwitchTop.get()) {
+            elevatorMotor1.set(0);
+            elevatorMotor2.set(0);
+        } else if (limitSwitchBottom.get()) {
+            elevatorMotor1.set(0);
+            elevatorMotor2.set(0);
+        }
+    } else {
+        elevatorMotor1.set(Constants.ElevatorConstants.elevatorMotor1speed);
+        elevatorMotor2.set(Constants.ElevatorConstants.elevatorMotor2speed);
+        clampElevatorSetPos();
+    }
+
+    }
+
     public void setElevator2PID (double position) {
         double setValue = elevatorMotor2PID.calculate(-getElevatorCoderPos(), position);
 
@@ -75,7 +96,7 @@ public class Elevator extends SubsystemBase{
     }
 
     public void nextElevatorPID() {
-        clampElevatorSetPos();
+        LimitSwitchCap();
         setElevator1PID(ElevatorPos);
         setElevator2PID(-ElevatorPos);
     }
