@@ -24,6 +24,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.RevCoder_TestCmd;
 import frc.robot.subsystems.RevCoder_test;
+import frc.robot.subsystems.Arm;
 
 
 /**
@@ -51,6 +52,7 @@ public class RobotContainer {
    private Vision vision;
    private RevCoder_test revCoderTest;
    private Elevator elevator;
+   private Arm arm;
 
   /* Commands */
   private LimelightCmd limelightCmd;
@@ -119,5 +121,6 @@ private void configureAutoSelector() {
 
   public void autonomousPeriodic() {
     elevator.nextElevatorPID();
+    arm.nextArmRotatorPID();
   }
 }

@@ -20,7 +20,7 @@ public class Arm extends SubsystemBase{
     private SparkMax CoralIntake;
 
     private PIDController ArmRotatorPID;
-    private DutyCycleEncoder ArmEncoder;
+    private DutyCycleEncoder ArmEncoder; 
 
     public double RotatorPos;
 

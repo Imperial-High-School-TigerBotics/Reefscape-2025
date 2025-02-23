@@ -64,7 +64,7 @@ public class Elevator extends SubsystemBase{
     }
 
     public void setElevator2PID (double position) {
-        double setValue = elevatorMotor2PID.calculate(getElevatorCoderPos(), position);
+        double setValue = elevatorMotor2PID.calculate(-getElevatorCoderPos(), position);
 
         double speedLimit = 0.3;
         if (setValue > speedLimit) {
@@ -77,7 +77,7 @@ public class Elevator extends SubsystemBase{
     public void nextElevatorPID() {
         clampElevatorSetPos();
         setElevator1PID(ElevatorPos);
-        setElevator2PID(ElevatorPos);
+        setElevator2PID(-ElevatorPos);
     }
 
     public void elevatorUp(double percent) {

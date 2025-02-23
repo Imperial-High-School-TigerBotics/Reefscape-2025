@@ -234,6 +234,8 @@ public final class Constants {
     public static final int CoralIntake = 2;
 
     public static final int ArmEncoder = 1; //TODO: change this
+    
+    public static double ArmRestPos = 0.0;
 
     public static double BallIntakeSpeed = 0.5;
     public static double CoralIntakeSpeed = 0.5;
