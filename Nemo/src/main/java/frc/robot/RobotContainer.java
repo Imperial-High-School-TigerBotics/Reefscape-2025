@@ -26,8 +26,6 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.climberCmd;
 import frc.robot.subsystems.climber;
-import frc.robot.commands.RevCoder_TestCmd;
-import frc.robot.subsystems.RevCoder_test;
 import frc.robot.subsystems.Arm;
 
 
@@ -54,7 +52,6 @@ public class RobotContainer {
    private final Swerve s_Swerve = new Swerve();
    private Limelight limelight;
    private Vision vision;
-   private RevCoder_test revCoderTest;
    private Elevator elevator;
    private Arm arm;
    private climber climber;
@@ -62,7 +59,6 @@ public class RobotContainer {
   /* Commands */
   private LimelightCmd limelightCmd;
 
-  private RevCoder_TestCmd revCoderTestCmd;
 
   private Autos autos;
   private SendableChooser<Command> chooser;
@@ -78,10 +74,6 @@ public class RobotContainer {
     limelight = new Limelight();
     limelightCmd = new LimelightCmd(limelight);
     limelight.setDefaultCommand(limelightCmd);
-
-    revCoderTest = new RevCoder_test();
-    revCoderTestCmd = new RevCoder_TestCmd(revCoderTest);
-    revCoderTest.setDefaultCommand(revCoderTestCmd);
 
     elevator = new Elevator();
     elevatorCmd = new ElevatorCmd(elevator, operator);

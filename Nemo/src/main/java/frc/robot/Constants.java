@@ -240,7 +240,7 @@ public final class Constants {
     public static final int BallIntake = 18;
     public static final int CoralIntake = 20;
 
-    public static final int ArmEncoder = 1; //TODO: change this
+    public static final int ArmEncoder = 2; //TODO: change this
 
     public static double ArmRotatorP = 0.1;
     public static double ArmRotatorI = 0.0;
