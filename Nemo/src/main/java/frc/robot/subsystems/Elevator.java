@@ -43,7 +43,7 @@ public class Elevator extends SubsystemBase {
 
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
 
-        ElevatorPos = Constants.PositionalConstants.allowed_rope_length;
+        ElevatorPos = Constants.PositionalConstants.min_rope_encoder_value;
     }
 
     public void clampElevatorSetPos() {

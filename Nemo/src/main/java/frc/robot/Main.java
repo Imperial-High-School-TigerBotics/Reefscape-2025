@@ -4,6 +4,7 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.RobotBase;
 
 /**
@@ -12,9 +13,17 @@ import edu.wpi.first.wpilibj.RobotBase;
  * call.
  */
 public final class Main {
-  private Main() {}
-
-  /**
+  private Main() {
+  try {
+        // This will construct your Robot class and start the robot loop.
+        RobotBase.startRobot(Robot::new);
+    } catch (Throwable t) {
+        // Catch any exception thrown during startCompetition or initialization.
+        t.printStackTrace();
+        DriverStation.reportError("Unhandled exception in robot startup: " + t.getMessage(), t.getStackTrace());
+    }
+  }
+ /**
    * Main initialization function. Do not perform any initialization here.
    *
    * <p>If you change your main robot class, change the parameter type.

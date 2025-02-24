@@ -220,10 +220,10 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final int elevatorMotor1ID = 66;
-    public static final int elevatorMotor2ID = 68;
+    public static final int elevatorMotor1ID = 19;
+    public static final int elevatorMotor2ID = 21;
 
-    public static final int elevatorCoderID = 69;
+    public static final int elevatorCoderID = 62;
 
     public static final double elevatorMotor1speed = 0.5;
     public static final double elevatorMotor2speed = 0.5;
@@ -236,9 +236,9 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
-    public static final int ArmRotator = 0;
-    public static final int BallIntake = 1;
-    public static final int CoralIntake = 2;
+    public static final int ArmRotator = 14;
+    public static final int BallIntake = 18;
+    public static final int CoralIntake = 20;
 
     public static final int ArmEncoder = 1; //TODO: change this
 
@@ -258,6 +258,20 @@ public final class Constants {
     public static boolean ArmRotatorReversed = false;
     public static boolean BallIntakeReversed = false;
     public static boolean CoralIntakeReversed = false;
+  }
+
+  public static final class ClimberConstants {
+    public static final int climberMotorID = 45;
+
+    public static final double climberMotorspeed = 0.2;
+
+    public static final double climberRestPos = 0.0;
+    public static final double climberMinPos = 0.0;
+    public static final double climberMaxPos = 0.0;
+
+    public static final double climberP = 0.1;
+    public static final double climberI = 0.0;
+    public static final double climberD = 0.0;
   }
 
 
