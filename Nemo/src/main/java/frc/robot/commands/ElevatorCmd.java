@@ -1,6 +1,5 @@
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -9,39 +8,42 @@ import edu.wpi.first.math.MathUtil;
 import frc.robot.subsystems.Elevator;
 import frc.robot.Constants;
 
-public class ElevatorCmd extends Command{
-    private Elevator elevator;
+public class ElevatorCmd extends Command {
+    private final Elevator elevator;
+    private final XboxController xbox;
 
-    private XboxController xbox;
-
-    private double ElevatorPos;
+    private double elevatorPos;
     private boolean autoShooter;
 
-    public ElevatorCmd (Elevator elevator, XboxController xbox) {
+    public ElevatorCmd(Elevator elevator, XboxController xbox) {
         this.elevator = elevator;
         addRequirements(this.elevator);
 
         this.xbox = xbox;
         autoShooter = false;
 
-        ElevatorPos = elevator.getElevatorCoderPos();
+        elevatorPos = elevator.getElevatorCoderPos();
     }
 
     @Override
-    public void initialize() {}
+    public void initialize() {
+        SmartDashboard.putString("ElevatorCmd", "Initialized");
+    }
 
     @Override 
     public void execute() {
-        if (DriverStation.isTeleop()){
-
-            SmartDashboard.putNumber("Elevator Motor 1 pos", elevator.getElevMotor1Pos());
+        if (DriverStation.isTeleop()) {
+            // Display Elevator Data
+            SmartDashboard.putNumber("Elevator Motor 1 Pos", elevator.getElevMotor1Pos());
             SmartDashboard.putNumber("Elevator Motor 2 Pos", elevator.getElevMotor2Pos());
-            SmartDashboard.putNumber("Elevator Coder Pos", elevator.getElevatorCoderPos());
+            SmartDashboard.putNumber("Elevator Encoder Pos", elevator.getElevatorCoderPos());
 
             if (!autoShooter) {
-                double axis = xbox.getRawAxis(1);
-                elevator.ElevatorPos += MathUtil.applyDeadband(axis, .1) * 0.1;
-                elevator.nextElevatorPID();
+                double axis = MathUtil.applyDeadband(xbox.getRawAxis(1), 0.1);
+                if (axis != 0) {
+                    elevatorPos += axis * 0.1;
+                    elevator.setElevatorPosition(elevatorPos);
+                }
             }
         } else {
             elevator.nextElevatorPID();
@@ -50,7 +52,9 @@ public class ElevatorCmd extends Command{
 
     @Override 
     public void end(boolean interrupted) {
-        elevator.ElevatorPos = Constants.PositionalConstants.min_rope_encoder_value;
+        SmartDashboard.putString("ElevatorCmd", "Ended");
+        if (interrupted) {
+            SmartDashboard.putString("ElevatorCmd", "Interrupted");
+        }
     }
-
 }

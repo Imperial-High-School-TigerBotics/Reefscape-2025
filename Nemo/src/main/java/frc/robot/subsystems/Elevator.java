@@ -8,9 +8,8 @@ import frc.robot.Constants;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.ctre.phoenix6.signals.UpdateModeValue;
 
-public class Elevator extends SubsystemBase{
+public class Elevator extends SubsystemBase {
     private TalonFX elevatorMotor1;
     private TalonFX elevatorMotor2;
 
@@ -19,98 +18,93 @@ public class Elevator extends SubsystemBase{
     private PIDController elevatorMotor1PID;
     private PIDController elevatorMotor2PID;
 
-    DigitalInput limitSwitchTop = new DigitalInput(0);
-    DigitalInput limitSwitchBottom = new DigitalInput(1);
+    private DigitalInput limitSwitchTop = new DigitalInput(0);
+    private DigitalInput limitSwitchBottom = new DigitalInput(1);
 
-    public double ElevatorPos;
+    private double ElevatorPos;
 
-    public Elevator(Limelight aprilTagDetection){
+    public Elevator() {
+        // Initialize motors with brake mode
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
-        elevatorMotor1PID = new PIDController(0,0,0);
+        elevatorMotor1PID = new PIDController(
+            Constants.ElevatorConstants.elevatorP,
+            Constants.ElevatorConstants.elevatorI,
+            Constants.ElevatorConstants.elevatorD
+        );
 
         elevatorMotor2 = new TalonFX(Constants.ElevatorConstants.elevatorMotor2ID);
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
-        elevatorMotor2PID = new PIDController(0,0,0);
+        elevatorMotor2PID = new PIDController(
+            Constants.ElevatorConstants.elevatorP,
+            Constants.ElevatorConstants.elevatorI,
+            Constants.ElevatorConstants.elevatorD
+        );
 
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
 
         ElevatorPos = Constants.PositionalConstants.allowed_rope_length;
     }
 
-    public TalonFX[] getTalonFXs() {
-        TalonFX[] talons = {
-            elevatorMotor1,
-            elevatorMotor2,
-        };
-        return talons;
-    }
-    
     public void clampElevatorSetPos() {
-        if (ElevatorPos < Constants.PositionalConstants.min_rope_encoder_value) {
-            ElevatorPos = Constants.PositionalConstants.min_rope_encoder_value;
-        } else if (ElevatorPos > Constants.PositionalConstants.max_rope_encoder_value) {
-            ElevatorPos = Constants.PositionalConstants.max_rope_encoder_value;
-        }
+        ElevatorPos = Math.max(
+            Constants.PositionalConstants.min_rope_encoder_value,
+            Math.min(Constants.PositionalConstants.max_rope_encoder_value, ElevatorPos)
+        );
+    }
+
+    public void setElevatorPosition(double position) {
+        ElevatorPos = position;
+        clampElevatorSetPos();
+        nextElevatorPID();
     }
 
     public void setElevator1PID(double position) {
         double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
-
         double speedLimit = 0.3;
-        if (setValue > speedLimit) {
-            setValue = speedLimit;
-        } else if (setValue < -speedLimit) {
-            setValue = -speedLimit;
-        }
+        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
 
         elevatorMotor1.set(setValue);
+        elevatorMotor2.set(-setValue); // Manually set motor 2 opposite to motor 1
     }
 
-    public void LimitSwitchCap(double ElevatorPos) { // just provide the speed applied to 1 of the motors
-
-    boolean allow_up = ElevatorPos < Constants.PositionalConstants.min_rope_encoder_value;
-    boolean allow_down = ElevatorPos > Constants.PositionalConstants.max_rope_encoder_value;
-
-
-    if (limitSwitchTop.get() || limitSwitchBottom.get()) {
-        if (limitSwitchTop.get() && allow_down) {
-            elevatorMotor1.set(0);
-            elevatorMotor2.set(0);
-        } else if (limitSwitchBottom.get() && allow_up) {
-            elevatorMotor1.set(0);
-            elevatorMotor2.set(0);
-        }else {
-            clampElevatorSetPos();
-            }
-        }
-    }
-
-    public void setElevator2PID (double position) {
-        double setValue = elevatorMotor2PID.calculate(-getElevatorCoderPos(), position);
-
+    public void setElevator2PID(double position) {
+        double setValue = elevatorMotor2PID.calculate(getElevatorCoderPos(), position);
         double speedLimit = 0.3;
-        if (setValue > speedLimit) {
-            setValue = speedLimit;
-        } else if (setValue < -speedLimit) {
-            setValue = speedLimit;
+        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
+
+        elevatorMotor2.set(-setValue); // Ensure synchronization with motor 1
+    }
+
+    public void limitSwitchCap() {
+        if (limitSwitchTop.get()) {
+            ElevatorPos = Constants.PositionalConstants.max_rope_encoder_value;
+            elevatorStop();
+        }
+        if (limitSwitchBottom.get()) {
+            ElevatorPos = Constants.PositionalConstants.min_rope_encoder_value;
+            elevatorStop();
         }
     }
 
     public void nextElevatorPID() {
-        LimitSwitchCap(ElevatorPos);
-        setElevator1PID(ElevatorPos);
-        setElevator2PID(-ElevatorPos);
+        limitSwitchCap();
+        if (!limitSwitchTop.get() && !limitSwitchBottom.get()) {
+            setElevator1PID(ElevatorPos);
+            setElevator2PID(ElevatorPos);
+        }
     }
 
     public void elevatorUp(double percent) {
-        elevatorMotor1.set(percent * Constants.ElevatorConstants.elevatorMotor1speed);
-        elevatorMotor2.set(percent * -Constants.ElevatorConstants.elevatorMotor2speed);
+        double speed = percent * Constants.ElevatorConstants.elevatorMotor1speed;
+        elevatorMotor1.set(speed);
+        elevatorMotor2.set(-speed); // Opposite direction for synchronization
     }
 
     public void elevatorDown(double percent) {
-        elevatorMotor1.set(percent * -Constants.ElevatorConstants.elevatorMotor1speed);
-        elevatorMotor2.set(percent * Constants.ElevatorConstants.elevatorMotor2speed);
+        double speed = percent * -Constants.ElevatorConstants.elevatorMotor1speed;
+        elevatorMotor1.set(speed);
+        elevatorMotor2.set(-speed); // Opposite direction for synchronization
     }
 
     public void elevatorStop() {
@@ -129,5 +123,4 @@ public class Elevator extends SubsystemBase{
     public double getElevatorCoderPos() {
         return elevatorCoder.getPosition().getValueAsDouble();
     }
-    
-} 
+}

@@ -227,6 +227,10 @@ public final class Constants {
 
     public static final double elevatorMotor1speed = 0.5;
     public static final double elevatorMotor2speed = 0.5;
+
+    public static final double elevatorP = 0.1;
+    public static final double elevatorI = 0.0;
+    public static final double elevatorD = 0.0;
   }
 
   public static final class ArmConstants {
