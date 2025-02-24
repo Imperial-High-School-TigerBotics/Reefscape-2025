@@ -74,10 +74,10 @@ public class Elevator extends SubsystemBase{
 
 
     if (limitSwitchTop.get() & limitSwitchBottom.get()) {
-        if (limitSwitchTop.get() & allow_up) {
+        if (limitSwitchTop.get() & allow_down) {
             elevatorMotor1.set(0);
             elevatorMotor2.set(0);
-        } else if (limitSwitchBottom.get() & allow_down) {
+        } else if (limitSwitchBottom.get() & allow_up) {
             elevatorMotor1.set(0);
             elevatorMotor2.set(0);
         }else {
