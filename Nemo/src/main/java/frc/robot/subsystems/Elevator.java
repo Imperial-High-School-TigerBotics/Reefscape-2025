@@ -73,11 +73,11 @@ public class Elevator extends SubsystemBase{
     boolean allow_down = ElevatorPos < Constants.PositionalConstants.max_rope_encoder_value;
 
 
-    if (limitSwitchTop.get() & limitSwitchBottom.get()) {
-        if (limitSwitchTop.get() & allow_down) {
+    if (limitSwitchTop.get() || limitSwitchBottom.get()) {
+        if (limitSwitchTop.get() && !allow_down) {
             elevatorMotor1.set(0);
             elevatorMotor2.set(0);
-        } else if (limitSwitchBottom.get() & allow_up) {
+        } else if (limitSwitchBottom.get() && !allow_up) {
             elevatorMotor1.set(0);
             elevatorMotor2.set(0);
         }else {
