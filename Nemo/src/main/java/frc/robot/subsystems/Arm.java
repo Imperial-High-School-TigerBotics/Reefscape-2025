@@ -1,18 +1,14 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.CANBus;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.revrobotics.spark.SparkMax;
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 
-import edu.wpi.first.apriltag.AprilTagDetection;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
-import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.ArmConstants;
 
 public class Arm extends SubsystemBase{
     private TalonFX ArmRotator;
@@ -130,7 +126,7 @@ public class Arm extends SubsystemBase{
     }
 
     public double getArmRotatorPos() {
-        return ArmRotator.getPosition().getValueAsDouble();
+        return ArmEncoder.get();
     }
 
 }
