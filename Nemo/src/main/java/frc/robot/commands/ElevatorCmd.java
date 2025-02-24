@@ -38,8 +38,15 @@ public class ElevatorCmd extends Command {
             SmartDashboard.putNumber("Elevator Motor 2 Pos", elevator.getElevMotor2Pos());
             SmartDashboard.putNumber("Elevator Encoder Pos", elevator.getElevatorCoderPos());
 
-            if (!autoShooter) {
-                double axis = MathUtil.applyDeadband(xbox.getRawAxis(1), 0.1);
+            //TODO: Record Elevator Data to constants, then delete this if/else statement and uncomment other code for full implementation
+            if(!autoShooter){
+                double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), (Constants.stickDeadband));
+                elevator.elevatorMove(axis);
+            }else{
+                elevator.elevatorStop();
+            }
+           /* if (!autoShooter) {
+                double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
                     elevatorPos += axis * 0.1;
                     elevator.setElevatorPosition(elevatorPos);
@@ -47,7 +54,7 @@ public class ElevatorCmd extends Command {
             }
         } else {
             elevator.nextElevatorPID();
-        }
+        */}
     }
 
     @Override 

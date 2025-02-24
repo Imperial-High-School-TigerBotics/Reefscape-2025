@@ -80,10 +80,16 @@ public class Elevator extends SubsystemBase {
         if (limitSwitchTop.get()) {
             ElevatorPos = Constants.PositionalConstants.max_rope_encoder_value;
             elevatorStop();
+            ElevatorPos -= Constants.ElevatorConstants.elevatorLimitSwitchOffset;
+            setElevator1PID(ElevatorPos);
+            setElevator2PID(ElevatorPos);
         }
         if (limitSwitchBottom.get()) {
             ElevatorPos = Constants.PositionalConstants.min_rope_encoder_value;
             elevatorStop();
+            ElevatorPos += Constants.ElevatorConstants.elevatorLimitSwitchOffset;
+            setElevator1PID(ElevatorPos);
+            setElevator2PID(ElevatorPos);
         }
     }
 
@@ -110,6 +116,11 @@ public class Elevator extends SubsystemBase {
     public void elevatorStop() {
         elevatorMotor1.set(0);
         elevatorMotor2.set(0);
+    }
+
+    public void elevatorMove(double speed){
+        elevatorMotor1.set(speed * Constants.ElevatorConstants.elevatorMotor1speed);
+        elevatorMotor2.set(-speed * Constants.ElevatorConstants.elevatorMotor2speed);
     }
 
     public double getElevMotor1Pos() {

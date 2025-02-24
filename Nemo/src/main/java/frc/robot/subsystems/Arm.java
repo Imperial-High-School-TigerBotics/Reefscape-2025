@@ -27,12 +27,18 @@ public class Arm extends SubsystemBase{
     public Arm(Limelight aprilTagDetection) {
         ArmRotator = new TalonFX(Constants.ArmConstants.ArmRotator);
         ArmRotator.setNeutralMode(NeutralModeValue.Brake);
-        ArmRotatorPID = new PIDController(0,0,0);
+        ArmRotatorPID = new PIDController(
+            Constants.ArmConstants.ArmRotatorP,
+            Constants.ArmConstants.ArmRotatorI,
+            Constants.ArmConstants.ArmRotatorD
+        );
 
         ArmEncoder = new DutyCycleEncoder(Constants.ArmConstants.ArmEncoder);
 
         BallIntake = new SparkMax(Constants.ArmConstants.BallIntake, MotorType.kBrushless);
         CoralIntake = new SparkMax(Constants.ArmConstants.CoralIntake, MotorType.kBrushless);
+
+        RotatorPos = Constants.ArmConstants.ArmRestPos;
 
     }
 
@@ -43,23 +49,25 @@ public class Arm extends SubsystemBase{
         return talons;
     }
 
-    public void ArmRotatorCap() {
-        if (RotatorPos < Constants.PositionalConstants.arm_counterclockwise_rotation_encoderCap) {
-            RotatorPos = Constants.PositionalConstants.arm_counterclockwise_rotation_encoderCap;
-        } else if (RotatorPos > Constants.PositionalConstants.arm_clockwise_rotation_encoderCap) {
-            RotatorPos = Constants.PositionalConstants.arm_clockwise_rotation_encoderCap;
-        }
+
+    public void clampArmRotatorSetPos(){
+        RotatorPos = Math.max(
+            Constants.ArmConstants.ArmMinPos,
+            Math.min(Constants.ArmConstants.ArmMaxPos, RotatorPos)
+        );
     }
 
-    public void setArmRotatorPID() {
+    public void setArmRotatorPosition(double position) {
+        RotatorPos = position;
+        clampArmRotatorSetPos();
+        nextArmRotatorPID();
+    }
+
+    public void nextArmRotatorPID() {
         double setValue = ArmRotatorPID.calculate(getArmRotatorPos(), RotatorPos);
 
         double speedLimit = 0.3;
-        if (setValue > speedLimit) {
-            setValue = speedLimit;
-        } else if (setValue < -speedLimit) {
-            setValue = -speedLimit;
-        }
+        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
 
         ArmRotator.set(setValue);
     }
@@ -70,11 +78,6 @@ public class Arm extends SubsystemBase{
         } else {
             return 0.0; // Set values inside the deadzone to zero
         }
-    }
-
-    public void nextArmRotatorPID() {
-        ArmRotatorCap();
-        setArmRotatorPID();
     }
 
     public void BallIntakeGo (double speed) {
@@ -120,6 +123,10 @@ public class Arm extends SubsystemBase{
     public void STOPThisMadness() {
         BallIntakeStop();
         CoralIntakeStop();
+    }
+
+    public void rotateArmMotor(double speed) {
+        ArmRotator.set(speed * Constants.ArmConstants.ArmRotatorSpeed);
     }
 
     public double getArmRotatorPos() {

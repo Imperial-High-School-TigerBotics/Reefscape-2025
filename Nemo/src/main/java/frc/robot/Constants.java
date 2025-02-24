@@ -231,6 +231,8 @@ public final class Constants {
     public static final double elevatorP = 0.1;
     public static final double elevatorI = 0.0;
     public static final double elevatorD = 0.0;
+
+    public static final double elevatorLimitSwitchOffset = 10;
   }
 
   public static final class ArmConstants {
@@ -240,7 +242,14 @@ public final class Constants {
 
     public static final int ArmEncoder = 1; //TODO: change this
 
+    public static double ArmRotatorP = 0.1;
+    public static double ArmRotatorI = 0.0;
+    public static double ArmRotatorD = 0.0;
+
     public static double ArmRestPos = 0.0;
+
+    public static double ArmMinPos = 0.0;
+    public static double ArmMaxPos = 0.0;
 
     public static double BallIntakeSpeed = 0.5;
     public static double CoralIntakeSpeed = 0.5;
