@@ -16,12 +16,16 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.commands.ArmCmd;
+import frc.robot.commands.ElevatorCmd;
 import frc.robot.commands.LimelightCmd;
 import frc.robot.commands.TeleopSwerve;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
+import frc.robot.commands.climberCmd;
+import frc.robot.subsystems.climber;
 import frc.robot.commands.RevCoder_TestCmd;
 import frc.robot.subsystems.RevCoder_test;
 import frc.robot.subsystems.Arm;
@@ -53,6 +57,7 @@ public class RobotContainer {
    private RevCoder_test revCoderTest;
    private Elevator elevator;
    private Arm arm;
+   private climber climber;
 
   /* Commands */
   private LimelightCmd limelightCmd;
@@ -61,6 +66,11 @@ public class RobotContainer {
 
   private Autos autos;
   private SendableChooser<Command> chooser;
+
+  private ElevatorCmd elevatorCmd;
+  private ArmCmd armCmd;
+
+  private climberCmd climberCmd;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -72,6 +82,18 @@ public class RobotContainer {
     revCoderTest = new RevCoder_test();
     revCoderTestCmd = new RevCoder_TestCmd(revCoderTest);
     revCoderTest.setDefaultCommand(revCoderTestCmd);
+
+    elevator = new Elevator();
+    elevatorCmd = new ElevatorCmd(elevator, operator);
+    elevator.setDefaultCommand(elevatorCmd);
+
+    arm = new Arm();
+    armCmd = new ArmCmd(arm, operator);
+    arm.setDefaultCommand(armCmd);
+
+    climber = new climber();
+    climberCmd = new climberCmd(climber, driver);
+    climber.setDefaultCommand(climberCmd);
     
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(

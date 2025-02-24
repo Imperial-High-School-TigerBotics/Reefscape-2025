@@ -24,7 +24,7 @@ public class Arm extends SubsystemBase{
 
     public double RotatorPos;
 
-    public Arm(Limelight aprilTagDetection) {
+    public Arm() {
         ArmRotator = new TalonFX(Constants.ArmConstants.ArmRotator);
         ArmRotator.setNeutralMode(NeutralModeValue.Brake);
         ArmRotatorPID = new PIDController(
