@@ -67,18 +67,20 @@ public class Elevator extends SubsystemBase{
         elevatorMotor1.set(setValue);
     }
 
-    public void LimitSwitchCap() {
-    if (limitSwitchTop.get() && limitSwitchBottom.get()) {
-        if (limitSwitchTop.get()) {
+    public void LimitSwitchCap(double elevator_speed) { // just provide the speed applied to 1 of the motors
+
+    boolean allow_down = elevator_speed < 0;
+    boolean allow_up = elevator_speed > 0;
+
+    if (limitSwitchTop.get() & limitSwitchBottom.get()) {
+        if (limitSwitchTop.get() & allow_up) {
             elevatorMotor1.set(0);
             elevatorMotor2.set(0);
-        } else if (limitSwitchBottom.get()) {
+        } else if (limitSwitchBottom.get() & allow_down) {
             elevatorMotor1.set(0);
             elevatorMotor2.set(0);
         }
     } else {
-        elevatorMotor1.set(Constants.ElevatorConstants.elevatorMotor1speed);
-        elevatorMotor2.set(Constants.ElevatorConstants.elevatorMotor2speed);
         clampElevatorSetPos();
     }
 
