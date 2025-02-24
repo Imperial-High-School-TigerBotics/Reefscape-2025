@@ -97,8 +97,8 @@ public class Elevator extends SubsystemBase{
         }
     }
 
-    public void nextElevatorPID(double elevator_speed) {
-        LimitSwitchCap(elevator_speed);
+    public void nextElevatorPID() {
+        LimitSwitchCap(ElevatorPos);
         setElevator1PID(ElevatorPos);
         setElevator2PID(-ElevatorPos);
     }
