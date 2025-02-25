@@ -76,44 +76,28 @@ public class Arm extends SubsystemBase{
         }
     }
 
-    public void BallIntakeGo (double speed) {
-        BallIntake.set(speed * Constants.ArmConstants.BallIntakeSpeed);
+    public void BallIntakeIn() {
+        BallIntake.set(Constants.ArmConstants.BallIntakeSpeed);
     }
 
-    public void BallIntakeGo(boolean reverse) {
-        BallIntake.set((reverse ? -0.5 : 1) * Constants.ArmConstants.BallIntakeSpeed);
-    }
-
-    public void CoralIntakeRecieve (double speed) {
-        CoralIntake.set(speed * Constants.ArmConstants.CoralIntakeSpeed);
-    }
-
-    public void CoralIntakeRecieve(boolean reverse) {
-        CoralIntake.set((reverse ? -0.5 : 1) * Constants.ArmConstants.CoralIntakeSpeed);
+    public void BallIntakeOut() {
+        BallIntake.set(-Constants.ArmConstants.BallIntakeSpeed);
     }
 
     public void BallIntakeStop() {
         BallIntake.set(0);
     }
 
-    public void CoralIntakeStop() {
-        CoralIntake.set(0);
-    }
-
     public void CoralIntakeIn() {
-        CoralIntakeRecieve(false);
+        CoralIntake.set(Constants.ArmConstants.CoralIntakeSpeed);
     }
 
     public void CoralIntakeOut() {
-        CoralIntakeRecieve(true);
+        CoralIntake.set(-Constants.ArmConstants.CoralIntakeSpeed);
     }
 
-    public void BallIntakeIn() {
-        BallIntakeGo(false);
-    }
-
-    public void BallIntakeOut() {
-        BallIntakeGo(true);
+    public void CoralIntakeStop() {
+        CoralIntake.set(0);
     }
 
     public void STOPThisMadness() {
