@@ -30,46 +30,48 @@ public class ArmCmd extends Command {
     @Override
     public void execute() {
         if (DriverStation.isTeleop()) {
+
+            arm.BallIntakeIn();
             // Ball Intake Controls
-            if (xbox.getYButtonPressed()) {
-                arm.BallIntakeIn();
-            } 
-            if (xbox.getYButtonReleased()) {
-                arm.BallIntakeStop();
-            }
+            // if (xbox.getYButtonPressed()) {
+            //     arm.BallIntakeIn();
+            // } 
+            // if (xbox.getYButtonReleased()) {
+            //     arm.BallIntakeStop();
+            // }
 
-            if (xbox.getBButtonPressed()) {
-                arm.BallIntakeOut();
-            } 
-            if (xbox.getBButtonReleased()) {
-                arm.BallIntakeStop();
-            }
+            // if (xbox.getBButtonPressed()) {
+            //     arm.BallIntakeOut();
+            // } 
+            // if (xbox.getBButtonReleased()) {
+            //     arm.BallIntakeStop();
+            // }
 
-            // Coral Intake Controls
-            if (xbox.getXButtonPressed()) {
-                arm.CoralIntakeIn();
-            } 
-            if (xbox.getXButtonReleased()) {
-                arm.CoralIntakeStop();
-            }
+            // // Coral Intake Controls
+            // if (xbox.getXButtonPressed()) {
+            //     arm.CoralIntakeIn();
+            // } 
+            // if (xbox.getXButtonReleased()) {
+            //     arm.CoralIntakeStop();
+            // }
 
-            if (xbox.getAButtonPressed()) {
-                arm.CoralIntakeOut();
-            } 
-            if (xbox.getAButtonReleased()) {
-                arm.CoralIntakeStop();
-            }
+            // if (xbox.getAButtonPressed()) {
+            //     arm.CoralIntakeOut();
+            // } 
+            // if (xbox.getAButtonReleased()) {
+            //     arm.CoralIntakeStop();
+            // }
 
-            //TODO: Record Arm Data to constants, then delete this if/else statement and uncomment other code for full implementation
+            // //TODO: Record Arm Data to constants, then delete this if/else statement and uncomment other code for full implementation
 
-            if(!autoShooter){
-                double axis = xbox.getRawAxis(4);
-                axis = MathUtil.applyDeadband(axis, Constants.stickDeadband);
+            // if(!autoShooter){
+            //     double axis = xbox.getRawAxis(4);
+            //     axis = MathUtil.applyDeadband(axis, Constants.stickDeadband);
 
-                arm.rotateArmMotor(axis);
-            }else{
-                arm.rotateArmMotor(0);
-            }
+            //     arm.rotateArmMotor(axis);
+            // }else{
+            //     arm.rotateArmMotor(0);
+            // }
             /*
             // Manual Arm Control
             if (!autoShooter) {
