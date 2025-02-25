@@ -120,7 +120,7 @@ public class Elevator extends SubsystemBase {
 
     public void elevatorMove(double speed){
         elevatorMotor1.set(speed * Constants.ElevatorConstants.elevatorMotor1speed);
-        elevatorMotor2.set(-speed * Constants.ElevatorConstants.elevatorMotor2speed);
+        elevatorMotor2.set(speed * Constants.ElevatorConstants.elevatorMotor2speed);
     }
 
     public double getElevMotor1Pos() {
