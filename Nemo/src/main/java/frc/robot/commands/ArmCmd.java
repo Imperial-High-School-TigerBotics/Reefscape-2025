@@ -90,6 +90,6 @@ public class ArmCmd extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
+        //arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
     }
 }
