@@ -20,8 +20,8 @@ public class ArmShootAndIntake extends SubsystemBase {
     }
 
     public void updateDashboard(){
-        SmartDashboard.putNumber("Ball Intake Speed", BallIntake.get());
-        SmartDashboard.putNumber("Coral Intake Speed", CoralIntake.get());
+        SmartDashboard.putNumber("Ball Intake Bus Voltage", BallIntake.getBusVoltage());
+        SmartDashboard.putNumber("Coral Intake Bus Voltage", CoralIntake.getBusVoltage());
     }
 
     public void BallIntakeIn() {
@@ -51,5 +51,13 @@ public class ArmShootAndIntake extends SubsystemBase {
     public void STOPThisMadness() {
         BallIntakeStop();
         CoralIntakeStop();
+    }
+
+    public void BallIntakeBusVoltage(){
+        BallIntake.getBusVoltage();
+    }
+
+    public void CoralIntakeBusVoltage(){
+        CoralIntake.getBusVoltage();
     }
 }
