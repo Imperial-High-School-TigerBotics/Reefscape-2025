@@ -33,13 +33,11 @@ public class ElevatorCmd extends Command {
 
     @Override 
     public void execute() {
+        SmartDashboard.putNumber("Elevator Encoder Pos", elevator.getElevatorCoderPos());
+
         if (DriverStation.isTeleop()) {
             elevator.setElevatorBrake();
             // Display Elevator Data
-            SmartDashboard.putNumber("Elevator Motor 1 Pos", elevator.getElevMotor1Pos());
-            SmartDashboard.putNumber("Elevator Motor 2 Pos", elevator.getElevMotor2Pos());
-            SmartDashboard.putNumber("Elevator Encoder Pos", elevator.getElevatorCoderPos());
-
             // if(xbox.getRightBumperPressed()){
             //     elevator.resetElevatorCoder();
             // }
