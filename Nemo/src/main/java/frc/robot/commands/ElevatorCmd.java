@@ -61,6 +61,5 @@ public class ElevatorCmd extends Command {
         if (interrupted) {
             SmartDashboard.putString("ElevatorCmd", "Interrupted");
         }
-        elevator.setElevatorCoast();
     }
 }
