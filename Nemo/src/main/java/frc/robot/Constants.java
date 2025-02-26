@@ -247,9 +247,9 @@ public final class Constants {
     public static double ArmMinPos = 0.0;
     public static double ArmMaxPos = 0.0;
 
-    public static double BallIntakeSpeed = 0.4;
-    public static double CoralIntakeSpeed = 0.4;
-    public static double ArmRotatorSpeed = 0.4;
+    public static double BallIntakeSpeed = 0.3;
+    public static double CoralIntakeSpeed = 0.6;
+    public static double ArmRotatorSpeed = 0.6;
 
     public static boolean ArmRotatorReversed = false;
     public static boolean BallIntakeReversed = false;

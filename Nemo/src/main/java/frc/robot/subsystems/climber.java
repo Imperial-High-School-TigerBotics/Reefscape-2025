@@ -45,4 +45,8 @@ public class climber extends SubsystemBase{
         climberMotor.set(-Constants.ClimberConstants.climberMotorspeed);
     }
 
+    public void climberStop() {
+        climberMotor.set(0);
+    }
+
 }

@@ -31,12 +31,21 @@ public class climberCmd extends Command{
         if (DriverStation.isTeleop()) {
             if (xbox.getLeftBumperButtonPressed()) {
                 climber.climberUp();
-            }
-        } 
+            } 
 
-        if (xbox.getRightBumperButtonPressed()) {
-            climber.climberDown();
-        }
+            if (xbox.getLeftBumperButtonReleased()) {
+                climber.climberStop();
+            }
+
+            if (xbox.getRightBumperButtonPressed()) {
+                climber.climberDown();
+            }
+
+            if (xbox.getRightBumperButtonReleased()) {
+                climber.climberStop();
+            }
+
+        } 
 
         SmartDashboard.putNumber("Climber Position", climber.getClimberPos());
     }
