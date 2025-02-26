@@ -26,11 +26,18 @@ public class ArmRotationCmd extends Command {
 
     @Override
     public void execute() {
-        if (DriverStation.isTeleop()) {
-            if (!autoShooter) {
+        // if (DriverStation.isTeleop()) {
+        //     if (!autoShooter) {
+        //         double axis = MathUtil.applyDeadband(xbox.getRawAxis(4), Constants.stickDeadband);
+        //         rotatorPos += axis * Constants.ArmConstants.ArmRotatorSpeed;
+        //         arm.setArmRotatorPosition(rotatorPos);
+        //     }
+        // }
+
+        if(DriverStation.isTeleop()){
+            if(!autoShooter){
                 double axis = MathUtil.applyDeadband(xbox.getRawAxis(4), Constants.stickDeadband);
-                rotatorPos += axis * Constants.ArmConstants.ArmRotatorSpeed;
-                arm.setArmRotatorPosition(rotatorPos);
+                arm.rotateArmMotor(axis * Constants.ArmConstants.ArmRotatorSpeed);
             }
         }
 

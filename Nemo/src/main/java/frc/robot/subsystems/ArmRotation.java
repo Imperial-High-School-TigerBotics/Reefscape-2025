@@ -5,6 +5,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -43,7 +44,7 @@ public class ArmRotation extends SubsystemBase {
         updateArmPID();
     }
 
-    private void updateArmPID() {
+    public void updateArmPID() {
         double setValue = armRotatorPID.calculate(getArmRotatorPos(), rotatorPos);
 
         double speedLimit = Constants.ArmConstants.ArmRotatorSpeed;
@@ -62,5 +63,11 @@ public class ArmRotation extends SubsystemBase {
 
     public double getArmRotatorPos() {
         return armEncoder.get();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Arm Encoder Pos", getArmRotatorPos());
+        SmartDashboard.putNumber("Target Arm Pos", rotatorPos);
     }
 }
