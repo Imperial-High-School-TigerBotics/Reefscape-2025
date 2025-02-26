@@ -163,5 +163,6 @@ public class Elevator extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
+        SmartDashboard.putNumber("Elevator Pos", ElevatorPos);
     }
 }
