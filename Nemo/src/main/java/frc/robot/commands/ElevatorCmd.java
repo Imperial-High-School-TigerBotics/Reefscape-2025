@@ -27,14 +27,10 @@ public class ElevatorCmd extends Command {
 
     @Override
     public void initialize() {
-        elevator.resetElevatorCoder();
-        SmartDashboard.putString("ElevatorCmd", "Initialized");
     }
 
     @Override 
     public void execute() {
-        SmartDashboard.putNumber("Elevator Encoder Pos", elevator.getElevatorCoderPos());
-
         if (DriverStation.isTeleop()) {
             elevator.setElevatorBrake();
             // Display Elevator Data
@@ -42,23 +38,21 @@ public class ElevatorCmd extends Command {
             //     elevator.resetElevatorCoder();
             // }
             //TODO: Record Elevator Data to constants, then delete this if/else statement and uncomment other code for full implementation
-            if(!autoShooter){
-                double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), (Constants.stickDeadband));
-                elevator.elevatorMove(axis);
-            }else{
-                elevator.elevatorStop();
-            }
-           /* if (!autoShooter) {
+            // if(!autoShooter){
+            //     double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), (Constants.stickDeadband));
+            //     elevator.elevatorMove(axis);
+            // }else{
+            //     elevator.elevatorStop();
+            // }
+           if (!autoShooter) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
-                    elevatorPos += axis;
+                    elevatorPos += axis * Constants.ElevatorConstants.axis_multiplier;
                     elevator.setElevatorPosition(elevatorPos);
                 }else{
                     elevator.elevatorStop();}
             }
-        } else {
-            elevator.nextElevatorPID();
-        */}
+        }
     }
 
     @Override 

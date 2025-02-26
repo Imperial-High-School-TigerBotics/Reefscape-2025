@@ -214,8 +214,13 @@ public final class Constants {
     public static final double elevatorLimitSwitchOffset = 10; // This value should be how much we need to move the elevator up/down from a limit switch to stop activating it.
 
     public static final double elevator_encoder_offset = 0.0;
-    public static final double min_elevator_pos = -2.177734;
-    public static final double max_elevator_pos = 0;
+
+    public static final double elevatorSafety = 0.25;
+
+    public static final double axis_multiplier  = 0.09;
+
+    public static final double min_elevator_pos = 0.0 + elevatorSafety;
+    public static final double max_elevator_pos = 8.51 - elevatorSafety;
 
     //TODO: change this
     public static final int limitSwitchTop = 5;
