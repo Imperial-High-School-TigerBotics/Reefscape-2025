@@ -38,26 +38,26 @@ import frc.robot.subsystems.ArmShootAndIntake;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-   /* Controllers */
-   private final XboxController driver = new XboxController(0);
-   private final XboxController operator = new XboxController(1);
+  /* Controllers */
+  private final XboxController driver = new XboxController(0);
+  private final XboxController operator = new XboxController(1);
 
-   /* Drive Controls */
-   private final int translationAxis = XboxController.Axis.kLeftY.value;
-   private final int strafeAxis = XboxController.Axis.kLeftX.value;
-   private final int rotationAxis = XboxController.Axis.kRightX.value;
+  /* Drive Controls */
+  private final int translationAxis = XboxController.Axis.kLeftY.value;
+  private final int strafeAxis = XboxController.Axis.kLeftX.value;
+  private final int rotationAxis = XboxController.Axis.kRightX.value;
 
-   /* Driver Buttons */
-   private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kA.value);
+  /* Driver Buttons */
+  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kA.value);
 
-   /* Subsystems */
-   private final Swerve s_Swerve = new Swerve();
-   private Limelight limelight;
-   private Vision vision;
-   private Elevator elevator;
-   private ArmRoatation arm;
-   private climber climber;
-    private ArmShootAndIntake armButtons;
+  /* Subsystems */
+  private final Swerve s_Swerve = new Swerve();
+  private Limelight limelight;
+  private Vision vision;
+  private Elevator elevator;
+  private ArmRoatation arm;
+  private climber climber;
+  private ArmShootAndIntake armShootAndIntake;
 
   /* Commands */
   private LimelightCmd limelightCmd;
@@ -87,9 +87,9 @@ public class RobotContainer {
     armCmd = new ArmRotationCmd(arm, operator);
     arm.setDefaultCommand(armCmd);
 
-    armButtons = new ArmShootAndIntake();
-    armButtonsCmd = new ArmShootAndIntakeCmd(armButtons, driver);
-    armButtons.setDefaultCommand(armButtonsCmd);
+    armShootAndIntake = new ArmShootAndIntake();
+    armButtonsCmd = new ArmShootAndIntakeCmd(armShootAndIntake, driver);
+    armShootAndIntake.setDefaultCommand(armButtonsCmd);
 
     climber = new climber();
     climberCmd = new climberCmd(climber, driver);
