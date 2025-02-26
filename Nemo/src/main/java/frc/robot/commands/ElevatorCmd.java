@@ -47,7 +47,7 @@ public class ElevatorCmd extends Command {
            if (!autoShooter) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
-                    elevatorPos += axis * Constants.ElevatorConstants.axis_multiplier;
+                    elevatorPos += axis;
                     elevator.setElevatorPosition(elevatorPos);
                 }else{
                     elevator.elevatorStop();}
