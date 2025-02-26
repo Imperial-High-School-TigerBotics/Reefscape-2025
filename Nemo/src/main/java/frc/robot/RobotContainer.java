@@ -26,7 +26,7 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.climberCmd;
 import frc.robot.subsystems.climber;
-import frc.robot.subsystems.ArmRoatation;
+import frc.robot.subsystems.ArmRotation;
 import frc.robot.commands.ArmShootAndIntakeCmd;
 import frc.robot.subsystems.ArmShootAndIntake;
 
@@ -55,7 +55,7 @@ public class RobotContainer {
   private Limelight limelight;
   private Vision vision;
   private Elevator elevator;
-  private ArmRoatation arm;
+  private ArmRotation arm;
   private climber climber;
   private ArmShootAndIntake armShootAndIntake;
 
@@ -83,7 +83,7 @@ public class RobotContainer {
     elevatorCmd = new ElevatorCmd(elevator, operator);
     elevator.setDefaultCommand(elevatorCmd);
 
-    arm = new ArmRoatation();
+    arm = new ArmRotation();
     armCmd = new ArmRotationCmd(arm, operator);
     arm.setDefaultCommand(armCmd);
 
@@ -143,6 +143,6 @@ private void configureAutoSelector() {
 
   public void autonomousPeriodic() {
     elevator.nextElevatorPID();
-    arm.nextArmRotatorPID();
+    arm.updateArmPID();
   }
 }

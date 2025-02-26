@@ -32,30 +32,19 @@ public class ElevatorCmd extends Command {
     @Override 
     public void execute() {
         if (DriverStation.isTeleop()) {
-            // if(xbox.getRightBumperPressed()){
-            //     elevator.resetElevatorCoder();
-            // }
-            //TODO: Record Elevator Data to constants, then delete this if/else statement and uncomment other code for full implementation
-            // if(!autoShooter){
-            //     double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), (Constants.stickDeadband));
-            //     elevator.elevatorMove(axis);
-            // }else{
-            //     elevator.elevatorStop();
-            // }
-            elevator.setElevatorPosition(Constants.ElevatorConstants.max_elevator_pos / 2);
-        //    if (!autoShooter) {
-        //         double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
-        //         if (axis != 0) {
-        //             elevatorPos = MathUtil.clamp(
-        //                 elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.axis_multiplier),
-        //                 Constants.ElevatorConstants.min_elevator_pos,
-        //                 Constants.ElevatorConstants.max_elevator_pos
-        //             );
-        //             elevator.setElevatorPosition(elevatorPos);
-        //         } else {
-        //             elevator.setElevatorPosition(elevatorPos); // Maintain last position
-        //         }
-            }
+           if (!autoShooter) {
+                double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
+                if (axis != 0) {
+                    elevatorPos = MathUtil.clamp(
+                        elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.axis_multiplier),
+                        Constants.ElevatorConstants.min_elevator_pos,
+                        Constants.ElevatorConstants.max_elevator_pos
+                    );
+                    elevator.setElevatorPosition(elevatorPos);
+                } else {
+                    elevator.setElevatorPosition(elevatorPos); // Maintain last position
+                }
+           }
         }
     }
 
