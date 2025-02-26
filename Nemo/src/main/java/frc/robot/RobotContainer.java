@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.commands.ArmCmd;
+import frc.robot.commands.ArmRotationCmd;
 import frc.robot.commands.ElevatorCmd;
 import frc.robot.commands.LimelightCmd;
 import frc.robot.commands.TeleopSwerve;
@@ -26,7 +26,9 @@ import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Vision;
 import frc.robot.commands.climberCmd;
 import frc.robot.subsystems.climber;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmRoatation;
+import frc.robot.commands.ArmShootAndIntakeCmd;
+import frc.robot.subsystems.ArmShootAndIntake;
 
 
 /**
@@ -53,8 +55,9 @@ public class RobotContainer {
    private Limelight limelight;
    private Vision vision;
    private Elevator elevator;
-   private Arm arm;
+   private ArmRoatation arm;
    private climber climber;
+    private ArmShootAndIntake armButtons;
 
   /* Commands */
   private LimelightCmd limelightCmd;
@@ -64,7 +67,8 @@ public class RobotContainer {
   private SendableChooser<Command> chooser;
 
   private ElevatorCmd elevatorCmd;
-  private ArmCmd armCmd;
+  private ArmRotationCmd armCmd;
+  private ArmShootAndIntakeCmd armButtonsCmd;
 
   private climberCmd climberCmd;
 
@@ -79,9 +83,13 @@ public class RobotContainer {
     elevatorCmd = new ElevatorCmd(elevator, operator);
     elevator.setDefaultCommand(elevatorCmd);
 
-    arm = new Arm();
-    armCmd = new ArmCmd(arm, operator);
+    arm = new ArmRoatation();
+    armCmd = new ArmRotationCmd(arm, operator);
     arm.setDefaultCommand(armCmd);
+
+    armButtons = new ArmShootAndIntake();
+    armButtonsCmd = new ArmShootAndIntakeCmd(armButtons, driver);
+    armButtons.setDefaultCommand(armButtonsCmd);
 
     climber = new climber();
     climberCmd = new climberCmd(climber, driver);

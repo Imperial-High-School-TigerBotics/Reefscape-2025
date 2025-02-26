@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-public class Arm extends SubsystemBase{
+public class ArmRoatation extends SubsystemBase{
     private TalonFX ArmRotator;
     private SparkMax BallIntake;
     private SparkMax CoralIntake;
@@ -20,7 +20,7 @@ public class Arm extends SubsystemBase{
 
     public double RotatorPos;
 
-    public Arm() {
+    public ArmRoatation() {
         ArmRotator = new TalonFX(Constants.ArmConstants.ArmRotator);
         ArmRotator.setNeutralMode(NeutralModeValue.Brake);
         ArmRotatorPID = new PIDController(
@@ -30,9 +30,6 @@ public class Arm extends SubsystemBase{
         );
 
         ArmEncoder = new DutyCycleEncoder(Constants.ArmConstants.ArmEncoder);
-
-        BallIntake = new SparkMax(Constants.ArmConstants.BallIntake, MotorType.kBrushless);
-        CoralIntake = new SparkMax(Constants.ArmConstants.CoralIntake, MotorType.kBrushless);
 
         RotatorPos = Constants.ArmConstants.ArmRestPos;
 
@@ -74,35 +71,6 @@ public class Arm extends SubsystemBase{
         } else {
             return 0.0; // Set values inside the deadzone to zero
         }
-    }
-
-    public void BallIntakeIn() {
-        BallIntake.set(Constants.ArmConstants.BallIntakeSpeed);
-    }
-
-    public void BallIntakeOut() {
-        BallIntake.set(-Constants.ArmConstants.BallIntakeSpeed);
-    }
-
-    public void BallIntakeStop() {
-        BallIntake.set(0);
-    }
-
-    public void CoralIntakeIn() {
-        CoralIntake.set(Constants.ArmConstants.CoralIntakeSpeed);
-    }
-
-    public void CoralIntakeOut() {
-        CoralIntake.set(-Constants.ArmConstants.CoralIntakeSpeed);
-    }
-
-    public void CoralIntakeStop() {
-        CoralIntake.set(0);
-    }
-
-    public void STOPThisMadness() {
-        BallIntakeStop();
-        CoralIntakeStop();
     }
 
     public void rotateArmMotor(double speed) {

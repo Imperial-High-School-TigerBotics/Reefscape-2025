@@ -6,16 +6,16 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.MathUtil;
 import frc.robot.Constants;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.ArmRoatation;
 
-public class ArmCmd extends Command {
-    private final Arm arm;
+public class ArmRotationCmd extends Command {
+    private final ArmRoatation arm;
     private final XboxController xbox;
 
     private boolean autoShooter;
     private double rotatorPos;
 
-    public ArmCmd(Arm arm, XboxController xbox) {
+    public ArmRotationCmd(ArmRoatation arm, XboxController xbox) {
         this.arm = arm;
         this.xbox = xbox;
         addRequirements(arm);
@@ -31,47 +31,16 @@ public class ArmCmd extends Command {
     public void execute() {
         if (DriverStation.isTeleop()) {
 
-            arm.BallIntakeIn();
-            // Ball Intake Controls
-            // if (xbox.getYButtonPressed()) {
-            //     arm.BallIntakeIn();
-            // } 
-            // if (xbox.getYButtonReleased()) {
-            //     arm.BallIntakeStop();
-            // }
-
-            // if (xbox.getBButtonPressed()) {
-            //     arm.BallIntakeOut();
-            // } 
-            // if (xbox.getBButtonReleased()) {
-            //     arm.BallIntakeStop();
-            // }
-
-            // // Coral Intake Controls
-            // if (xbox.getXButtonPressed()) {
-            //     arm.CoralIntakeIn();
-            // } 
-            // if (xbox.getXButtonReleased()) {
-            //     arm.CoralIntakeStop();
-            // }
-
-            // if (xbox.getAButtonPressed()) {
-            //     arm.CoralIntakeOut();
-            // } 
-            // if (xbox.getAButtonReleased()) {
-            //     arm.CoralIntakeStop();
-            // }
-
             // //TODO: Record Arm Data to constants, then delete this if/else statement and uncomment other code for full implementation
 
-            // if(!autoShooter){
-            //     double axis = xbox.getRawAxis(4);
-            //     axis = MathUtil.applyDeadband(axis, Constants.stickDeadband);
+             if(!autoShooter){
+                 double axis = xbox.getRawAxis(4);
+                 axis = MathUtil.applyDeadband(axis, Constants.stickDeadband);
 
-            //     arm.rotateArmMotor(axis);
-            // }else{
-            //     arm.rotateArmMotor(0);
-            // }
+                 arm.rotateArmMotor(axis);
+             }else{
+                 arm.rotateArmMotor(0);
+             }
             /*
             // Manual Arm Control
             if (!autoShooter) {
