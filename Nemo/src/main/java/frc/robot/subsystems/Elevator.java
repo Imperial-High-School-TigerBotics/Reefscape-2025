@@ -18,8 +18,8 @@ public class Elevator extends SubsystemBase {
     private PIDController elevatorMotor1PID;
     private PIDController elevatorMotor2PID;
 
-    private DigitalInput limitSwitchTop = new DigitalInput(0);
-    private DigitalInput limitSwitchBottom = new DigitalInput(1);
+    private DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.limitSwitchTop);
+    private DigitalInput limitSwitchBottom = new DigitalInput(Constants.ElevatorConstants.limitSwitchBottom);
 
     private double ElevatorPos;
 

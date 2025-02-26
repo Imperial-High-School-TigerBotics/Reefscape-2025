@@ -37,9 +37,6 @@ public final class Constants {
     public static final int shooterController = 1;
   }
 
-  public static class TestConstants{
-    public static final int kTestEncoderChannel = 0;
-  }
 
   public static final double stickDeadband = 0.08;
 
@@ -219,6 +216,10 @@ public final class Constants {
     public static final double elevator_encoder_offset = 0.0;
     public static final double min_elevator_pos = 0.0;
     public static final double max_elevator_pos = 0.0;
+
+    //TODO: change this
+    public static final int limitSwitchTop = 5;
+    public static final int limitSwitchBottom = 6;
   }
 
   public static final class ArmConstants {
@@ -226,7 +227,7 @@ public final class Constants {
     public static final int BallIntake = 18;
     public static final int CoralIntake = 20;
 
-    public static final int ArmEncoder = 2; //TODO: change this
+    public static final int ArmEncoder = 0; //TODO: change this
 
     public static double ArmRotatorP = 0.1;
     public static double ArmRotatorI = 0.0;
