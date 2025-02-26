@@ -61,20 +61,6 @@ public final class Constants {
         public static final double autoTurnSpeed = 0.27;
     }
 
-    public static class PositionalConstants {
-      /* - Positional Constants for telescoping arm - */
-      public static final double rope_encoder_offset = 0.0;
-      public static final double min_rope_encoder_value = 0.0;
-      public static final double max_rope_encoder_value = 0.0;
-      public static final double allowed_rope_length = max_rope_encoder_value - min_rope_encoder_value;
-
-      public static final double arm_encoder_offset = 0.0;
-      public static final double arm_clockwise_rotation_encoderCap = 0.0;
-      public static final double arm_counterclockwise_rotation_encoderCap = 0.0;
-      public static final double arm_rest_encoderPosition = 0.0;
-    }
-
-
     public static final class Swerve {
       public static final int pigeonID = 49;
 
@@ -229,6 +215,10 @@ public final class Constants {
     public static final double elevatorD = 0.0;
 
     public static final double elevatorLimitSwitchOffset = 10;
+
+    public static final double elevator_encoder_offset = 0.0;
+    public static final double min_elevator_pos = 0.0;
+    public static final double max_elevator_pos = 0.0;
   }
 
   public static final class ArmConstants {
@@ -250,10 +240,6 @@ public final class Constants {
     public static double BallIntakeSpeed = 0.3;
     public static double CoralIntakeSpeed = 0.6;
     public static double ArmRotatorSpeed = 0.6;
-
-    public static boolean ArmRotatorReversed = false;
-    public static boolean BallIntakeReversed = false;
-    public static boolean CoralIntakeReversed = false;
   }
 
   public static final class ClimberConstants {

@@ -43,13 +43,13 @@ public class Elevator extends SubsystemBase {
 
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
 
-        ElevatorPos = Constants.PositionalConstants.min_rope_encoder_value;
+        ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
     }
 
     public void clampElevatorSetPos() {
         ElevatorPos = Math.max(
-            Constants.PositionalConstants.min_rope_encoder_value,
-            Math.min(Constants.PositionalConstants.max_rope_encoder_value, ElevatorPos)
+            Constants.ElevatorConstants.min_elevator_pos,
+            Math.min(Constants.ElevatorConstants.max_elevator_pos, ElevatorPos)
         );
     }
 
@@ -78,14 +78,14 @@ public class Elevator extends SubsystemBase {
 
     public void limitSwitchCap() {
         if (limitSwitchTop.get()) {
-            ElevatorPos = Constants.PositionalConstants.max_rope_encoder_value;
+            ElevatorPos = Constants.ElevatorConstants.max_elevator_pos;
             elevatorStop();
             ElevatorPos -= Constants.ElevatorConstants.elevatorLimitSwitchOffset;
             setElevator1PID(ElevatorPos);
             setElevator2PID(ElevatorPos);
         }
         if (limitSwitchBottom.get()) {
-            ElevatorPos = Constants.PositionalConstants.min_rope_encoder_value;
+            ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
             elevatorStop();
             ElevatorPos += Constants.ElevatorConstants.elevatorLimitSwitchOffset;
             setElevator1PID(ElevatorPos);
