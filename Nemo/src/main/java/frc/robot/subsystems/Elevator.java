@@ -157,7 +157,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public double getElevatorCoderPos() {
-        return elevatorCoder.getPosition().getValueAsDouble();
+        return elevatorCoder.getPositionSinceBoot().getValueAsDouble();
     }
 
     @Override
