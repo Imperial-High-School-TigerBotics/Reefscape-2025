@@ -38,6 +38,9 @@ public class ElevatorCmd extends Command {
             SmartDashboard.putNumber("Elevator Motor 2 Pos", elevator.getElevMotor2Pos());
             SmartDashboard.putNumber("Elevator Encoder Pos", elevator.getElevatorCoderPos());
 
+            if(xbox.getRightBumperPressed()){
+                elevator.resetElevatorCoder();
+            }
             //TODO: Record Elevator Data to constants, then delete this if/else statement and uncomment other code for full implementation
             if(!autoShooter){
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), (Constants.stickDeadband));

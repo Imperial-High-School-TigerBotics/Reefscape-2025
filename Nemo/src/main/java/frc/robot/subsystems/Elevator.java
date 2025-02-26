@@ -134,6 +134,10 @@ public class Elevator extends SubsystemBase {
         elevatorMotor2.set(speed * Constants.ElevatorConstants.elevatorMotor2speed);
     }
 
+    public void resetElevatorCoder(){
+        elevatorCoder.setPosition(0);
+    }
+
     public double getElevMotor1Pos() {
         return elevatorMotor1.getPosition().getValueAsDouble();
     }
