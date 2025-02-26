@@ -26,7 +26,7 @@ public class Elevator extends SubsystemBase {
     public Elevator() {
         // Initialize motors with brake mode
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
-        elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
+        elevatorMotor1.setNeutralMode(NeutralModeValue.Coast);
         elevatorMotor1PID = new PIDController(
             Constants.ElevatorConstants.elevatorP,
             Constants.ElevatorConstants.elevatorI,
@@ -34,7 +34,7 @@ public class Elevator extends SubsystemBase {
         );
 
         elevatorMotor2 = new TalonFX(Constants.ElevatorConstants.elevatorMotor2ID);
-        elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
+        elevatorMotor2.setNeutralMode(NeutralModeValue.Coast);
         elevatorMotor2PID = new PIDController(
             Constants.ElevatorConstants.elevatorP,
             Constants.ElevatorConstants.elevatorI,
@@ -85,6 +85,15 @@ public class Elevator extends SubsystemBase {
         setElevatorPID(ElevatorPos); // Continue moving if safe
     }
     
+    public void setElevatorCoast(){
+        elevatorMotor1.setNeutralMode(NeutralModeValue.Coast);
+        elevatorMotor2.setNeutralMode(NeutralModeValue.Coast);
+    }
+
+    public void setElevatorBrake(){
+        elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
+        elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
+    }
 
     public void setElevatorPID(double position) {
         double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
