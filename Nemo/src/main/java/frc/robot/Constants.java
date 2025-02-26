@@ -234,7 +234,7 @@ public final class Constants {
 
     public static final int ArmEncoder = 0; //TODO: change this
 
-    public static double ArmRotatorP = 0.1;
+    public static double ArmRotatorP = 1;
     public static double ArmRotatorI = 0.0;
     public static double ArmRotatorD = 0.0;
 
@@ -257,7 +257,7 @@ public final class Constants {
     public static final double climberMinPos = 0.0;
     public static final double climberMaxPos = 0.0;
 
-    public static final double climberP = 0.1;
+    public static final double climberP = 1;
     public static final double climberI = 0.0;
     public static final double climberD = 0.0;
   }
