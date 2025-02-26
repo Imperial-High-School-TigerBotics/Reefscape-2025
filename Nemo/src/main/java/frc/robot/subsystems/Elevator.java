@@ -64,11 +64,11 @@ public class Elevator extends SubsystemBase {
     public void limitSwitchCap() {
         if (limitSwitchTop.get()) {
             elevatorStop(); // Stop movement immediately
-            ElevatorPos = Constants.ElevatorConstants.max_elevator_pos - Constants.ElevatorConstants.elevatorLimitSwitchOffset;
+            ElevatorPos = Constants.ElevatorConstants.max_elevator_pos - Constants.ElevatorConstants.elevatorSafety;
         } 
         if (limitSwitchBottom.get()) {
             elevatorStop(); // Stop movement immediately
-            ElevatorPos = Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorLimitSwitchOffset;
+            ElevatorPos = Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorSafety;
         }
     }
     

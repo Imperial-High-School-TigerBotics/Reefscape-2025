@@ -40,10 +40,6 @@ public class ArmRotationCmd extends Command {
                 arm.rotateArmMotor(axis * Constants.ArmConstants.ArmRotatorSpeed);
             }
         }
-
-        // Displaying encoder values for debugging
-        SmartDashboard.putNumber("Arm Encoder Pos", arm.getArmRotatorPos());
-        SmartDashboard.putNumber("Target Arm Pos", rotatorPos);
     }
 
     @Override
