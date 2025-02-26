@@ -55,10 +55,11 @@ public class Elevator extends SubsystemBase {
 
     public void clampElevatorSetPos() {
         ElevatorPos = Math.max(
-            Constants.ElevatorConstants.max_elevator_pos,
-            Math.min(Constants.ElevatorConstants.min_elevator_pos, ElevatorPos)
+            Constants.ElevatorConstants.min_elevator_pos, // Ensure minimum position
+            Math.min(Constants.ElevatorConstants.max_elevator_pos, ElevatorPos) // Ensure maximum position
         );
     }
+    
 
     public void limitSwitchCap() {
         if (limitSwitchTop.get()) {
