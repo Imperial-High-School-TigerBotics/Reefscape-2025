@@ -2,6 +2,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -157,5 +158,10 @@ public class Elevator extends SubsystemBase {
 
     public double getElevatorCoderPos() {
         return elevatorCoder.getPosition().getValueAsDouble();
+    }
+
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
     }
 }
