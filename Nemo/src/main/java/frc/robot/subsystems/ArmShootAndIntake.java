@@ -14,9 +14,7 @@ public class ArmShootAndIntake extends SubsystemBase {
 
     public ArmShootAndIntake() {
         BallIntake = new SparkMax(Constants.ArmConstants.BallIntake, MotorType.kBrushless);
-
         CoralIntake = new SparkMax(Constants.ArmConstants.CoralIntake, MotorType.kBrushless);
-
     }
 
     public void updateDashboard(){

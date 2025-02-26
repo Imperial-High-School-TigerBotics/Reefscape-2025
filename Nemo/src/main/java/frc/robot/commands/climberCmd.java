@@ -20,7 +20,6 @@ public class climberCmd extends Command{
 
         this.xbox = xbox;
         autoShooter = false;
-        climberPos = climber.getClimberPos();
     }
 
     @Override
@@ -47,6 +46,5 @@ public class climberCmd extends Command{
 
         } 
 
-        SmartDashboard.putNumber("Climber Position", climber.getClimberPos());
     }
 }
