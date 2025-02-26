@@ -74,15 +74,13 @@ public class Elevator extends SubsystemBase {
     
 
     public void nextElevatorPID() {
-        // limitSwitchCap(); // Check limit switches and adjust ElevatorPos if necessary
+        //limitSwitchCap(); // Check limit switches and adjust ElevatorPos if necessary
     
-        // // Prevent movement in the direction of the limit switch
-        // if (limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) {
-        //     return; // Do nothing if we're at the top and trying to move up
-        // }
-        // if (limitSwitchBottom.get() && ElevatorPos <= Constants.ElevatorConstants.min_elevator_pos) {
-        //     return; // Do nothing if we're at the bottom and trying to move down
-        // }
+        if ((limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) ||
+        (limitSwitchBottom.get() && ElevatorPos <= Constants.ElevatorConstants.min_elevator_pos)) 
+        {
+            return; // Stop movement if at limits
+        }
     
         setElevatorPID(ElevatorPos); // Continue moving if safe
     }
@@ -100,8 +98,11 @@ public class Elevator extends SubsystemBase {
     public void setElevatorPID(double position) {
         double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
         double speedLimit = Constants.ElevatorConstants.elevatorMotor1speed;
-        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
-
+        if (setValue > speedLimit) {
+            setValue = speedLimit;
+        } else if (setValue < -speedLimit) {
+            setValue = -speedLimit;
+        }
         elevatorMotor1.set(-setValue);
         elevatorMotor2.set(setValue);
     }

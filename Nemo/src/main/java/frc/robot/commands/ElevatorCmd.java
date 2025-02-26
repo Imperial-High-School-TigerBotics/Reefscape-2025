@@ -47,10 +47,15 @@ public class ElevatorCmd extends Command {
            if (!autoShooter) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
-                    elevatorPos += axis;
+                    elevatorPos = MathUtil.clamp(
+                        elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.axis_multiplier),
+                        Constants.ElevatorConstants.min_elevator_pos,
+                        Constants.ElevatorConstants.max_elevator_pos
+                    );
                     elevator.setElevatorPosition(elevatorPos);
-                }else{
-                    elevator.elevatorStop();}
+                } else {
+                    elevator.setElevatorPosition(elevatorPos); // Maintain last position
+                }
             }
         }
     }
