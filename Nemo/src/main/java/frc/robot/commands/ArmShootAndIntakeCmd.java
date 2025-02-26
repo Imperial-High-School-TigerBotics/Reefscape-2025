@@ -3,6 +3,7 @@ package frc.robot.commands;
 import frc.robot.subsystems.ArmShootAndIntake;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 
 public class ArmShootAndIntakeCmd extends Command{
@@ -21,6 +22,7 @@ public class ArmShootAndIntakeCmd extends Command{
 
     @Override
     public void execute() {
+    arm.updateDashboard();
     if (DriverStation.isTeleop()) {
             // Ball Intake Controls
              if (xbox.getYButtonPressed()) {

@@ -2,8 +2,6 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
-import com.revrobotics.spark.SparkMax;
-import com.revrobotics.spark.SparkLowLevel.MotorType;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj.DutyCycleEncoder;
@@ -12,8 +10,6 @@ import frc.robot.Constants;
 
 public class ArmRoatation extends SubsystemBase{
     private TalonFX ArmRotator;
-    private SparkMax BallIntake;
-    private SparkMax CoralIntake;
 
     private PIDController ArmRotatorPID;
     private DutyCycleEncoder ArmEncoder; 
