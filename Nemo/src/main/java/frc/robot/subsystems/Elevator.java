@@ -46,6 +46,12 @@ public class Elevator extends SubsystemBase {
         ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
     }
 
+    public void setElevatorPosition(double position) {
+        ElevatorPos = position;
+        clampElevatorSetPos();
+        nextElevatorPID();
+    }
+
     public void clampElevatorSetPos() {
         ElevatorPos = Math.max(
             Constants.ElevatorConstants.min_elevator_pos,
@@ -53,53 +59,58 @@ public class Elevator extends SubsystemBase {
         );
     }
 
-    public void setElevatorPosition(double position) {
-        ElevatorPos = position;
-        clampElevatorSetPos();
-        nextElevatorPID();
+    public void limitSwitchCap() {
+        if (limitSwitchTop.get()) {
+            elevatorStop(); // Stop movement immediately
+            ElevatorPos = Constants.ElevatorConstants.max_elevator_pos - Constants.ElevatorConstants.elevatorLimitSwitchOffset;
+        } 
+        if (limitSwitchBottom.get()) {
+            elevatorStop(); // Stop movement immediately
+            ElevatorPos = Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorLimitSwitchOffset;
+        }
     }
+    
 
-    public void setElevator1PID(double position) {
+    public void nextElevatorPID() {
+        limitSwitchCap(); // Check limit switches and adjust ElevatorPos if necessary
+    
+        // Prevent movement in the direction of the limit switch
+        if (limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) {
+            return; // Do nothing if we're at the top and trying to move up
+        }
+        if (limitSwitchBottom.get() && ElevatorPos <= Constants.ElevatorConstants.min_elevator_pos) {
+            return; // Do nothing if we're at the bottom and trying to move down
+        }
+    
+        setElevatorPID(ElevatorPos); // Continue moving if safe
+    }
+    
+
+    public void setElevatorPID(double position) {
         double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
-        double speedLimit = 0.3;
+        double speedLimit = Constants.ElevatorConstants.elevatorMotor1speed;
         setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
 
-        elevatorMotor1.set(setValue);
-        elevatorMotor2.set(-setValue); // Manually set motor 2 opposite to motor 1
+        elevatorMotor1.set(-setValue);
+        elevatorMotor2.set(setValue);
+    }
+
+    public void setElevatorPID1(double position){
+        double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
+        double speedLimit = Constants.ElevatorConstants.elevatorMotor1speed;
+        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
+
+        elevatorMotor1.set(-setValue); // Ensure synchronization with motor 2
     }
 
     public void setElevator2PID(double position) {
         double setValue = elevatorMotor2PID.calculate(getElevatorCoderPos(), position);
-        double speedLimit = 0.3;
+        double speedLimit = Constants.ElevatorConstants.elevatorMotor2speed;
         setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
 
-        elevatorMotor2.set(-setValue); // Ensure synchronization with motor 1
+        elevatorMotor2.set(setValue); // Ensure synchronization with motor 1
     }
 
-    public void limitSwitchCap() {
-        if (limitSwitchTop.get()) {
-            ElevatorPos = Constants.ElevatorConstants.max_elevator_pos;
-            elevatorStop();
-            ElevatorPos -= Constants.ElevatorConstants.elevatorLimitSwitchOffset;
-            setElevator1PID(ElevatorPos);
-            setElevator2PID(ElevatorPos);
-        }
-        if (limitSwitchBottom.get()) {
-            ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
-            elevatorStop();
-            ElevatorPos += Constants.ElevatorConstants.elevatorLimitSwitchOffset;
-            setElevator1PID(ElevatorPos);
-            setElevator2PID(ElevatorPos);
-        }
-    }
-
-    public void nextElevatorPID() {
-        limitSwitchCap();
-        if (!limitSwitchTop.get() && !limitSwitchBottom.get()) {
-            setElevator1PID(ElevatorPos);
-            setElevator2PID(ElevatorPos);
-        }
-    }
 
     public void elevatorUp(double percent) {
         double speed = percent * Constants.ElevatorConstants.elevatorMotor1speed;
