@@ -32,8 +32,6 @@ public class ElevatorCmd extends Command {
     @Override 
     public void execute() {
         if (DriverStation.isTeleop()) {
-            elevator.setElevatorBrake();
-            // Display Elevator Data
             // if(xbox.getRightBumperPressed()){
             //     elevator.resetElevatorCoder();
             // }

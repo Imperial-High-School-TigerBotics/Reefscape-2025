@@ -74,7 +74,7 @@ public class Elevator extends SubsystemBase {
     
 
     public void nextElevatorPID() {
-        //limitSwitchCap(); // Check limit switches and adjust ElevatorPos if necessary
+        limitSwitchCap(); // Check limit switches and adjust ElevatorPos if necessary
     
         if ((limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) ||
         (limitSwitchBottom.get() && ElevatorPos <= Constants.ElevatorConstants.min_elevator_pos)) 

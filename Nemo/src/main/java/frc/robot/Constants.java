@@ -223,8 +223,8 @@ public final class Constants {
     public static final double max_elevator_pos = 8.4 - elevatorSafety;
 
     //TODO: change this
-    public static final int limitSwitchTop = 5;
-    public static final int limitSwitchBottom = 6;
+    public static final int limitSwitchTop = 2;
+    public static final int limitSwitchBottom = 1;
   }
 
   public static final class ArmConstants {
