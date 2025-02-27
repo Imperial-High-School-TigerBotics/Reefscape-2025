@@ -214,7 +214,7 @@ public final class Constants {
     public static final double elevator_encoder_offset = 0.0;
 
     public static final double elevatorSafety = 0.25;
-    public static final double elevatorLimitSwitchOffset = 10;
+    public static final double elevatorLimitSwitchOffset = 0;
 
     public static final double axis_multiplier  = 0.09;
 
