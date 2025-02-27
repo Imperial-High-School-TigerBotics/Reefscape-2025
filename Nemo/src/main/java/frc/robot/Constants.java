@@ -206,8 +206,8 @@ public final class Constants {
 
     public static final int elevatorCoderID = 62;
 
-    public static final double elevatorMotor1speed = 0.5;
-    public static final double elevatorMotor2speed = 0.5;
+    public static final double elevatorMotor1speed = 0.25;
+    public static final double elevatorMotor2speed = 0.25;
 
     public static final double elevatorP = 1;
     public static final double elevatorI = 0.0;
@@ -233,7 +233,6 @@ public final class Constants {
     public static final int CoralIntake = 20;
 
     public static final int ArmEncoder = 0;
-
     public static double ArmRotatorP = 1;
     public static double ArmRotatorI = 0.0;
     public static double ArmRotatorD = 0.0;
@@ -241,7 +240,7 @@ public final class Constants {
     //TODO: Set these values -------------
     public static double ArmRestPos = 0.86;
 
-    public static double ArmMinPos = 0.0;
+    public static double ArmMinPos = 0.154;
     public static double ArmMaxPos = 0.56;
     //------------------------------------
 
