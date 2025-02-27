@@ -237,7 +237,7 @@ public final class Constants {
     public static double ArmRotatorD = 0.0;
 
     //TODO: Set these values -------------
-    public static double armCoderOffset = 0.165; // Ball intake left, Coral intake right
+    public static double armCoderOffset = 0.195; // Ball intake left, Coral intake right
     //------------------------------------
 
     public static double BallIntakeSpeed = 0.3;
