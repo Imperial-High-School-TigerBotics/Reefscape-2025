@@ -52,7 +52,9 @@ public class ElevatorCmd extends Command {
                 } else {
                     elevator.setElevatorPosition(elevatorPos); // Maintain last position
                 }
-           }
+            } else {
+                elevator.setElevatorPosition(Constants.ElevatorConstants.min_elevator_pos);
+            }
         }
     }
 
