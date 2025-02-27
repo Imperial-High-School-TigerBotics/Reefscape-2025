@@ -33,8 +33,8 @@ public class ElevatorCmd extends Command {
     @Override 
     public void execute() {
         if (DriverStation.isTeleop()) {
-            // Toggle manual control on/off with D-Pad Up
-            if (xbox.getPOV() == 0) { // 0 means D-Pad Up
+            // Toggle manual control on/off with Start button
+            if (xbox.getStartButtonPressed()) { 
                 manualControlEnabled = !manualControlEnabled;
                 SmartDashboard.putBoolean("Manual Elevator Control", manualControlEnabled);
             }
