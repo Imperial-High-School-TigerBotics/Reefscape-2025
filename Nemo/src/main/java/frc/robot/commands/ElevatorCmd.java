@@ -2,6 +2,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.math.MathUtil;
@@ -15,6 +16,8 @@ public class ElevatorCmd extends Command {
     private double elevatorPos;
     private boolean manualElevatorControl;
 
+    private final SendableChooser<Boolean> manualControlChooser;
+
     public ElevatorCmd(Elevator elevator, XboxController xbox) {
         this.elevator = elevator;
         addRequirements(this.elevator);
@@ -23,6 +26,12 @@ public class ElevatorCmd extends Command {
         manualElevatorControl = false;
 
         elevatorPos = elevator.getElevatorCoderPos();
+
+        // Initialize SendableChooser
+        manualControlChooser = new SendableChooser<>();
+        manualControlChooser.setDefaultOption("Automatic Control", false);
+        manualControlChooser.addOption("Manual Control", true);
+        SmartDashboard.putData("Elevator Control Mode", manualControlChooser);
     }
 
     @Override
@@ -32,10 +41,8 @@ public class ElevatorCmd extends Command {
     @Override 
     public void execute() {
         if (DriverStation.isTeleop()) {
-            if (xbox.getAButtonPressed()) {
-                manualElevatorControl = !manualElevatorControl;
-                SmartDashboard.putBoolean("Manual Elevator Control", manualElevatorControl);
-            }
+            // Get the selected control mode from the SendableChooser
+            manualElevatorControl = manualControlChooser.getSelected();
 
             boolean bPressed = xbox.getBButton();
             SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
