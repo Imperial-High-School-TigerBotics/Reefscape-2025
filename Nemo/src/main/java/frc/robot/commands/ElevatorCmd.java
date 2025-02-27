@@ -31,6 +31,10 @@ public class ElevatorCmd extends Command {
 
     @Override 
     public void execute() {
+        if (DriverStation.isTeleop()) {
+            if(xbox.getXButtonPressed()){
+                elevatorPos = Constants.ElevatorConstants.max_elevator_pos / 2;
+            }
            if (!autoShooter) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
@@ -45,6 +49,7 @@ public class ElevatorCmd extends Command {
                 }
            }
         }
+    }
 
     @Override 
     public void end(boolean interrupted) {
