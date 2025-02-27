@@ -37,12 +37,14 @@ public class ElevatorCmd extends Command {
                 SmartDashboard.putBoolean("Manual Elevator Control", manualElevatorControl);
             }
 
-            if (xbox.getBButton()) {
-                manualElevatorControl = false;
+            boolean bPressed = xbox.getBButton();
+            SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
+
+            if (bPressed) {
+                manualElevatorControl = false; // Disable manual mode
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos;
                 elevator.setElevatorPosition(elevatorPos);
             }
-            
 
             if (manualElevatorControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
@@ -56,7 +58,7 @@ public class ElevatorCmd extends Command {
                 } else {
                     elevator.setElevatorPosition(elevatorPos); // Maintain last position
                 }
-            } else {
+            } else if (!bPressed) { // 🚀 Prevent override if B is pressed
                 // Only move to min position if the elevator is actually above it
                 if (elevator.getElevatorCoderPos() > Constants.ElevatorConstants.min_elevator_pos) {
                     elevator.setElevatorPosition(Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorSafety);
@@ -64,7 +66,6 @@ public class ElevatorCmd extends Command {
             }
         }
     }
-
 
     @Override 
     public void end(boolean interrupted) {
