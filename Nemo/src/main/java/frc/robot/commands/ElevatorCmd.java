@@ -29,7 +29,7 @@ public class ElevatorCmd extends Command {
 
         // Initialize SendableChooser
         manualControlChooser = new SendableChooser<>();
-        manualControlChooser.setDefaultOption("Automatic Control", false);
+        manualControlChooser.setDefaultOption("Automatic Elevator Control", false);
         manualControlChooser.addOption("Manual Elevator Control", true);
         SmartDashboard.putData("Elevator Control Mode", manualControlChooser);
     }

@@ -9,7 +9,7 @@ import edu.wpi.first.math.MathUtil;
 import frc.robot.subsystems.ArmRotation;
 import frc.robot.Constants;
 
-public class ArmCmd extends Command {
+public class ArmRotationCmd extends Command {
     private final ArmRotation armRotation;
     private final XboxController xbox;
 
@@ -18,7 +18,7 @@ public class ArmCmd extends Command {
 
     private final SendableChooser<Boolean> manualControlChooser;
 
-    public ArmCmd(ArmRotation armRotation, XboxController xbox) {
+    public ArmRotationCmd(ArmRotation armRotation, XboxController xbox) {
         this.armRotation = armRotation;
         addRequirements(this.armRotation);
 
