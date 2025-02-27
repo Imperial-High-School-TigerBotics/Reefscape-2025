@@ -48,6 +48,7 @@ public class ElevatorCmd extends Command {
             SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
 
             if (bPressed) {
+                manualControlChooser.setDefaultOption("Automatic Control", false);
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos;
                 elevator.setElevatorPosition(elevatorPos);
