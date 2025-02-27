@@ -92,7 +92,7 @@ public class RobotContainer {
     armShootAndIntake.setDefaultCommand(armButtonsCmd);
 
     climber = new climber();
-    climberCmd = new climberCmd(climber, driver);
+    climberCmd = new climberCmd(climber, operator);
     climber.setDefaultCommand(climberCmd);
     
     s_Swerve.setDefaultCommand(
