@@ -38,8 +38,10 @@ public class ElevatorCmd extends Command {
             }
 
             if (xbox.getBButton()) {
-                elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos);
+                elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos;
+                elevator.setElevatorPosition(elevatorPos);
             }
+            
 
             if (manualElevatorControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
