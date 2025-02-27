@@ -62,11 +62,11 @@ public class Elevator extends SubsystemBase {
     
 
     public void limitSwitchCap() {
-        if (limitSwitchTop.get()) {
+        if (!limitSwitchTop.get()) {
             elevatorStop(); // Stop movement immediately
             ElevatorPos = Constants.ElevatorConstants.max_elevator_pos - Constants.ElevatorConstants.elevatorLimitSwitchOffset;
         } 
-        if (limitSwitchBottom.get()) {
+        if (!limitSwitchBottom.get()) {
             elevatorStop(); // Stop movement immediately
             ElevatorPos = Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorLimitSwitchOffset;
         }
@@ -166,5 +166,7 @@ public class Elevator extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
         SmartDashboard.putNumber("Elevator Pos", ElevatorPos);
+        SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
+        SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
     }
 }
