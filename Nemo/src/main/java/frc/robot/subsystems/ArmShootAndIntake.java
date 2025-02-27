@@ -58,8 +58,4 @@ public class ArmShootAndIntake extends SubsystemBase {
     public void CoralIntakeBusVoltage(){
         CoralIntake.getBusVoltage();
     }
-
-    public boolean getBumperButtonPressed(double BumperValue){
-        return BumperValue > Constants.OperatorConstants.BUMPERTHRESHOLD;
-    }
 }

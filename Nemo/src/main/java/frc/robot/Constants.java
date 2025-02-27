@@ -35,8 +35,6 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
     public static final int shooterController = 1;
-
-    public static final double BUMPERTHRESHOLD = 0.1; 
   }
 
 
@@ -206,8 +204,8 @@ public final class Constants {
 
     public static final int elevatorCoderID = 62;
 
-    public static final double elevatorMotor1speed = 0.25;
-    public static final double elevatorMotor2speed = 0.25;
+    public static final double elevatorMotor1speed = 0.5;
+    public static final double elevatorMotor2speed = 0.5;
 
     public static final double elevatorP = 1;
     public static final double elevatorI = 0.0;
@@ -216,7 +214,7 @@ public final class Constants {
     public static final double elevator_encoder_offset = 0.0;
 
     public static final double elevatorSafety = 0.25;
-    public static final double elevatorLimitSwitchOffset = 0;
+    public static final double elevatorLimitSwitchOffset = 10;
 
     public static final double axis_multiplier  = 0.09;
 
@@ -233,20 +231,21 @@ public final class Constants {
     public static final int CoralIntake = 20;
 
     public static final int ArmEncoder = 0;
+
     public static double ArmRotatorP = 1;
     public static double ArmRotatorI = 0.0;
     public static double ArmRotatorD = 0.0;
 
     //TODO: Set these values -------------
-    public static double ArmRestPos = 0.86;
+    public static double ArmRestPos = 0.0;
 
-    public static double ArmMinPos = 0.154;
-    public static double ArmMaxPos = 0.56;
+    public static double ArmMinPos = 0.0;
+    public static double ArmMaxPos = 0.0;
     //------------------------------------
 
     public static double BallIntakeSpeed = 0.3;
     public static double CoralIntakeSpeed = 0.6;
-    public static double ArmRotatorSpeed = 0.4;
+    public static double ArmRotatorSpeed = 0.15;
   }
 
   public static final class ClimberConstants {

@@ -91,9 +91,9 @@ public class RobotContainer {
     armButtonsCmd = new ArmShootAndIntakeCmd(armShootAndIntake, driver);
     armShootAndIntake.setDefaultCommand(armButtonsCmd);
 
-    // climber = new climber();
-    // climberCmd = new climberCmd(climber, operator);
-    // climber.setDefaultCommand(climberCmd);
+    climber = new climber();
+    climberCmd = new climberCmd(climber, operator);
+    climber.setDefaultCommand(climberCmd);
     
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
