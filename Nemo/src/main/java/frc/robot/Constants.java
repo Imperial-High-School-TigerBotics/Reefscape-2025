@@ -237,12 +237,68 @@ public final class Constants {
     public static double ArmRotatorD = 0.0;
 
     //TODO: Set these values -------------
-    public static double armCoderOffset = 0.165; // Ball intake left, Coral intake right
+    public static double armCoderOffset = 0.165; // Ball intake left(what they call back), Coral intake right(what they call  front)
+    public static double ArmMinPos = 0.38;
+    public static double ArmMaxPos = 0.66;
+    public static double ArmRestPos = 0.66;
+
+    public static final double axis_multiplier  = 0.18;
     //------------------------------------
 
     public static double BallIntakeSpeed = 0.3;
     public static double CoralIntakeSpeed = 0.6;
     public static double ArmRotatorSpeed = 0.25;
+  }
+
+  public static final class PresetElevatorAndArmConstants{
+
+    /*--------------------Coral Intake From Source-------------------*/
+    //Mapped to Buttoon B on operator controller
+    public static final double armCoralIntakeFromSourcePos = 0.37;
+    public static final double elevatorCoralIntakeFromSourcePos = 1.1;
+    /*--------------------------------------------------------------*/
+
+    /*--------------------Score Coral L2-------------------*/
+    //Mapped to Button Y on operator controller
+    public static final double armScoreCoralL2Pos = 0.94;
+    public static final double elevatorScoreCoralL2Pos = 2.23;
+    /*-----------------------------------------------------*/
+
+    /*--------------------Score Coral L3-------------------*/
+    //Mapped to Button X on operator controller
+    public static final double armScoreCoralL3Pos = 0.94;
+    public static final double elevatorScoreCoralL3Pos = 3.4;
+    /*-----------------------------------------------------*/
+
+    /*--------------------Score Coral L4-------------------*/
+    //Mapped to Button A on operator controller
+    public static final double armScoreCoralL4Pos = 0.09;
+    public static final double elevatorScoreCoralL4Pos = 3.4;
+    /*-----------------------------------------------------*/
+
+    /*--------------------Score Algae In Processor-------------------*/
+    //Mapped to Right Trigger on operator controller
+    public static final double armScoreAlgaeInProcessorPos = 0.38;
+    public static final double elevatorScoreAlgaeInProcessorPos = 8.365;
+    /*--------------------------------------------------------------*/
+
+    /*--------------------Pick Up Algae From Lower Reef-------------------*/
+    //Mapped to Right Bumper on operator controller
+    public static final double armPickUpAlgaeFromLowerReefPos = 0.43;
+    public static final double elevatorPickUpAlgaeFromLowerReefPos = 2.02;
+    /*--------------------------------------------------------------------*/
+
+    /*--------------------Pick Up Algae From Upper Reef-------------------*/
+    //Mapped to Left Bumper on operator controller
+    public static final double armPickUpAlgaeFromUpperReefPos = 0.43;
+    public static final double elevatorPickUpAlgaeFromUpperReefPos = 4.77;
+    /*--------------------------------------------------------------------*/
+
+    /*----------------------Score Into Barge--------------------*/
+    //Mapped to Left Trigger on operator controller
+    public static final double armScoreIntoBargePos = 0.06;
+    public static final double elevatorScoreIntoBargePos = 8.3;
+    /*----------------------------------------------------------*/
   }
 
   public static final class ClimberConstants {

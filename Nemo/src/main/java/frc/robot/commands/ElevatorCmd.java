@@ -13,14 +13,14 @@ public class ElevatorCmd extends Command {
     private final XboxController xbox;
 
     private double elevatorPos;
-    private boolean autoShooter;
+    private boolean manualElevatorControl;
 
     public ElevatorCmd(Elevator elevator, XboxController xbox) {
         this.elevator = elevator;
         addRequirements(this.elevator);
 
         this.xbox = xbox;
-        autoShooter = false;
+        manualElevatorControl = false;
 
         elevatorPos = elevator.getElevatorCoderPos();
     }
@@ -32,7 +32,7 @@ public class ElevatorCmd extends Command {
     @Override 
     public void execute() {
         if (DriverStation.isTeleop()) {
-           if (!autoShooter) {
+           if (!manualElevatorControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
                     elevatorPos = MathUtil.clamp(

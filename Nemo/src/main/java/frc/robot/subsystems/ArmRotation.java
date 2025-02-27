@@ -31,24 +31,27 @@ public class ArmRotation extends SubsystemBase {
         rotatorPos = 0;
     }
 
-    // public void clampArmRotatorSetPos() {
-    //     rotatorPos = Math.max(
-    //         Constants.ArmConstants.ArmMinPos,
-    //         Math.min(Constants.ArmConstants.ArmMaxPos, rotatorPos)
-    //     );
-    // }
+    public void clampArmRotatorSetPos() {
+        rotatorPos = Math.max(
+            Constants.ArmConstants.ArmMinPos,
+            Math.min(Constants.ArmConstants.ArmMaxPos, rotatorPos)
+        );
+    }
 
     public void setArmRotatorPosition(double position) {
         rotatorPos = position;
-        //clampArmRotatorSetPos();
+        clampArmRotatorSetPos();
         updateArmPID();
     }
 
     public void updateArmPID() {
         double setValue = armRotatorPID.calculate(getArmRotatorPos(), rotatorPos);
-
         double speedLimit = Constants.ArmConstants.ArmRotatorSpeed;
-        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
+        if (setValue > speedLimit) {
+            setValue = speedLimit;
+        } else if (setValue < -speedLimit) {
+            setValue = -speedLimit;
+        }
 
         armRotator.set(setValue);
     }

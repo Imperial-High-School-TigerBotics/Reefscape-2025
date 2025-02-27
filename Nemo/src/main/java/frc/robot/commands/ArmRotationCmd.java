@@ -12,38 +12,56 @@ public class ArmRotationCmd extends Command {
     private final ArmRotation arm;
     private final XboxController xbox;
 
-    private boolean autoShooter;
     private double rotatorPos;
+    private boolean manualArmControl;
 
     public ArmRotationCmd(ArmRotation arm, XboxController xbox) {
         this.arm = arm;
-        this.xbox = xbox;
-        addRequirements(arm);
+        addRequirements(this.arm);
 
-        autoShooter = false;
+        this.xbox = xbox;
+        manualArmControl = false;
+
         rotatorPos = arm.getArmRotatorPos();
     }
 
     @Override
-    public void execute() {
-        // if (DriverStation.isTeleop()) {
-        //     if (!autoShooter) {
-        //         double axis = MathUtil.applyDeadband(xbox.getRawAxis(4), Constants.stickDeadband);
-        //         rotatorPos += axis * Constants.ArmConstants.ArmRotatorSpeed;
-        //         arm.setArmRotatorPosition(rotatorPos);
-        //     }
-        // }
+    public void initialize() {
+    }
 
-        if(DriverStation.isTeleop()){
-            if(!autoShooter){
+    @Override
+    public void execute() {
+        if (DriverStation.isTeleop()) {
+            if (!manualArmControl) {
                 double axis = MathUtil.applyDeadband(xbox.getRawAxis(4), Constants.stickDeadband);
-                arm.rotateArmMotor(axis * Constants.ArmConstants.ArmRotatorSpeed);
+                if (axis != 0) {
+                    rotatorPos = MathUtil.clamp(
+                        arm.getArmRotatorPos() + (axis * Constants.ArmConstants.ArmRotatorSpeed),
+                        Constants.ArmConstants.ArmMinPos,
+                        Constants.ArmConstants.ArmMaxPos
+                    );
+                    arm.setArmRotatorPosition(rotatorPos);
+                } else {
+                    arm.setArmRotatorPosition(rotatorPos); // Maintain last position
+                }
             }
         }
+
+        // if(DriverStation.isTeleop()){
+        //     if(!manualArmControl){
+        //         double axis = MathUtil.applyDeadband(xbox.getRawAxis(4), Constants.stickDeadband);
+        //         if(axis != 0){
+        //             arm.rotateArmMotor(axis * Constants.ArmConstants.ArmRotatorSpeed);
+        //         }
+        //     }
+        // }
     }
 
     @Override
     public void end(boolean interrupted) {
-        arm.setArmRotatorPosition(rotatorPos);
+        SmartDashboard.putString("ArmRotationCmd", "Ended");
+        if (interrupted) {
+            SmartDashboard.putString("ArmRotationCmd", "Interrupted");
+        }
     }
 }
