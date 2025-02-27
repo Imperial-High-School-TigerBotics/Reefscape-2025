@@ -32,6 +32,10 @@ public class ElevatorCmd extends Command {
     @Override 
     public void execute() {
         if (DriverStation.isTeleop()) {
+            if (xbox.getAButtonPressed()) {
+                manualElevatorControl = !manualElevatorControl;
+                SmartDashboard.putBoolean("Manual Elevator Control", manualElevatorControl);
+            }
             if (manualElevatorControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
