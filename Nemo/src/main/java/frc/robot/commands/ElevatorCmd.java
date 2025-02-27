@@ -31,19 +31,26 @@ public class ElevatorCmd extends Command {
 
     @Override 
     public void execute() {
+
         if (DriverStation.isTeleop()) {
-           if (!autoShooter) {
+
+            if(xbox.getXButtonPressed()){
+                elevator.setElevatorPosition(Constants.ElevatorConstants.max_elevator_pos / 2);
+            }
+
+            if (!autoShooter) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
                     elevatorPos = MathUtil.clamp(
-                        elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.axis_multiplier),
-                        Constants.ElevatorConstants.min_elevator_pos,
-                        Constants.ElevatorConstants.max_elevator_pos
+                    elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.axis_multiplier),
+                    Constants.ElevatorConstants.min_elevator_pos,
+                    Constants.ElevatorConstants.max_elevator_pos
                     );
                     elevator.setElevatorPosition(elevatorPos);
                 } else {
                     elevator.setElevatorPosition(elevatorPos); // Maintain last position
                 }
+
             }
         }
     }
