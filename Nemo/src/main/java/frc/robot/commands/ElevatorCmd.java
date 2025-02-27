@@ -13,16 +13,17 @@ public class ElevatorCmd extends Command {
     private final XboxController xbox;
 
     private double elevatorPos;
-    private boolean autoShooter;
+    private boolean manualControlEnabled;
 
     public ElevatorCmd(Elevator elevator, XboxController xbox) {
         this.elevator = elevator;
         addRequirements(this.elevator);
 
         this.xbox = xbox;
-        autoShooter = false;
+        manualControlEnabled = false; // Initially disabled
 
-        elevatorPos = elevator.getElevatorCoderPos();
+        // Default resting position
+        elevatorPos = Constants.ElevatorConstants.min_elevator_pos;
     }
 
     @Override
@@ -32,12 +33,17 @@ public class ElevatorCmd extends Command {
     @Override 
     public void execute() {
         if (DriverStation.isTeleop()) {
-            if(xbox.getXButtonPressed()){
-                elevatorPos = Constants.ElevatorConstants.max_elevator_pos / 2;
-            }else if(xbox.getXButtonReleased()){
-                elevatorPos = Constants.ElevatorConstants.min_elevator_pos;
+            // Toggle manual control on/off with D-Pad Up
+            if (xbox.getPOV() == 0) { // 0 means D-Pad Up
+                manualControlEnabled = !manualControlEnabled;
+                SmartDashboard.putBoolean("Manual Elevator Control", manualControlEnabled);
             }
-           if (!autoShooter) {
+
+            if (xbox.getXButtonPressed()) {
+                elevatorPos = Constants.ElevatorConstants.max_elevator_pos / 2;
+            }
+
+            if (manualControlEnabled) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
                     elevatorPos = MathUtil.clamp(
@@ -45,11 +51,14 @@ public class ElevatorCmd extends Command {
                         Constants.ElevatorConstants.min_elevator_pos,
                         Constants.ElevatorConstants.max_elevator_pos
                     );
-                    elevator.setElevatorPosition(elevatorPos);
-                } else {
-                    elevator.setElevatorPosition(elevatorPos); // Maintain last position
                 }
-           }
+            } else {
+                // Default to resting position when manual control is off
+                elevatorPos = Constants.ElevatorConstants.min_elevator_pos;
+            }
+
+            // Apply position to the elevator
+            elevator.setElevatorPosition(elevatorPos);
         }
     }
 
