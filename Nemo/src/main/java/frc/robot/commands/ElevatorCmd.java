@@ -41,7 +41,7 @@ public class ElevatorCmd extends Command {
             SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
 
             if (bPressed) {
-                manualElevatorControl = false; // Disable manual mode
+                manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos;
                 elevator.setElevatorPosition(elevatorPos);
             }
@@ -58,7 +58,7 @@ public class ElevatorCmd extends Command {
                 } else {
                     elevator.setElevatorPosition(elevatorPos); // Maintain last position
                 }
-            } else if (!bPressed) { // 🚀 Prevent override if B is pressed
+            } else if (!bPressed) {
                 // Only move to min position if the elevator is actually above it
                 if (elevator.getElevatorCoderPos() > Constants.ElevatorConstants.min_elevator_pos) {
                     elevator.setElevatorPosition(Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorSafety);
