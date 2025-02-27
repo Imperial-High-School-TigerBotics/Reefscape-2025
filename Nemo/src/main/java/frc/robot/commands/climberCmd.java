@@ -28,7 +28,7 @@ public class climberCmd extends Command{
     @Override
     public void execute() {
         if (DriverStation.isTeleop()) {
-          /*   if (xbox.getLeftBumperButtonPressed()) {
+            if (xbox.getLeftBumperButtonPressed()) {
                 climber.climberUp();
             } 
 
@@ -42,7 +42,7 @@ public class climberCmd extends Command{
 
             if (xbox.getRightBumperButtonReleased()) {
                 climber.climberStop();
-            }*/
+            }
 
         } 
 

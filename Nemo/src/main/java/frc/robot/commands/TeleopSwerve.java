@@ -49,7 +49,7 @@ public class TeleopSwerve extends Command {
     public void execute() {
         SmartDashboard.putString("pose", String.valueOf(s_Swerve.swerveOdometry.getPoseMeters().getX()) + ", " + String.valueOf(s_Swerve.swerveOdometry.getPoseMeters().getY()));
 
-        if (xbox.getRightBumperButtonPressed()) {
+        if (xbox.getXButtonPressed()) {
             autoTurn = !autoTurn;
         }
 
