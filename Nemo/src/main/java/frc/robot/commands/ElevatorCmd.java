@@ -37,7 +37,7 @@ public class ElevatorCmd extends Command {
                 SmartDashboard.putBoolean("Manual Elevator Control", manualElevatorControl);
             }
 
-            if (xbox.getBButtonPressed()) {
+            if (xbox.getBButton()) {
                 elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos);
             }
 
