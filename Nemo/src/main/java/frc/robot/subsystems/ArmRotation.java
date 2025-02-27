@@ -28,19 +28,19 @@ public class ArmRotation extends SubsystemBase {
 
         armEncoder = new DutyCycleEncoder(Constants.ArmConstants.ArmEncoder);
 
-        rotatorPos = Constants.ArmConstants.ArmRestPos;
+        rotatorPos = 0;
     }
 
-    public void clampArmRotatorSetPos() {
-        rotatorPos = Math.max(
-            Constants.ArmConstants.ArmMinPos,
-            Math.min(Constants.ArmConstants.ArmMaxPos, rotatorPos)
-        );
-    }
+    // public void clampArmRotatorSetPos() {
+    //     rotatorPos = Math.max(
+    //         Constants.ArmConstants.ArmMinPos,
+    //         Math.min(Constants.ArmConstants.ArmMaxPos, rotatorPos)
+    //     );
+    // }
 
     public void setArmRotatorPosition(double position) {
         rotatorPos = position;
-        clampArmRotatorSetPos();
+        //clampArmRotatorSetPos();
         updateArmPID();
     }
 
@@ -62,7 +62,7 @@ public class ArmRotation extends SubsystemBase {
     }
 
     public double getArmRotatorPos() {
-        return armEncoder.get();
+        return armEncoder.get() - Constants.ArmConstants.armCoderOffset;
     }
 
     @Override

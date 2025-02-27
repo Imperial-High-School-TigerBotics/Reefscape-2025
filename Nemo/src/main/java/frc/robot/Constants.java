@@ -237,10 +237,7 @@ public final class Constants {
     public static double ArmRotatorD = 0.0;
 
     //TODO: Set these values -------------
-    public static double ArmRestPos = 0.0;
-
-    public static double ArmMinPos = 0.0;
-    public static double ArmMaxPos = 0.0;
+    public static double armCoderOffset = 0.86;
     //------------------------------------
 
     public static double BallIntakeSpeed = 0.3;

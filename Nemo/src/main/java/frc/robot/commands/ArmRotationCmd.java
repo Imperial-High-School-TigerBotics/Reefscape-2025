@@ -44,6 +44,6 @@ public class ArmRotationCmd extends Command {
 
     @Override
     public void end(boolean interrupted) {
-        arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
+        arm.setArmRotatorPosition(rotatorPos);
     }
 }
