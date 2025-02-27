@@ -38,6 +38,7 @@ public class ElevatorCmd extends Command {
             }
 
             if (xbox.getBButton()) {
+                manualElevatorControl = !manualElevatorControl;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos;
                 elevator.setElevatorPosition(elevatorPos);
             }
