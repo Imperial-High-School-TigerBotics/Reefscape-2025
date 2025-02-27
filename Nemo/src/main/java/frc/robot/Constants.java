@@ -245,7 +245,7 @@ public final class Constants {
 
     public static double BallIntakeSpeed = 0.3;
     public static double CoralIntakeSpeed = 0.6;
-    public static double ArmRotatorSpeed = 0.15;
+    public static double ArmRotatorSpeed = 0.25;
   }
 
   public static final class ClimberConstants {
