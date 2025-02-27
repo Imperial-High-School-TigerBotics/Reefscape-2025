@@ -32,10 +32,11 @@ public class ElevatorCmd extends Command {
     @Override 
     public void execute() {
         if (DriverStation.isTeleop()) {
-           if (!manualElevatorControl) {
+            if (manualElevatorControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
-                    elevatorPos = MathUtil.clamp(
+                    elevatorPos = MathUtil.clamp
+                    (
                         elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.axis_multiplier),
                         Constants.ElevatorConstants.min_elevator_pos,
                         Constants.ElevatorConstants.max_elevator_pos

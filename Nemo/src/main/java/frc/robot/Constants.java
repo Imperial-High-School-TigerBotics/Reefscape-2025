@@ -204,8 +204,9 @@ public final class Constants {
 
     public static final int elevatorCoderID = 62;
 
-    public static final double elevatorMotor1speed = 0.5;
-    public static final double elevatorMotor2speed = 0.5;
+    //TODO: Set these values -------------
+    public static final double elevatorMotor1speed = 0.2;
+    public static final double elevatorMotor2speed = 0.2;
 
     public static final double elevatorP = 1;
     public static final double elevatorI = 0.0;
@@ -219,7 +220,8 @@ public final class Constants {
     public static final double axis_multiplier  = 0.18;
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 8.4 - elevatorSafety;
+    //TODO: Reset the max height, reduced height for hotel is currently in place
+    public static final double max_elevator_pos = (8.4 / 3) - elevatorSafety; 
 
     public static final int limitSwitchTop = 2;
     public static final int limitSwitchBottom = 1;
@@ -242,7 +244,7 @@ public final class Constants {
     public static double ArmMaxPos = 0.66;
     public static double ArmRestPos = 0.66;
 
-    public static final double axis_multiplier  = 0.18;
+    public static final double axis_multiplier  = 0.09;
     //------------------------------------
 
     public static double BallIntakeSpeed = 0.3;
