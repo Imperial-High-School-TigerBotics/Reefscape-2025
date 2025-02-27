@@ -49,7 +49,7 @@ public class ArmCmd extends Command {
 
             if (xPressed) {
                 manualArmControl = false;
-                armPos = Constants.PresetArmConstants.armCoralIntakeFromSourcePos;
+                armPos = Constants.PresetElevatorAndArmConstants.armCoralIntakeFromSourcePos;
                 armRotation.setArmRotatorPosition(armPos);
             }
 
@@ -68,7 +68,7 @@ public class ArmCmd extends Command {
             } else if (!xPressed) {
                 // Only move to min position if the arm is actually above it
                 if (armRotation.getArmRotatorPos() > Constants.ArmConstants.ArmMinPos) {
-                    armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmMinPos + Constants.ArmConstants.armSafety);
+                    armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
                 }
             }
         }

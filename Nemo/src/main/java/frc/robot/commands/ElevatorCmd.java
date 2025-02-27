@@ -30,7 +30,7 @@ public class ElevatorCmd extends Command {
         // Initialize SendableChooser
         manualControlChooser = new SendableChooser<>();
         manualControlChooser.setDefaultOption("Automatic Control", false);
-        manualControlChooser.addOption("Manual Control", true);
+        manualControlChooser.addOption("Manual Elevator Control", true);
         SmartDashboard.putData("Elevator Control Mode", manualControlChooser);
     }
 
@@ -48,7 +48,6 @@ public class ElevatorCmd extends Command {
             SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
 
             if (bPressed) {
-                manualControlChooser.setDefaultOption("Automatic Control", false);
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos;
                 elevator.setElevatorPosition(elevatorPos);
