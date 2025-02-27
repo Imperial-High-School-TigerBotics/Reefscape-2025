@@ -52,7 +52,7 @@ public class ElevatorCmd extends Command {
             } else {
                 // Only move to min position if the elevator is actually above it
                 if (elevator.getElevatorCoderPos() > Constants.ElevatorConstants.min_elevator_pos) {
-                    elevator.setElevatorPosition(Constants.ElevatorConstants.min_elevator_pos);
+                    elevator.setElevatorPosition(Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorSafety);
                 }
             }
         }
