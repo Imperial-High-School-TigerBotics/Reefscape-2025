@@ -2,36 +2,92 @@ package frc.robot.autos;
 
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.WaitUntilCommand;
 import frc.robot.Constants;
+import frc.robot.subsystems.ArmRotation;
+import frc.robot.subsystems.ArmShootAndIntake;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Swerve;
 
-
 public class AutoController {
+    private Elevator elevator;
+    private ArmRotation armRotation;
+    private ArmShootAndIntake armShootAndIntake;
     private Swerve swerve;
 
-    public AutoController(Swerve swerve){
+    public AutoController(Elevator elevator, ArmRotation armRotation,ArmShootAndIntake armShootAndIntake, Swerve swerve) {
+        this.elevator = elevator;
+        this.armRotation = armRotation;
+        this.armShootAndIntake = armShootAndIntake;
         this.swerve = swerve;
     }
 
-    public Command wait(double seconds) {
+    public Command wait(double seconds){
         return new WaitCommand(seconds);
     }
 
-    public Command autoShoot() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'autoShoot'");
+    public Command scoreCoralL2(){
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> swerve.disableAutonMoving(), swerve),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL2Pos), elevator),
+                new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armScoreCoralL2Pos), armRotation)
+            ),
+            new WaitCommand(1.5),
+            new InstantCommand(() -> armShootAndIntake.CoralIntakeOut(), armShootAndIntake),
+            new WaitCommand(0.5),
+            new InstantCommand(() -> {
+                armShootAndIntake.CoralIntakeStop();
+                elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos);
+                armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
+            }, 
+                armShootAndIntake, elevator, armRotation
+            ),
+            new InstantCommand(() -> swerve.enableAutonMoving(), swerve)
+        ).handleInterrupt(() -> swerve.enableAutonMoving());
     }
 
-    public Command readyShooter() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'readyShooter'");
+    public Command scoreCoralL4(){
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> swerve.disableAutonMoving(), swerve),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL4Pos), elevator),
+                new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armScoreCoralL4Pos), armRotation)
+            ),
+            new WaitCommand(1.5),
+            new InstantCommand(() -> armShootAndIntake.CoralIntakeOut(), armShootAndIntake),
+            new WaitCommand(0.5),
+            new InstantCommand(() -> {
+                armShootAndIntake.CoralIntakeStop();
+                elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos);
+                armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
+            }, 
+                armShootAndIntake, elevator, armRotation
+            ),
+            new InstantCommand(() -> swerve.enableAutonMoving(), swerve)
+        ).handleInterrupt(() -> swerve.enableAutonMoving());
     }
 
-    public Command robotIsAtShootPoint() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'robotIsAtShootPoint'");
+    public Command coralIntakefromSource(){
+        return new SequentialCommandGroup(
+            new InstantCommand(() -> swerve.disableAutonMoving(), swerve),
+            new ParallelCommandGroup(
+                new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos), elevator),
+                new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armCoralIntakeFromSourcePos), armRotation)
+            ),
+            new WaitCommand(1.5),
+            new InstantCommand(() -> armShootAndIntake.CoralIntakeIn(), armShootAndIntake),
+            new WaitCommand(0.5),
+            new InstantCommand(() -> {
+                armShootAndIntake.CoralIntakeStop();
+                elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos);
+                armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
+            }, 
+                armShootAndIntake, elevator, armRotation
+            ),
+            new InstantCommand(() -> swerve.enableAutonMoving(), swerve)
+        ).handleInterrupt(() -> swerve.enableAutonMoving());
     }
 }

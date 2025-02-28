@@ -64,6 +64,7 @@ public class RobotContainer {
 
 
   private Autos autos;
+  private AutoController autoController;
   private SendableChooser<Command> chooser;
 
   private ElevatorCmd elevatorCmd;
@@ -107,7 +108,9 @@ public class RobotContainer {
         )
     );
 
-    //autos = new Autos(s_Swerve, s_Swerve);
+    autoController = new AutoController(elevator, arm, armShootAndIntake, s_Swerve);
+    autos = new Autos(s_Swerve, autoController, s_Swerve);
+
     chooser = new SendableChooser<>();
 
     configureButtonBindings();
@@ -122,10 +125,7 @@ public class RobotContainer {
 
 private void configureAutoSelector() {
 
-  
-
-
-  chooser.setDefaultOption("2note for use with spyder", s_Swerve.a1);
+  //chooser.setDefaultOption("Auto Score Coral L2", autos.autoScoreCoralL2);
 
 
   SmartDashboard.putData(chooser);
