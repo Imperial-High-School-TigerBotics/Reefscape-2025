@@ -65,7 +65,7 @@ public class ElevatorCmd extends Command {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
                     elevatorPos = MathUtil.clamp(
-                        elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.axis_multiplier),
+                        elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.manual_elevator_speed),
                         Constants.ElevatorConstants.min_elevator_pos,
                         Constants.ElevatorConstants.max_elevator_pos
                     );
