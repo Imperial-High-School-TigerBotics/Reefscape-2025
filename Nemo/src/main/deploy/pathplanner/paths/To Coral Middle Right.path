@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.135128205128204,
-        "y": 1.8886538461538465
+        "x": 8.309203767123288,
+        "y": 6.136108732876712
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.217182076555832,
-        "y": 2.8244090121721612
+        "x": 6.160530821917808,
+        "y": 4.167744006849316
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 6.153589743589744,
-        "y": 3.870192307692308
+        "x": 6.1455051369863005,
+        "y": 4.197795376712328
       },
       "prevControl": {
-        "x": 6.654217453137594,
-        "y": 3.3941173854107487
+        "x": 8.309203767123288,
+        "y": 6.136108732876712
       },
       "nextControl": null,
       "isLocked": false,
@@ -36,12 +36,7 @@
       "name": "At G",
       "waypointRelativePos": 1.0,
       "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": null
-        }
-      }
+      "command": null
     }
   ],
   "globalConstraints": {

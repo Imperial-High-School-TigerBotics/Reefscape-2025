@@ -79,8 +79,4 @@ public class Autos {
         NamedCommands.registerCommand("resetHeading", new InstantCommand(() -> s_Swerve.zeroHeading(), s_Swerve));
         System.out.println("✅ Registered Named Command: resetHeading");
     }
-
-    public Command getCurrentAuto() {
-        return null;
-    }
 }

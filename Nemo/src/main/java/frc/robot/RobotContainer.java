@@ -111,14 +111,12 @@ public class RobotContainer {
         )
     );
 
+    chooser = new SendableChooser<>();
     autoController = new AutoController(elevator, arm, armShootAndIntake, s_Swerve);
     autos = new Autos(s_Swerve, autoController, s_Swerve);
 
-    chooser = new SendableChooser<>();
-
-    configureButtonBindings();
     configureAutoSelector();
-
+    configureButtonBindings();
   }
 
   private void configureButtonBindings() {
