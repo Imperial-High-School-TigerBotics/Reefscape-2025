@@ -147,4 +147,9 @@ private void configureAutoSelector() {
     elevator.nextElevatorPID();
     arm.updateArmPID();
   }
+
+  public void teleoperatedPeriodic(){
+    elevator.nextElevatorPID();
+    arm.updateArmPID();
+  }
 }

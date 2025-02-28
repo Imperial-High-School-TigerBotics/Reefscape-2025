@@ -74,15 +74,41 @@ public class Elevator extends SubsystemBase {
     
 
     public void nextElevatorPID() {
-        limitSwitchCap(); // Check limit switches and adjust ElevatorPos if necessary
-    
-        if ((!limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) ||
-        (!limitSwitchBottom.get() && ElevatorPos <= Constants.ElevatorConstants.min_elevator_pos)) 
-        {
-            return; // Stop movement if at limits
+
+        
+
+
+
+        if(ElevatorPos > getElevatorCoderPos() && limitSwitchTop.get() ){
+
+            setElevatorPID(ElevatorPos); // Continue moving if safe
+
+
+        }else if(ElevatorPos < getElevatorCoderPos() && limitSwitchBottom.get() ){
+            setElevatorPID(ElevatorPos);
         }
-    
-        setElevatorPID(ElevatorPos); // Continue moving if safe
+        else{
+            elevatorStop();
+        }
+
+        // if ((!limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) ||
+        // (!limitSwitchBottom.get() && ElevatorPos <= Constants.ElevatorConstants.min_elevator_pos)) 
+        // {
+        //     return; // Stop movement if at limits
+        // // }
+        // if(ElevatorPos > getElevatorCoderPos() && limitSwitchTop.get()){
+
+        //     setElevatorPID(ElevatorPos); // Continue moving if safe
+
+
+        // }
+        // else if(ElevatorPos < getElevatorCoderPos() && limitSwitchBottom.get()){
+
+        //     setElevatorPID(ElevatorPos); // Continue moving if safe
+
+
+        // }
+        // setElevatorPID(ElevatorPos); // Continue moving if safe
     }
     
     public void setElevatorCoast(){
@@ -103,6 +129,9 @@ public class Elevator extends SubsystemBase {
         } else if (setValue < -speedLimit) {
             setValue = -speedLimit;
         }
+
+        
+
         elevatorMotor1.set(-setValue);
         elevatorMotor2.set(setValue);
     }
