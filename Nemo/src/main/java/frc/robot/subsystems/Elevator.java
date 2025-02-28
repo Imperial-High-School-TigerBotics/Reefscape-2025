@@ -77,7 +77,7 @@ public class Elevator extends SubsystemBase {
 
         
 
-
+        clampElevatorSetPos();
 
         if(ElevatorPos > getElevatorCoderPos() && limitSwitchTop.get() ){
 
@@ -201,6 +201,7 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putNumber("Elevator Pos", ElevatorPos);
         SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
         SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
+        nextElevatorPID();
     }
 
 }

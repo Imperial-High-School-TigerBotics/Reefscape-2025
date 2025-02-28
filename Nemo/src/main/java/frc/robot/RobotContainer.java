@@ -142,14 +142,4 @@ private void configureAutoSelector() {
     // An example command will be run in autonomous
     return chooser.getSelected();
   }
-
-  public void autonomousPeriodic() {
-    elevator.nextElevatorPID();
-    arm.updateArmPID();
-  }
-
-  public void teleoperatedPeriodic(){
-    elevator.nextElevatorPID();
-    arm.updateArmPID();
-  }
 }

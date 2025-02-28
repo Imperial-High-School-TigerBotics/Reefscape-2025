@@ -77,5 +77,6 @@ public class ArmRotation extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Arm Encoder Pos", getArmRotatorPos());
         SmartDashboard.putNumber("Target Arm Pos", rotatorPos);
+        updateArmPID();
     }
 }
