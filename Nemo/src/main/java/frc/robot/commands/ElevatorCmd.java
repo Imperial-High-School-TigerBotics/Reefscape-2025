@@ -45,11 +45,18 @@ public class ElevatorCmd extends Command {
             manualElevatorControl = manualControlChooser.getSelected();
 
             boolean bPressed = xbox.getBButton();
+            boolean rbPressed = xbox.getRightBumperButton();
             SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
 
             if (bPressed) {
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos;
+                elevator.setElevatorPosition(elevatorPos);
+            }
+
+            if (rbPressed) {
+                manualElevatorControl = false;
+                elevatorPos = Constants.PresetElevatorAndArmConstants.armPickUpAlgaeFromLowerReefPos;
                 elevator.setElevatorPosition(elevatorPos);
             }
 
@@ -65,7 +72,7 @@ public class ElevatorCmd extends Command {
                 } else {
                     elevator.setElevatorPosition(elevatorPos); // Maintain last position
                 }
-            } else if (!bPressed) {
+            } else if (!bPressed && !rbPressed) {
                 // Only move to min position if the elevator is actually above it
                 if (elevator.getElevatorCoderPos() > Constants.ElevatorConstants.min_elevator_pos) {
                     elevator.setElevatorPosition(Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorSafety);

@@ -45,6 +45,7 @@ public class ArmRotationCmd extends Command {
             manualArmControl = manualControlChooser.getSelected();
 
             boolean bPressed = xbox.getBButton();
+            boolean rbPressed = xbox.getRightBumperButton();
             SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
 
             if (bPressed) {
@@ -52,6 +53,13 @@ public class ArmRotationCmd extends Command {
                 armPos = Constants.PresetElevatorAndArmConstants.armCoralIntakeFromSourcePos;
                 armRotation.setArmRotatorPosition(armPos);
             }
+
+            if (rbPressed) {
+                manualArmControl = false;
+                armPos = Constants.PresetElevatorAndArmConstants.armPickUpAlgaeFromLowerReefPos;
+                armRotation.setArmRotatorPosition(armPos);
+            }
+
 
             if (manualArmControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(4), Constants.stickDeadband);
@@ -65,7 +73,7 @@ public class ArmRotationCmd extends Command {
                 } else {
                     armRotation.setArmRotatorPosition(armPos); // Maintain last position
                 }
-            } else if (!bPressed) {
+            } else if (!bPressed && !rbPressed) {
                 // Only move to min position if the arm is actually above it
                 if (armRotation.getArmRotatorPos() > Constants.ArmConstants.ArmMinPos) {
                     armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
