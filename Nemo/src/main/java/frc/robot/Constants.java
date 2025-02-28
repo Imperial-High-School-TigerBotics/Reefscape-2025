@@ -223,7 +223,7 @@ public final class Constants {
 
     public static final double min_elevator_pos = 0.0;
     //TODO: Reset the max height, reduced height for hotel is currently in place
-    public static final double max_elevator_pos = (8.4 / 3) - elevatorSafety; 
+    public static final double max_elevator_pos = 8.4; 
 
     public static final int limitSwitchTop = 2;
     public static final int limitSwitchBottom = 1;

@@ -55,7 +55,7 @@ public class ElevatorCmd extends Command {
                 elevator.setElevatorPosition(elevatorPos);
             }
 
-            if (rtPressed) {
+            if (rbPressed) {
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorPickUpAlgaeFromLowerReefPos;
                 elevator.setElevatorPosition(elevatorPos);
@@ -73,10 +73,10 @@ public class ElevatorCmd extends Command {
                 } else {
                     elevator.setElevatorPosition(elevatorPos); // Maintain last position
                 }
-            } else if (!bPressed && !rtPressed) {
+            } else if (!bPressed && !rbPressed) {
                 // Only move to min position if the elevator is actually above it
                 if (elevator.getElevatorCoderPos() > Constants.ElevatorConstants.min_elevator_pos) {
-                    elevator.setElevatorPosition(Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorSafety);
+                    elevator.setElevatorPosition(Constants.ElevatorConstants.min_elevator_pos);
                 }
             }
         }
