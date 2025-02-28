@@ -109,7 +109,7 @@ public class ElevatorCmd extends Command {
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorScoreIntoBargePos;
                 elevator.setElevatorPosition(elevatorPos);
             }
-
+            // Manual Elevator Control
             if (manualElevatorControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
