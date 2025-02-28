@@ -3,6 +3,7 @@ package frc.robot.commands;
 import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Elevator;
 
 import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
@@ -21,11 +22,12 @@ public class TeleopSwerve extends Command {
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
     private Limelight limelight;
+    private Elevator elevator;
 
     private XboxController xbox;
     private boolean autoTurn;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, XboxController xbox, Limelight aprilTagDetection) {
+    public TeleopSwerve(Swerve s_Swerve, Elevator elevator, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, XboxController xbox, Limelight aprilTagDetection) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -34,6 +36,7 @@ public class TeleopSwerve extends Command {
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
         this.limelight = aprilTagDetection;
+        this.elevator = elevator;
 
         this.xbox = xbox;
 
@@ -64,9 +67,15 @@ public class TeleopSwerve extends Command {
             rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
         }
 
+        double speedLimit = Constants.Swerve.maxSpeed;
+
+        if (elevator.ElevatorAboveHalf()) {
+            speedLimit *= Constants.Swerve.ElevatorAboveHalfMultiplier;
+        }
+
         /* Drive */
         s_Swerve.drive(
-            new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed), 
+            new Translation2d(translationVal, strafeVal).times(speedLimit), 
             rotationVal * Constants.Swerve.maxAngularVelocity, 
             !robotCentricSup.getAsBoolean(), 
             true

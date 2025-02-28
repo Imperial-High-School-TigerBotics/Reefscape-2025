@@ -22,7 +22,7 @@ public class Elevator extends SubsystemBase {
     private DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.limitSwitchTop);
     private DigitalInput limitSwitchBottom = new DigitalInput(Constants.ElevatorConstants.limitSwitchBottom);
 
-    private double ElevatorPos;
+    public double ElevatorPos;
 
     public Elevator() {
         // Initialize motors with brake mode
@@ -162,6 +162,10 @@ public class Elevator extends SubsystemBase {
         return elevatorCoder.getPositionSinceBoot().getValueAsDouble();
     }
 
+    public boolean ElevatorAboveHalf() {
+        return getElevatorCoderPos() > Constants.ElevatorConstants.max_elevator_pos / 2;
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
@@ -169,4 +173,5 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
         SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
     }
+
 }
