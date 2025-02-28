@@ -219,7 +219,7 @@ public final class Constants {
     public static final double elevatorSafety = 0.25;
     public static final double elevatorLimitSwitchOffset = 10;
 
-    public static final double axis_multiplier  = 0.18;
+    public static final double axis_multiplier  = 0.36;
 
     public static final double min_elevator_pos = 0.0;
     public static final double max_elevator_pos = 6 - elevatorSafety;//8.4 - elevatorSafety; 
@@ -246,7 +246,7 @@ public final class Constants {
     public static double ArmMaxPos = 0.97;
     public static double ArmRestPos = 0.66;
 
-    public static final double axis_multiplier  = 0.09;
+    public static final double axis_multiplier  = 0.18;
     //------------------------------------
 
     public static double BallIntakeSpeed = 0.3;
