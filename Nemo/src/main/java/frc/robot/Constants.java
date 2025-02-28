@@ -206,9 +206,11 @@ public final class Constants {
 
     public static final int elevatorCoderID = 62;
 
-    //TODO: Set these values -------------
+    /* -----------------Elevator Motor Speeds----------------- */
     public static final double elevatorMotor1speed = 0.4;
     public static final double elevatorMotor2speed = 0.4;
+    public static final double manual_elevator_speed  = 0.36;
+    /* ------------------------------------------------------ */
 
     public static final double elevatorP = 1;
     public static final double elevatorI = 0.0;
@@ -219,7 +221,6 @@ public final class Constants {
     public static final double elevatorSafety = 0.25;
     public static final double elevatorLimitSwitchOffset = 10;
 
-    public static final double axis_multiplier  = 0.36;
 
     public static final double min_elevator_pos = 0.0;
     public static final double max_elevator_pos = 6 - elevatorSafety;//8.4 - elevatorSafety; 
@@ -230,6 +231,13 @@ public final class Constants {
   }
 
   public static final class ArmConstants {
+    /* -----------------Arm Motor Speeds----------------- */
+    public static final double manual_arm_speed  = 0.18;
+    public static double BallIntakeSpeed = 0.3;
+    public static double CoralIntakeSpeed = 0.6;
+    public static double ArmRotatorSpeed = 0.4;
+    /* ------------------------------------------------ */
+
     public static final int ArmRotator = 14;
     public static final int BallIntake = 18;
     public static final int CoralIntake = 20;
@@ -240,18 +248,10 @@ public final class Constants {
     public static double ArmRotatorI = 0.0;
     public static double ArmRotatorD = 0.0;
 
-    //TODO: Set these values -------------
     public static double armCoderOffset = 0.195; // Ball intake left, Coral intake right
     public static double ArmMinPos = 0.38;
     public static double ArmMaxPos = 0.97;
     public static double ArmRestPos = 0.66;
-
-    public static final double axis_multiplier  = 0.18;
-    //------------------------------------
-
-    public static double BallIntakeSpeed = 0.3;
-    public static double CoralIntakeSpeed = 0.6;
-    public static double ArmRotatorSpeed = 0.4;
   }
 
   public static final class PresetElevatorAndArmConstants{
