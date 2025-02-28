@@ -56,7 +56,7 @@ public class ElevatorCmd extends Command {
 
             if (rbPressed) {
                 manualElevatorControl = false;
-                elevatorPos = Constants.PresetElevatorAndArmConstants.armPickUpAlgaeFromLowerReefPos;
+                elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorPickUpAlgaeFromLowerReefPos;
                 elevator.setElevatorPosition(elevatorPos);
             }
 
