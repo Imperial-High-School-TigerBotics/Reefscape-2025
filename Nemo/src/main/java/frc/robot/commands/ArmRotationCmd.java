@@ -44,10 +44,10 @@ public class ArmRotationCmd extends Command {
             // Get the selected control mode from the SendableChooser
             manualArmControl = manualControlChooser.getSelected();
 
-            boolean xPressed = xbox.getXButton();
-            SmartDashboard.putBoolean("X Button Pressed", xPressed); // Debugging
+            boolean bPressed = xbox.getBButton();
+            SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
 
-            if (xPressed) {
+            if (bPressed) {
                 manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armCoralIntakeFromSourcePos;
                 armRotation.setArmRotatorPosition(armPos);
@@ -65,7 +65,7 @@ public class ArmRotationCmd extends Command {
                 } else {
                     armRotation.setArmRotatorPosition(armPos); // Maintain last position
                 }
-            } else if (!xPressed) {
+            } else if (!bPressed) {
                 // Only move to min position if the arm is actually above it
                 if (armRotation.getArmRotatorPos() > Constants.ArmConstants.ArmMinPos) {
                     armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
