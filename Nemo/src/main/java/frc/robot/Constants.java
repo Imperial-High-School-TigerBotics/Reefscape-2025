@@ -207,8 +207,8 @@ public final class Constants {
     public static final int elevatorCoderID = 62;
 
     //TODO: Set these values -------------
-    public static final double elevatorMotor1speed = 0.2;
-    public static final double elevatorMotor2speed = 0.2;
+    public static final double elevatorMotor1speed = 0.4;
+    public static final double elevatorMotor2speed = 0.4;
 
     public static final double elevatorP = 1;
     public static final double elevatorI = 0.0;
@@ -216,13 +216,13 @@ public final class Constants {
 
     public static final double elevator_encoder_offset = 0.0;
 
-    public static final double elevatorSafety = 0.15;
+    public static final double elevatorSafety = 0.25;
     public static final double elevatorLimitSwitchOffset = 10;
 
     public static final double axis_multiplier  = 0.18;
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 8.4 - elevatorSafety; 
+    public static final double max_elevator_pos = 6 - elevatorSafety;//8.4 - elevatorSafety; 
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2;
@@ -251,7 +251,7 @@ public final class Constants {
 
     public static double BallIntakeSpeed = 0.3;
     public static double CoralIntakeSpeed = 0.6;
-    public static double ArmRotatorSpeed = 0.25;
+    public static double ArmRotatorSpeed = 0.4;
   }
 
   public static final class PresetElevatorAndArmConstants{
