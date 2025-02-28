@@ -54,7 +54,7 @@ public class ArmRotationCmd extends Command {
             }
 
             if (manualArmControl) {
-                double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
+                double axis = -MathUtil.applyDeadband(xbox.getRawAxis(4), Constants.stickDeadband);
                 if (axis != 0) {
                     armPos = MathUtil.clamp(
                         armRotation.getArmRotatorPos() + (axis * Constants.ArmConstants.axis_multiplier),
