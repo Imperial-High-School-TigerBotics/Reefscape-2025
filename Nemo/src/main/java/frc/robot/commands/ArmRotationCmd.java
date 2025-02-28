@@ -45,22 +45,63 @@ public class ArmRotationCmd extends Command {
             manualArmControl = manualControlChooser.getSelected();
 
             boolean bPressed = xbox.getBButton();
+            boolean yPressed = xbox.getYButton();
+            boolean aPressed = xbox.getAButton();
+            boolean xPressed = xbox.getXButton();
             boolean rbPressed = xbox.getRightBumperButton();
-            SmartDashboard.putBoolean("B Button Pressed", bPressed); // Debugging
+            boolean lbPressed = xbox.getLeftBumperButton();
+            boolean rtPressed = xbox.getRightTriggerAxis() > Constants.OperatorConstants.TRIGGER_THRESHOLD;
+            boolean ltPressed = xbox.getLeftTriggerAxis() > Constants.OperatorConstants.TRIGGER_THRESHOLD;
 
+            //Corral intake from source
             if (bPressed) {
                 manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armCoralIntakeFromSourcePos;
-                armRotation.setArmRotatorPosition(armPos);
             }
 
+            //Score Coral L2
+            if (yPressed) {
+                manualArmControl = false;
+                armPos = Constants.PresetElevatorAndArmConstants.armScoreCoralL2Pos;
+            }
+
+            //Score Coral L3
+            if (xPressed) {
+                manualArmControl = false;
+                armPos = Constants.PresetElevatorAndArmConstants.armScoreCoralL3Pos;
+            }
+
+            //Score Coral L4
+            if (aPressed) {
+                manualArmControl = false;
+                armPos = Constants.PresetElevatorAndArmConstants.armScoreCoralL4Pos;
+            }
+
+            //Score Algae In Processor
+            if (rtPressed) {
+                manualArmControl = false;
+                armPos = Constants.PresetElevatorAndArmConstants.armScoreAlgaeInProcessorPos;
+            }
+
+            //Pick Up Algae from Lower Reef
             if (rbPressed) {
                 manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armPickUpAlgaeFromLowerReefPos;
-                armRotation.setArmRotatorPosition(armPos);
+            }
+            
+            //Pick Up Algae from Upper Reef
+            if (lbPressed) {
+                manualArmControl = false;
+                armPos = Constants.PresetElevatorAndArmConstants.armPickUpAlgaeFromUpperReefPos;
             }
 
+            //Score Into Barge
+            if (ltPressed) {
+                manualArmControl = false;
+                armPos = Constants.PresetElevatorAndArmConstants.armScoreIntoBargePos;
+            }
 
+            // Manual Arm Control
             if (manualArmControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(4), Constants.stickDeadband);
                 if (axis != 0) {
@@ -73,7 +114,7 @@ public class ArmRotationCmd extends Command {
                 } else {
                     armRotation.setArmRotatorPosition(armPos); // Maintain last position
                 }
-            } else if (!bPressed && !rbPressed) {
+            } else if (!bPressed && !rbPressed && !lbPressed && !rtPressed && !ltPressed && !yPressed && !aPressed && !xPressed) {
                 // Only move to min position if the arm is actually above it
                     armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
             }
