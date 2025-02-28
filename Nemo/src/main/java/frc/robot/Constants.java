@@ -276,14 +276,14 @@ public final class Constants {
 
     /*--------------------Score Coral L4-------------------*/
     //Mapped to Button A on operator controller
-    public static final double armScoreCoralL4Pos = 0.09;
-    public static final double elevatorScoreCoralL4Pos = 3.4;
+    public static final double armScoreCoralL4Pos = 0.9;
+    public static final double elevatorScoreCoralL4Pos = 8.365;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Algae In Processor-------------------*/
     //Mapped to Right Trigger on operator controller
     public static final double armScoreAlgaeInProcessorPos = 0.38;
-    public static final double elevatorScoreAlgaeInProcessorPos = 8.365;
+    public static final double elevatorScoreAlgaeInProcessorPos = 0.53;
     /*--------------------------------------------------------------*/
 
     /*--------------------Pick Up Algae From Lower Reef-------------------*/
@@ -300,7 +300,7 @@ public final class Constants {
 
     /*----------------------Score Into Barge--------------------*/
     //Mapped to Left Trigger on operator controller
-    public static final double armScoreIntoBargePos = 0.06;
+    public static final double armScoreIntoBargePos = 0.6;
     public static final double elevatorScoreIntoBargePos = 8.3;
     /*----------------------------------------------------------*/
   }
