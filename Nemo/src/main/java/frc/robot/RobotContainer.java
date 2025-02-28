@@ -10,6 +10,9 @@ import frc.robot.autos.Autos;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -124,11 +127,11 @@ public class RobotContainer {
 }
 
 private void configureAutoSelector() {
-
+  chooser.setDefaultOption("Score L2 Auto", new PathPlannerAuto("Score L2 Auto"));
   //chooser.setDefaultOption("Auto Score Coral L2", autos.autoScoreCoralL2);
 
 
-  SmartDashboard.putData(chooser);
+  SmartDashboard.putData("Auto Mode", chooser);
 }
 
 

@@ -51,36 +51,8 @@ public class Swerve extends SubsystemBase {
         
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
         autonMovingEnabled = true;
-        
-
-        
-            AutoBuilder.configure(
-                this::getPose, // Robot pose supplier
-                this::resetPose, // Odometry reset
-                this::getChassisSpeeds, // Speed supplier (robot-relative)
-                (speeds, feedforwards) -> drive(speeds), // Command to drive robot
-                new PPHolonomicDriveController(
-                        new PIDConstants(5.0, 0.0, 0.0),
-                        new PIDConstants(5.0, 0.0, 0.0)
-                ),
-                Constants.CONFIG,
-                () -> {
-                    var alliance = DriverStation.getAlliance();
-                    if (alliance.isPresent()) {
-                        return alliance.get() == DriverStation.Alliance.Red;
-                    }
-                    return false;
-                },
-                this
-            );
-            
-            a1 = new PathPlannerAuto("monkey");
         }
-    
                     
-                
-    
-    
     public ChassisSpeeds getChassisSpeeds() {
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
     }
