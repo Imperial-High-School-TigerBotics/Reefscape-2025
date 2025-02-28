@@ -216,14 +216,14 @@ public final class Constants {
 
     public static final double elevator_encoder_offset = 0.0;
 
-    public static final double elevatorSafety = 0.25;
+    public static final double elevatorSafety = 0.15;
     public static final double elevatorLimitSwitchOffset = 10;
 
     public static final double axis_multiplier  = 0.18;
 
     public static final double min_elevator_pos = 0.0;
-    //TODO: Reset the max height, reduced height for hotel is currently in place
-    public static final double max_elevator_pos = 8.4; 
+    public static final double max_elevator_pos = 8.4 - elevatorSafety; 
+    public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2;
     public static final int limitSwitchBottom = 1;
