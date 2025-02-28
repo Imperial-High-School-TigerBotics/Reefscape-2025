@@ -75,9 +75,7 @@ public class ArmRotationCmd extends Command {
                 }
             } else if (!bPressed && !rbPressed) {
                 // Only move to min position if the arm is actually above it
-                if (armRotation.getArmRotatorPos() > Constants.ArmConstants.ArmMinPos) {
                     armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
-                }
             }
         }
     }
