@@ -213,8 +213,8 @@ public final class Constants {
     /* ------------------------------------------------------ */
 
     public static final double elevatorP = 1;
-    public static final double elevatorI = 0.0;
-    public static final double elevatorD = 0.0;
+    public static final double elevatorI = 0.08;
+    public static final double elevatorD = 0.015;
 
     public static final double elevator_encoder_offset = 0.0;
 
