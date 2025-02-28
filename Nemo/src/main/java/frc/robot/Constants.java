@@ -241,7 +241,7 @@ public final class Constants {
     //TODO: Set these values -------------
     public static double armCoderOffset = 0.195; // Ball intake left, Coral intake right
     public static double ArmMinPos = 0.38;
-    public static double ArmMaxPos = 0.66;
+    public static double ArmMaxPos = 0.97;
     public static double ArmRestPos = 0.66;
 
     public static final double axis_multiplier  = 0.09;
