@@ -140,6 +140,8 @@ private void configureAutoSelector() {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+    elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos);
+    arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
     return chooser.getSelected();
   }
 
