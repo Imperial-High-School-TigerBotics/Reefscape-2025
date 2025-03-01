@@ -74,9 +74,6 @@ public class RobotContainer {
   private ArmRotationCmd armCmd;
   private ArmShootAndIntakeCmd armButtonsCmd;
 
-  private Command defaultArmCmd;
-  private Command default_elevatorCmd;
-
   private climberCmd climberCmd;
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -88,12 +85,10 @@ public class RobotContainer {
 
     elevator = new Elevator();
     elevatorCmd = new ElevatorCmd(elevator, operator);
-    default_elevatorCmd = elevatorCmd;
     elevator.setDefaultCommand(elevatorCmd);
 
     arm = new ArmRotation();
     armCmd = new ArmRotationCmd(arm, operator);
-    defaultArmCmd = armCmd;
     arm.setDefaultCommand(armCmd);
 
     armShootAndIntake = new ArmShootAndIntake();
