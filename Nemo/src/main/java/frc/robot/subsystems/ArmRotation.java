@@ -28,7 +28,12 @@ public class ArmRotation extends SubsystemBase {
 
         armEncoder = new DutyCycleEncoder(Constants.ArmConstants.ArmEncoder);
 
-        rotatorPos = 0;
+        rotatorPos = Constants.ArmConstants.ArmMinPos;
+    }
+
+    public void setArmRotatorPosition(double position) {
+        rotatorPos = position;
+        clampArmRotatorSetPos();
     }
 
     public void clampArmRotatorSetPos() {
@@ -38,26 +43,16 @@ public class ArmRotation extends SubsystemBase {
         );
     }
 
-    public void setArmRotatorPosition(double position) {
-        rotatorPos = position;
+    public void nextArmPID() {
         clampArmRotatorSetPos();
-        updateArmPID();
+        setArmRotatorPID(rotatorPos);
     }
 
-    public void updateArmPID() {
-        double setValue = armRotatorPID.calculate(getArmRotatorPos(), rotatorPos);
+    public void setArmRotatorPID(double position) {
+        double setValue = armRotatorPID.calculate(getArmRotatorPos(), position);
         double speedLimit = Constants.ArmConstants.ArmRotatorSpeed;
-        if (setValue > speedLimit) {
-            setValue = speedLimit;
-        } else if (setValue < -speedLimit) {
-            setValue = -speedLimit;
-        }
-
+        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
         armRotator.set(setValue);
-    }
-
-    private double applyDeadzone(double value, double deadzone) {
-        return Math.abs(value) > deadzone ? value : 0.0;
     }
 
     public void rotateArmMotor(double speed) {
@@ -67,16 +62,15 @@ public class ArmRotation extends SubsystemBase {
     public double getArmRotatorPos() {
         double normalizedPosition = (armEncoder.get() - Constants.ArmConstants.armCoderOffset) % 1.0;
         if (normalizedPosition < 0) {
-            normalizedPosition += 1.0; // Ensure values stay between 0 and 1
+            normalizedPosition += 1.0;
         }
         return normalizedPosition;
     }
-    
 
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Arm Encoder Pos", getArmRotatorPos());
         SmartDashboard.putNumber("Target Arm Pos", rotatorPos);
-        updateArmPID();
+        nextArmPID();
     }
 }
