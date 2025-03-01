@@ -74,4 +74,5 @@ public class Autos {
         NamedCommands.registerCommand("Coral Intake From Source", autoController.coralIntakefromSource());
 
         NamedCommands.registerCommand("resetHeading", new InstantCommand(() -> s_Swerve.zeroHeading(), s_Swerve));
+    }
 }
