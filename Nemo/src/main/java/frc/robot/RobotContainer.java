@@ -140,6 +140,8 @@ private void configureAutoSelector() {
    */
   public Command getAutonomousCommand() {
     // An example command will be run in autonomous
+    arm.setDefaultCommand(null);
+    elevator.setDefaultCommand(null);
     return chooser.getSelected();
   }
 
