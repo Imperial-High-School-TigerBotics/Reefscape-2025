@@ -55,21 +55,21 @@ public class ArmRotationCmd extends Command {
 
             //Corral intake from source
             if (bPressed) {
-                manualArmControl = false;
+                //manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armCoralIntakeFromSourcePos;
                 armRotation.setArmRotatorPosition(armPos);
             }
 
             //Score Coral L2
             if (yPressed) {
-                manualArmControl = false;
+                //manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armScoreCoralL2Pos;
                 armRotation.setArmRotatorPosition(armPos);
             }
 
             //Score Coral L3
             if (xPressed) {
-                manualArmControl = false;
+                //manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armScoreCoralL3Pos;
                 armRotation.setArmRotatorPosition(armPos);
             }
@@ -83,21 +83,21 @@ public class ArmRotationCmd extends Command {
 
             //Score Algae In Processor
             if (rtPressed) {
-                manualArmControl = false;
+                //manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armScoreAlgaeInProcessorPos;
                 armRotation.setArmRotatorPosition(armPos);
             }
 
             //Pick Up Algae from Lower Reef
-            if (rbPressed) {
-                manualArmControl = false;
+            if (lbPressed) {
+                //manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armPickUpAlgaeFromLowerReefPos;
                 armRotation.setArmRotatorPosition(armPos);
             }
             
             //Pick Up Algae from Upper Reef
-            if (lbPressed) {
-                manualArmControl = false;
+            if (rbPressed) {
+                //manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armPickUpAlgaeFromUpperReefPos;
                 armRotation.setArmRotatorPosition(armPos);
             }

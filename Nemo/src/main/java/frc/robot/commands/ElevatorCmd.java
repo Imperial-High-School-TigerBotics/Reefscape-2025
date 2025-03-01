@@ -90,14 +90,14 @@ public class ElevatorCmd extends Command {
             }
 
             //Pick Up Algae From Lower Reef
-            if(rbPressed){
+            if(lbPressed){
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorPickUpAlgaeFromLowerReefPos;
                 elevator.setElevatorPosition(elevatorPos);
             }
 
             //Pick Algae from Upper Reef
-            if(lbPressed){
+            if(rbPressed){
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorPickUpAlgaeFromUpperReefPos;
                 elevator.setElevatorPosition(elevatorPos);

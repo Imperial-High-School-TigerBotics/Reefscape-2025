@@ -235,7 +235,7 @@ public final class Constants {
     /* -----------------Arm Motor Speeds----------------- */
     public static final double manual_arm_speed  = 0.13;
     public static double BallIntakeSpeed = 0.3;
-    public static double CoralIntakeSpeed = 0.6;
+    public static double CoralIntakeSpeed = 0.4;
     public static double ArmRotatorSpeed = 0.3;
     /* ------------------------------------------------ */
 
