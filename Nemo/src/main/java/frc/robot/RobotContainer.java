@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.ArmRotationCmd;
@@ -139,10 +140,21 @@ private void configureAutoSelector() {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // An example command will be run in autonomous
-    elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos);
-    arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
-    return chooser.getSelected();
-  }
+    // Ensure initial positions are part of a command
+    Command initializePositions = new SequentialCommandGroup(
+        new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
+        new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
+    );
+
+    // Get selected auto command, defaulting to a do-nothing command if null
+    Command autoCommand = chooser.getSelected();
+    if (autoCommand == null) {
+        autoCommand = new InstantCommand(); // Default safe command
+    }
+
+    // Run initialization, then the selected auto command
+    return new SequentialCommandGroup(initializePositions, autoCommand);
+}
+  
 
 }
