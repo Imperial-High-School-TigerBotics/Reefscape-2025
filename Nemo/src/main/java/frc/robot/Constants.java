@@ -63,7 +63,7 @@ public final class Constants {
     public static final class Swerve {
       public static final int pigeonID = 49;
 
-      public static final int SwerveStartHeading = 0;
+      public static final int SwerveStartHeading = 180;
 
       public static final COTSTalonFXSwerveConstants chosenModule = 
       COTSTalonFXSwerveConstants.SDS.MK4i.KrakenX60(COTSTalonFXSwerveConstants.SDS.MK4i.driveRatios.L2);
