@@ -142,4 +142,13 @@ private void configureAutoSelector() {
     // An example command will be run in autonomous
     return chooser.getSelected();
   }
+
+  /**
+   * Use this to pass the autonomous periodic command to the main {@link Robot} class.
+   */
+  public void autonomousPeriodic() {
+    // Add your autonomous periodic code here
+    arm.rotateArmMotor(0);
+    elevator.elevatorMove(0);
+  }
 }
