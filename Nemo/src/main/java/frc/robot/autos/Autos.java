@@ -29,9 +29,6 @@ public class Autos {
      * red2 & blue2 = just aim and shoot
      * 
      */
-
-    private PathPlannerPath ToCoralMiddleRight;
-    private PathPlannerAuto ScoreL2Auto;
     private RobotConfig config;
 
 
