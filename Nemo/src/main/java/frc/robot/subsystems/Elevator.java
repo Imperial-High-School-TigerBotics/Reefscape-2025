@@ -50,7 +50,7 @@ public class Elevator extends SubsystemBase {
     public void setElevatorPosition(double position) {
         ElevatorPos = position;
         clampElevatorSetPos();
-        nextElevatorPID();
+       // nextElevatorPID();
     }
 
     public void clampElevatorSetPos() {
@@ -88,7 +88,8 @@ public class Elevator extends SubsystemBase {
             setElevatorPID(ElevatorPos);
         }
         else{
-            elevatorStop();
+            limitSwitchCap();
+           // elevatorStop();
         }
 
         // if ((!limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) ||

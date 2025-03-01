@@ -76,11 +76,11 @@ public class ElevatorCmd extends Command {
             }
 
             //Score Coral L4
-            if(aPressed) {
+            /*if(aPressed) {
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL4Pos;
                 elevator.setElevatorPosition(elevatorPos);
-            }
+            }*/
 
             //Score Algae In Processor
             if (rtPressed){
@@ -104,11 +104,11 @@ public class ElevatorCmd extends Command {
             }
 
             //Score into Barge
-            if (ltPressed){
+           /*  if (ltPressed){
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorScoreIntoBargePos;
                 elevator.setElevatorPosition(elevatorPos);
-            }
+            }*/
             // Manual Elevator Control
             if (manualElevatorControl) {
                 double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);

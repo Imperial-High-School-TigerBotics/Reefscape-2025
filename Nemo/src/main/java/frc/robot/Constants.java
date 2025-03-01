@@ -213,7 +213,7 @@ public final class Constants {
     public static final double manual_elevator_speed  = 0.36;
     /* ------------------------------------------------------ */
 
-    public static final double elevatorP = 1;
+    public static final double elevatorP = 0.6;
     public static final double elevatorI = 0.045;
     public static final double elevatorD = 0.0075;
 
@@ -224,7 +224,7 @@ public final class Constants {
 
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos =8.365;
+    public static final double max_elevator_pos = 7;
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2;
