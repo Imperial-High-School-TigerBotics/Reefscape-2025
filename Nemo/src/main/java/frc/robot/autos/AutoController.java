@@ -9,19 +9,16 @@ import frc.robot.Constants;
 import frc.robot.subsystems.ArmRotation;
 import frc.robot.subsystems.ArmShootAndIntake;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Swerve;
 
 public class AutoController {
     private Elevator elevator;
     private ArmRotation armRotation;
     private ArmShootAndIntake armShootAndIntake;
-    private Swerve swerve;
 
-    public AutoController(Elevator elevator, ArmRotation armRotation,ArmShootAndIntake armShootAndIntake, Swerve swerve) {
+    public AutoController(Elevator elevator, ArmRotation armRotation,ArmShootAndIntake armShootAndIntake) {
         this.elevator = elevator;
         this.armRotation = armRotation;
         this.armShootAndIntake = armShootAndIntake;
-        this.swerve = swerve;
     }
 
     public Command wait(double seconds){
@@ -30,7 +27,6 @@ public class AutoController {
 
     public Command scoreCoralL2(){
         return new SequentialCommandGroup(
-            new InstantCommand(() -> swerve.disableAutonMoving(), swerve),
             new ParallelCommandGroup(
                 new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL2Pos), elevator),
                 new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armScoreCoralL2Pos), armRotation)
@@ -44,14 +40,12 @@ public class AutoController {
                 armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
             }, 
                 armShootAndIntake, elevator, armRotation
-            ),
-            new InstantCommand(() -> swerve.enableAutonMoving(), swerve)
-        ).handleInterrupt(() -> swerve.enableAutonMoving());
+            )
+        );
     }
 
     public Command scoreCoralL4(){
         return new SequentialCommandGroup(
-            new InstantCommand(() -> swerve.disableAutonMoving(), swerve),
             new ParallelCommandGroup(
                 new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL4Pos), elevator),
                 new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armScoreCoralL4Pos), armRotation)
@@ -65,14 +59,12 @@ public class AutoController {
                 armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
             }, 
                 armShootAndIntake, elevator, armRotation
-            ),
-            new InstantCommand(() -> swerve.enableAutonMoving(), swerve)
-        ).handleInterrupt(() -> swerve.enableAutonMoving());
+            )
+        );
     }
 
     public Command coralIntakefromSource(){
         return new SequentialCommandGroup(
-            new InstantCommand(() -> swerve.disableAutonMoving(), swerve),
             new ParallelCommandGroup(
                 new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorCoralIntakeFromSourcePos), elevator),
                 new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armCoralIntakeFromSourcePos), armRotation)
@@ -86,8 +78,7 @@ public class AutoController {
                 armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
             }, 
                 armShootAndIntake, elevator, armRotation
-            ),
-            new InstantCommand(() -> swerve.enableAutonMoving(), swerve)
-        ).handleInterrupt(() -> swerve.enableAutonMoving());
+            )
+        );
     }
 }

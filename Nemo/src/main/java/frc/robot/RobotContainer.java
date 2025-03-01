@@ -113,7 +113,7 @@ public class RobotContainer {
     );
 
     chooser = new SendableChooser<>();
-    autoController = new AutoController(elevator, arm, armShootAndIntake, s_Swerve);
+    autoController = new AutoController(elevator, arm, armShootAndIntake);
     autos = new Autos(s_Swerve, autoController, s_Swerve);
 
     configureAutoSelector();
