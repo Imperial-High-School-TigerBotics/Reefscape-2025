@@ -155,7 +155,7 @@ private void configureAutoSelector() {
     Command flipHeading = new InstantCommand(() -> s_Swerve.flipHeading());
 
     // Run initialization, then the selected auto command
-    return new SequentialCommandGroup(flipHeading,initializePositions, autoCommand);
+    return new SequentialCommandGroup(initializePositions, autoCommand, flipHeading);
 }
   
 
