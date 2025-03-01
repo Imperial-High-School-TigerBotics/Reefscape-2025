@@ -67,16 +67,11 @@ public class Autos {
 
 
         // Register Named Commands and print them
-        /*NamedCommands.registerCommand("Score L2", autoController.scoreCoralL2());
-        System.out.println("✅ Registered Named Command: Score L2");
+        NamedCommands.registerCommand("Score L2", autoController.scoreCoralL2());
 
         NamedCommands.registerCommand("Score L4", autoController.scoreCoralL4());
-        System.out.println("✅ Registered Named Command: Score L4");
 
         NamedCommands.registerCommand("Coral Intake From Source", autoController.coralIntakefromSource());
-        System.out.println("✅ Registered Named Command: Coral Intake From Source");
 
         NamedCommands.registerCommand("resetHeading", new InstantCommand(() -> s_Swerve.zeroHeading(), s_Swerve));
-        System.out.println("✅ Registered Named Command: resetHeading");*/
-    }
 }
