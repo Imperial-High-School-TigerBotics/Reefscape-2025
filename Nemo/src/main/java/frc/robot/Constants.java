@@ -213,18 +213,18 @@ public final class Constants {
     public static final double manual_elevator_speed  = 0.36;
     /* ------------------------------------------------------ */
 
-    public static final double elevatorP = 0.6;
-    public static final double elevatorI = 0.045;
-    public static final double elevatorD = 0.0075;
+    public static final double elevatorP = 0.7;
+    public static final double elevatorI = 0.0;
+    public static final double elevatorD = 0.0;
 
-    public static final double elevator_encoder_offset = 0.5;
+    public static final double elevator_encoder_offset = 0.4;
 
     public static final double elevatorSafety = 0.25;
     public static final double elevatorLimitSwitchOffset = 10;
 
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 7;
+    public static final double max_elevator_pos = 8.365;
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2;
@@ -233,10 +233,10 @@ public final class Constants {
 
   public static final class ArmConstants {
     /* -----------------Arm Motor Speeds----------------- */
-    public static final double manual_arm_speed  = 0.18;
+    public static final double manual_arm_speed  = 0.13;
     public static double BallIntakeSpeed = 0.3;
     public static double CoralIntakeSpeed = 0.6;
-    public static double ArmRotatorSpeed = 0.4;
+    public static double ArmRotatorSpeed = 0.3;
     /* ------------------------------------------------ */
 
     public static final int ArmRotator = 14;

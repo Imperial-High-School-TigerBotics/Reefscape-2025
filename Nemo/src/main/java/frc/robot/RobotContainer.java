@@ -125,7 +125,7 @@ public class RobotContainer {
 }
 
 private void configureAutoSelector() {
-  chooser.setDefaultOption("Score L2 Auto", new PathPlannerAuto("Score L2 Auto"));
+  chooser.setDefaultOption("Back", new PathPlannerAuto("monkey"));
   //chooser.setDefaultOption("Auto Score Coral L2", autos.autoScoreCoralL2);
 
 

@@ -75,11 +75,11 @@ public class ArmRotationCmd extends Command {
             }
 
             //Score Coral L4
-            if (aPressed) {
+            /*if (aPressed) {
                 manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armScoreCoralL4Pos;
                 armRotation.setArmRotatorPosition(armPos);
-            }
+            }*/
 
             //Score Algae In Processor
             if (rtPressed) {
@@ -103,11 +103,11 @@ public class ArmRotationCmd extends Command {
             }
 
             //Score Into Barge
-            if (ltPressed) {
+            /*if (ltPressed) {
                 manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armScoreIntoBargePos;
                 armRotation.setArmRotatorPosition(armPos);
-            }
+            }*/
 
             // Manual Arm Control
             if (manualArmControl) {
