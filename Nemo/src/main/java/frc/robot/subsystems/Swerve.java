@@ -157,6 +157,10 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
+    public void flipHeading(){
+        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), getHeading().rotateBy(Rotation2d.fromDegrees(180))));
+    }
+
     public Rotation2d getGyroYaw() {
         return gyro.getRotation2d(); //used to be: return Rotation2d.fromDegrees(gyro.getYaw().getValue());
     }
