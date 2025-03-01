@@ -31,9 +31,7 @@ public class AutoController {
                 new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL2Pos), elevator),
                 new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armScoreCoralL2Pos), armRotation)
             ),
-            new WaitCommand(1.5),
             new InstantCommand(() -> armShootAndIntake.CoralIntakeOut(), armShootAndIntake),
-            new WaitCommand(0.5),
             new InstantCommand(() -> {
                 armShootAndIntake.CoralIntakeStop();
                 elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos);
