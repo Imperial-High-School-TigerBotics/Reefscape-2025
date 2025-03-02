@@ -109,8 +109,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis), 
             () -> false,
             driver, limelight,
-            () -> driver.getLeftBumper(),
-            () -> driver.getRightBumper()
+            () -> driver.getAButtonPressed(),
+            () -> driver.getBButtonPressed()
         )
     );
 
@@ -150,7 +150,7 @@ private void configureAutoSelector() {
 
     // Get selected auto command, defaulting to a do-nothing command if null
     Command autoCommand = chooser.getSelected();
-    if (autoCommand == null) {
+    if (autoCommand  == null) {
         autoCommand = new InstantCommand(); // Default safe command
     }
 
