@@ -76,11 +76,11 @@ public class ElevatorCmd extends Command {
             }
 
             //Score Coral L4
-            /*if(aPressed) {
+            if(aPressed) {
                 manualElevatorControl = false;
                 elevatorPos = Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL4Pos;
                 elevator.setElevatorPosition(elevatorPos);
-            }*/
+            }
 
             //Score Algae In Processor
             if (rtPressed){
