@@ -250,7 +250,6 @@ public final class Constants {
     public static double ArmRotatorP = 1;
     public static double ArmRotatorI = 0.0;
     public static double ArmRotatorD = 0.0;
-
     public static double armCoderOffset = 0.195; // Ball intake left, Coral intake right
     public static double ArmMinPos = 0.38;
     public static double ArmMaxPos = 0.97;
@@ -267,20 +266,20 @@ public final class Constants {
 
     /*--------------------Score Coral L2-------------------*/
     //Mapped to Button Y on operator controller
-    public static final double armScoreCoralL2Pos = 0.94;
-    public static final double elevatorScoreCoralL2Pos = 2.23;
+    public static final double armScoreCoralL2Pos = 0.92;
+    public static final double elevatorScoreCoralL2Pos = 2.21;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L3-------------------*/
     //Mapped to Button X on operator controller
-    public static final double armScoreCoralL3Pos = 0.94;
-    public static final double elevatorScoreCoralL3Pos = 3.4;
+    public static final double armScoreCoralL3Pos = 0.944;
+    public static final double elevatorScoreCoralL3Pos = 4.06;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L4-------------------*/
     //Mapped to Button A on operator controller
     public static final double armScoreCoralL4Pos = 0.9;
-    public static final double elevatorScoreCoralL4Pos = 8.365;
+    public static final double elevatorScoreCoralL4Pos = 8.343;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Algae In Processor-------------------*/
