@@ -62,22 +62,20 @@ public void execute() {
         String.valueOf(s_Swerve.swerveOdometry.getPoseMeters().getX()) + ", " 
         + String.valueOf(s_Swerve.swerveOdometry.getPoseMeters().getY()));
 
-    boolean parallelMode = xbox.getLeftBumper();  // LB enables parallel motion
-    boolean allowRotation = xbox.getRightBumper(); // RB allows rotation in parallel mode
 
     // NEW: detect the "just pressed" event
-    boolean justPressedLB = (parallelMode && !wasParallelModeActive);
+    boolean justPressedLB = (parallelMotionSup.getAsBoolean() && !wasParallelModeActive);
     // If we release LB, we want to reset heading
-    boolean returnToOriginal = !parallelMode && wasParallelModeActive;
+    boolean returnToOriginal = !parallelMotionSup.getAsBoolean() && wasParallelModeActive;
 
     // NEW: If we just pressed LB for the first time, store our current heading
     if (justPressedLB) {
         s_Swerve.setOriginalHeading(s_Swerve.getHeading());
     }
 
-    s_Swerve.updateParallelMotion(parallelMode, returnToOriginal, allowRotation, limelight);
+    s_Swerve.updateParallelMotion(parallelMotionSup.getAsBoolean(), returnToOriginal, allowRotationSup.getAsBoolean(), limelight);
 
-    wasParallelModeActive = parallelMode; // Keep track if parallel mode was active
+    wasParallelModeActive = parallelMotionSup.getAsBoolean(); // Keep track if parallel mode was active
 
     // --- normal driving logic below ---
     double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
@@ -85,7 +83,7 @@ public void execute() {
     double rotationVal    = MathUtil.applyDeadband(rotationSup.getAsDouble(),    Constants.stickDeadband);
 
     // If LB is pressed but RB is not, lock rotation
-    if (parallelMode && !allowRotation) {
+    if (parallelMotionSup.getAsBoolean() && !allowRotationSup.getAsBoolean()) {
         rotationVal = 0;
     }
 

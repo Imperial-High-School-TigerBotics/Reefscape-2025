@@ -109,8 +109,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis), 
             () -> false,
             driver, limelight,
-            () -> driver.getAButtonPressed(),
-            () -> driver.getBButtonPressed()
+            () -> driver.getBButtonPressed(),
+            () -> driver.getAButtonPressed()
         )
     );
 
