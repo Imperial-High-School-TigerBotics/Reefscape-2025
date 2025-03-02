@@ -287,14 +287,14 @@ public final class Constants {
     public static final double armScoreAlgaeInProcessorPos = 0.38;
     public static final double elevatorScoreAlgaeInProcessorPos = 0.53;
     /*--------------------------------------------------------------*/
-
-    /*--------------------Pick Up Algae From Lower Reef-------------------*/
+    
+    /*--------------------Pick Up Algae From Lower Reef In Between L2-L3 -------------------*/
     //Mapped to Right Bumper on operator controller
     public static final double armPickUpAlgaeFromLowerReefPos = 0.43;
     public static final double elevatorPickUpAlgaeFromLowerReefPos = 2.02;
     /*--------------------------------------------------------------------*/
 
-    /*--------------------Pick Up Algae From Upper Reef-------------------*/
+    /*--------------------Pick Up Algae From Upper Reef In Between L3-L4-------------------*/
     //Mapped to Left Bumper on operator controller
     public static final double armPickUpAlgaeFromUpperReefPos = 0.43;
     public static final double elevatorPickUpAlgaeFromUpperReefPos = 4.77;
