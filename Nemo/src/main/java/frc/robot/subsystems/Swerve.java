@@ -187,25 +187,25 @@ public class Swerve extends SubsystemBase {
         // Attempt to get a fresh detected Pose from the limelight
         Pose2d detectedPose = limelight.getAdjustedRobotPose();
 
-        if (parallelModeActive) {
-            // 1) If we see a *valid* tag pose, update the lastKnownTagHeading
-            if (detectedPose != null) {
-                lastKnownTagHeading = detectedPose.getRotation();
-            }
-
-            // 2) If user does NOT allow rotation, forcibly lock heading
-            // to our lastKnownTagHeading. If the tag is lost, we do NOT overwrite
-            // lastKnownTagHeading with null, so we keep the last good heading.
-            if (!allowRotation) {
-                setHeading(lastKnownTagHeading);
-            }
+        // 1) If we see a new valid pose, update lastKnownTagHeading
+        //    (only do this if we actually got a detection!)
+        if (detectedPose != null) {
+            lastKnownTagHeading = detectedPose.getRotation();
         }
 
-        // 3) If LB has just been released, revert to the original heading
+        // 2) If the driver is holding LB (parallelModeActive),
+        //    and not holding RB (which would allow rotation),
+        //    then forcibly lock heading to the last known tag heading (if we have one).
+        if (parallelModeActive && !allowRotation && lastKnownTagHeading != null) {
+            setHeading(lastKnownTagHeading);
+        }
+
+        // 3) If LB has just been released, revert to the stored original heading
         if (returnToOriginal) {
             setHeading(originalHeading);
         }
     }
+
 
 
 
