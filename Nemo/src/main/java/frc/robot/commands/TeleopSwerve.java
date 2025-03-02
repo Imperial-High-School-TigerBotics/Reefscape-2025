@@ -9,7 +9,9 @@ import java.util.function.BooleanSupplier;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.math.MathUtil;
+import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -25,9 +27,12 @@ public class TeleopSwerve extends Command {
     private Elevator elevator;
 
     private XboxController xbox;
-    private boolean autoTurn;
+    private BooleanSupplier parallelMotionSup;
+    private boolean wasParallelModeActive = false;
+    private double storedHeading = 0;
+    private double lastKnownTagYaw = 0;
 
-    public TeleopSwerve(Swerve s_Swerve, Elevator elevator, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, XboxController xbox, Limelight aprilTagDetection) {
+    public TeleopSwerve(Swerve s_Swerve, Elevator elevator, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, XboxController xbox, Limelight aprilTagDetection, BooleanSupplier parallelMotionsup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -40,45 +45,66 @@ public class TeleopSwerve extends Command {
 
         this.xbox = xbox;
 
-        autoTurn = false;
+        this.parallelMotionSup = parallelMotionSup;
+
     }
 
     @Override
     public void initialize() {
-        autoTurn = false;
     }
 
     @Override
     public void execute() {
-        SmartDashboard.putString("pose", String.valueOf(s_Swerve.swerveOdometry.getPoseMeters().getX()) + ", " + String.valueOf(s_Swerve.swerveOdometry.getPoseMeters().getY()));
+        boolean parallelModeActive = parallelMotionSup.getAsBoolean();
 
-        if (xbox.getRightBumperButtonPressed()) {
-            autoTurn = !autoTurn;
+        if (parallelModeActive && !wasParallelModeActive) {
+            // Capture the robot's current heading
+            storedHeading = s_Swerve.getHeading().getDegrees();
+
+            // Get the closest valid AprilTag for reef alignment
+            double closestTagId = Constants.TeamDependentFactors.redTeam ?
+                                  limelight.getClosestTag(new double[]{7, 6, 8, 10, 11, 9}) :  // Red Team IDs
+                                  limelight.getClosestTag(new double[]{18, 19, 17, 21, 20, 22}); // Blue Team IDs
+
+            double[] tagData = limelight.getTarget((int) closestTagId);
+            if (tagData != null) {
+                lastKnownTagYaw = tagData[2]; // Store last detected yaw of the tag
+            }
         }
 
-        /* Get Values, Deadband*/
         double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
         double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
-        double rotationVal = 0;
-        if (autoTurn) {
-            rotationVal = limelight.getDeadBandedPosition();
-        }
-        if (!autoTurn || rotationVal == 2) {
-            rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
+        double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
+
+        if (parallelModeActive) {
+            // Maintain heading at last known AprilTag direction
+            s_Swerve.setHeading(Rotation2d.fromDegrees(lastKnownTagYaw));
+            rotationVal = 0; // Prevents manual rotation
+
+            // Drive parallel while keeping heading fixed
+            s_Swerve.drive(
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
+                0, // No rotation
+                !robotCentricSup.getAsBoolean(),
+                true
+            );
+        } else {
+            // Restore the original heading when the button is released
+            if (wasParallelModeActive) {
+                s_Swerve.setHeading(Rotation2d.fromDegrees(storedHeading));
+            }
+
+            // Normal driving behavior
+            s_Swerve.drive(
+                new Translation2d(translationVal, strafeVal).times(Constants.Swerve.maxSpeed),
+                rotationVal * Constants.Swerve.maxAngularVelocity,
+                !robotCentricSup.getAsBoolean(),
+                true
+            );
         }
 
-        double speedLimit = Constants.Swerve.maxSpeed;
-
-        if (elevator.ElevatorAboveHalf()) {
-            speedLimit *= Constants.Swerve.ElevatorAboveHalfMultiplier;
-        }
-
-        /* Drive */
-        s_Swerve.drive(
-            new Translation2d(translationVal, strafeVal).times(speedLimit), 
-            rotationVal * Constants.Swerve.maxAngularVelocity, 
-            !robotCentricSup.getAsBoolean(), 
-            true
-        );
+        wasParallelModeActive = parallelModeActive;
     }
+
+
 }

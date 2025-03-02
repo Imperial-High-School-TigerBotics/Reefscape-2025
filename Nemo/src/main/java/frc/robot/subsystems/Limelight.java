@@ -61,13 +61,6 @@ public class Limelight extends SubsystemBase {
         SmartDashboard.putNumberArray("ids", ids);*/
     }
 
-    public double getDeadBandedPosition() {
-        double[] ppos = percentPosition(getTarget(Constants.TeamDependentFactors.middleAprilTagId));
-        if (ppos == null) {
-            return 2;
-        }
-        return -(ppos[0] * 2 - 1) * Constants.SpeedScaleFactors.autoTurnSpeed; // value between -1 and 1, slowing it down by autoTurnSpeed
-    }
 
     public void portForward() { // we dont need this but dont delete it in case we actually do need this
         for (int port = 5800; port <= 5807; port++) {
@@ -76,6 +69,29 @@ public class Limelight extends SubsystemBase {
     }
 
     public void stopAprilTagDetector() {}
+
+    public double getClosestTag(double[] validTagIds) {
+        double[] targets = NetworkTableInstance.getDefault().getTable(name)
+                                               .getEntry("rawfiducials")
+                                               .getDoubleArray(new double[] {-1, 0, 0, 0, 0, 0, 0});
+        
+        double closestTag = -1;
+        double closestDistance = Double.MAX_VALUE;
+    
+        for (int i = 0; i < targets.length; i += 7) {
+            double tagId = targets[i];
+            double distanceToCamera = targets[i + 5]; // Distance to the robot
+    
+            for (double validId : validTagIds) {
+                if (tagId == validId && distanceToCamera < closestDistance) {
+                    closestTag = tagId;
+                    closestDistance = distanceToCamera;
+                }
+            }
+        }
+        return closestTag;
+    }
+    
 
     public double[] getTarget(int id) {
         //var lresults = LimelightHelpers.getLatestResults(name);
