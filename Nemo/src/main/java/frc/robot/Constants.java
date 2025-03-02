@@ -288,14 +288,14 @@ public final class Constants {
     
     /*--------------------Pick Up Algae From Lower Reef In Between L2-L3 -------------------*/
     //Mapped to Right Bumper on operator controller
-    public static final double armPickUpAlgaeFromLowerReefPos = 0.43;
-    public static final double elevatorPickUpAlgaeFromLowerReefPos = 2.02;
+    public static final double armPickUpAlgaeFromLowerReefPos = 0.48;
+    public static final double elevatorPickUpAlgaeFromLowerReefPos = 2.0;
     /*--------------------------------------------------------------------*/
 
     /*--------------------Pick Up Algae From Upper Reef In Between L3-L4-------------------*/
     //Mapped to Left Bumper on operator controller
-    public static final double armPickUpAlgaeFromUpperReefPos = 0.43;
-    public static final double elevatorPickUpAlgaeFromUpperReefPos = 4.77;
+    public static final double armPickUpAlgaeFromUpperReefPos = 0.46;
+    public static final double elevatorPickUpAlgaeFromUpperReefPos = 4.71;
     /*--------------------------------------------------------------------*/
 
     /*----------------------Score Into Barge--------------------*/
