@@ -70,6 +70,9 @@ public final class Constants {
         public static final double XOffset = 0.635;
         public static final double YOffset = 0;
         public static final double ZOffset = -0.8382;
+
+        //Offset if limelight from set robot heading
+        public static final double limelightHeadingOffset = 180;
     }
 
 

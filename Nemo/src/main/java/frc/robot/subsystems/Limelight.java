@@ -9,6 +9,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.hal.simulation.ConstBufferCallback;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.net.PortForwarder;
 import java.util.List;
 
@@ -45,6 +48,36 @@ public class Limelight extends SubsystemBase {
             (tagInfo[2] + 20.5) / 41.0
         };
     }
+
+    public Pose2d getAdjustedRobotPose() {
+        double[] botPose = LimelightHelpers.getBotPose(Constants.LimelightConstants.limelightName);
+        if (botPose.length < 6) {
+            return new Pose2d(); // Return default if data is invalid
+        }
+
+        // Extract X, Y, and Rotation (Yaw) in **robot's coordinate space**
+        double x = botPose[0];  // X Position (meters)
+        double y = botPose[1];  // Y Position (meters)
+        double yaw = botPose[5]; // Rotation in **degrees**
+
+        // Convert yaw to Rotation2d
+        Rotation2d heading = Rotation2d.fromDegrees(yaw);
+
+        // Apply offsets from Limelight's position relative to robot
+        Translation2d offset = new Translation2d(
+            Constants.LimelightConstants.XOffset, 
+            Constants.LimelightConstants.YOffset
+        );
+
+        // Adjust the robot’s position based on Limelight offsets
+        Translation2d adjustedTranslation = new Translation2d(x, y).plus(offset);
+
+        // Since your Limelight faces 180° backward, **rotate the heading by 180°**
+        Rotation2d adjustedHeading = heading.rotateBy(Rotation2d.fromDegrees(Constants.LimelightConstants.limelightHeadingOffset));
+
+        return new Pose2d(adjustedTranslation, adjustedHeading);
+    }
+
 
     public void updateValues() {
 

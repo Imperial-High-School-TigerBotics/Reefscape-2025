@@ -35,22 +35,26 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
     public boolean autonMovingEnabled;
     public PathPlannerAuto a1;
+    private Rotation2d lastKnownTagHeading;
+    private Rotation2d originalHeading;
 
-    public Swerve()
-         {
-            gyro = new Pigeon2(Constants.Swerve.pigeonID);
-            gyro.getConfigurator().apply(new Pigeon2Configuration());
-            gyro.setYaw(Constants.Swerve.SwerveStartHeading);
+    public Swerve(){
+        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro.getConfigurator().apply(new Pigeon2Configuration());
+        gyro.setYaw(Constants.Swerve.SwerveStartHeading);
     
-            mSwerveMods = new SwerveModule[] {
-                new SwerveModule(0, Constants.Swerve.Mod0.constants),
-                new SwerveModule(1, Constants.Swerve.Mod1.constants),
-                new SwerveModule(2, Constants.Swerve.Mod2.constants),
-                new SwerveModule(3, Constants.Swerve.Mod3.constants)
+        mSwerveMods = new SwerveModule[] {
+            new SwerveModule(0, Constants.Swerve.Mod0.constants),
+            new SwerveModule(1, Constants.Swerve.Mod1.constants),
+            new SwerveModule(2, Constants.Swerve.Mod2.constants),
+            new SwerveModule(3, Constants.Swerve.Mod3.constants)
             };
         
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
         autonMovingEnabled = true;
+
+        lastKnownTagHeading = new Rotation2d(); 
+        originalHeading = new Rotation2d();
         }
                     
     public ChassisSpeeds getChassisSpeeds() {
@@ -170,6 +174,40 @@ public class Swerve extends SubsystemBase {
             mod.resetToAbsolute();
         }
     }
+
+    public void setOriginalHeading(Rotation2d heading) {
+        originalHeading = heading;
+    }
+
+    public void updateParallelMotion(boolean parallelModeActive,
+                                 boolean returnToOriginal,
+                                 boolean allowRotation,
+                                 Limelight limelight) {
+
+        // Attempt to get a fresh detected Pose from the limelight
+        Pose2d detectedPose = limelight.getAdjustedRobotPose();
+
+        if (parallelModeActive) {
+            // 1) If we see a *valid* tag pose, update the lastKnownTagHeading
+            if (detectedPose != null) {
+                lastKnownTagHeading = detectedPose.getRotation();
+            }
+
+            // 2) If user does NOT allow rotation, forcibly lock heading
+            // to our lastKnownTagHeading. If the tag is lost, we do NOT overwrite
+            // lastKnownTagHeading with null, so we keep the last good heading.
+            if (!allowRotation) {
+                setHeading(lastKnownTagHeading);
+            }
+        }
+
+        // 3) If LB has just been released, revert to the original heading
+        if (returnToOriginal) {
+            setHeading(originalHeading);
+        }
+    }
+
+
 
     @Override
     public void periodic(){

@@ -109,7 +109,8 @@ public class RobotContainer {
             () -> -driver.getRawAxis(rotationAxis), 
             () -> false,
             driver, limelight,
-            () -> driver.getLeftBumper()
+            () -> driver.getLeftBumper(),
+            () -> driver.getRightBumper()
         )
     );
 
