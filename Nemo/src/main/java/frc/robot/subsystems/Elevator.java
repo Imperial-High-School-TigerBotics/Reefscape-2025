@@ -28,6 +28,10 @@ public class Elevator extends SubsystemBase {
     public double ElevatorI;
     public double ElevatorD;
 
+    public double newP;
+    public double newI;
+    public double newD;
+
     public Elevator() {
         // Initialize motors with brake mode
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
@@ -207,9 +211,9 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
 
         // Read values from SmartDashboard
-        double newP = SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.elevatorP);
-        double newI = SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.elevatorI);
-        double newD = SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.elevatorD);
+        newP = SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.elevatorP);
+        newI = SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.elevatorI);
+        newD = SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.elevatorD);
 
         // Check if values have changed before updating (avoiding unnecessary updates)
         if (newP != ElevatorP || newI != ElevatorI || newD != ElevatorD) {
