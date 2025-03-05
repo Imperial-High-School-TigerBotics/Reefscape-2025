@@ -181,7 +181,7 @@ public class Swerve extends SubsystemBase {
             // SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond);    
 
             // SmartDashboard.putNumber("Pigeon ang vel", gyro.getAngularVelocityXDevice().getValueAsDouble());
-            SmartDashboard.putNumber("Pigeon Yaw", gyro.getYaw().getValueAsDouble());
+            SmartDashboard.putNumber("Pigeon Yaw", gyro.getYaw().getValueAsDouble());            
 
                 
         }

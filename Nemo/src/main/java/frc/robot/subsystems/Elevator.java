@@ -24,6 +24,10 @@ public class Elevator extends SubsystemBase {
 
     public double ElevatorPos;
 
+    public double ElevatorP;
+    public double ElevatorI;
+    public double ElevatorD;
+
     public Elevator() {
         // Initialize motors with brake mode
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
@@ -199,10 +203,32 @@ public class Elevator extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
-        // SmartDashboard.putNumber("Elevator Pos", ElevatorPos);
         SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
         SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
+
+        // Read values from SmartDashboard
+        double newP = SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.elevatorP);
+        double newI = SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.elevatorI);
+        double newD = SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.elevatorD);
+
+        // Check if values have changed before updating (avoiding unnecessary updates)
+        if (newP != ElevatorP || newI != ElevatorI || newD != ElevatorD) {
+            ElevatorP = newP;
+            ElevatorI = newI;
+            ElevatorD = newD;
+
+            // Update PID controllers with new values
+            elevatorMotor1PID.setP(ElevatorP);
+            elevatorMotor1PID.setI(ElevatorI);
+            elevatorMotor1PID.setD(ElevatorD);
+
+            elevatorMotor2PID.setP(ElevatorP);
+            elevatorMotor2PID.setI(ElevatorI);
+            elevatorMotor2PID.setD(ElevatorD);
+        }
+
         nextElevatorPID();
     }
+
 
 }
