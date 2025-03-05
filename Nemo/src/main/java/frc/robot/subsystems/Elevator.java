@@ -28,10 +28,6 @@ public class Elevator extends SubsystemBase {
     public double ElevatorI;
     public double ElevatorD;
 
-    public double newP;
-    public double newI;
-    public double newD;
-
     public Elevator() {
         // Initialize motors with brake mode
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
@@ -211,25 +207,12 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
 
         // Read values from SmartDashboard
-        newP = SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.elevatorP);
-        newI = SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.elevatorI);
-        newD = SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.elevatorD);
+        ElevatorP = SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.elevatorP);
+        ElevatorI = SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.elevatorI);
+        ElevatorD = SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.elevatorD);
 
-        // Check if values have changed before updating (avoiding unnecessary updates)
-        if (newP != ElevatorP || newI != ElevatorI || newD != ElevatorD) {
-            ElevatorP = newP;
-            ElevatorI = newI;
-            ElevatorD = newD;
-
-            // Update PID controllers with new values
-            elevatorMotor1PID.setP(ElevatorP);
-            elevatorMotor1PID.setI(ElevatorI);
-            elevatorMotor1PID.setD(ElevatorD);
-
-            elevatorMotor2PID.setP(ElevatorP);
-            elevatorMotor2PID.setI(ElevatorI);
-            elevatorMotor2PID.setD(ElevatorD);
-        }
+        elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
+        elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
 
         nextElevatorPID();
     }
