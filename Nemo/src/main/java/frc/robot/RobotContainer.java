@@ -77,8 +77,12 @@ public class RobotContainer {
 
   private climberCmd climberCmd;
 
+  private Command initializePositions;
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
 
     limelight = new Limelight();
     limelightCmd = new LimelightCmd(limelight);
@@ -99,6 +103,11 @@ public class RobotContainer {
     // climber = new climber();
     // climberCmd = new climberCmd(climber, operator);
     // climber.setDefaultCommand(climberCmd);
+
+    initializePositions = new SequentialCommandGroup(
+        new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
+        new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
+    );
     
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
@@ -142,22 +151,16 @@ private void configureAutoSelector() {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Ensure initial positions are part of a command
-    Command initializePositions = new SequentialCommandGroup(
-        new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
-        new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
-    );
 
     // Get selected auto command, defaulting to a do-nothing command if null
     Command autoCommand = chooser.getSelected();
     if (autoCommand  == null) {
         autoCommand = new InstantCommand(); // Default safe command
     }
-
-    Command flipHeading = new InstantCommand(() -> s_Swerve.flipHeading());
+    Command heading_flip = s_Swerve.flipHeading();
 
     // Run initialization, then the selected auto command
-    return new SequentialCommandGroup(initializePositions, autoCommand, flipHeading);
+    return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
 }
   
 

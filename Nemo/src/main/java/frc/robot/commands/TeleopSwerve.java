@@ -33,7 +33,7 @@ public class TeleopSwerve extends Command {
     private double storedHeading = 0;
     private double lastKnownTagYaw = 0;
 
-    public TeleopSwerve(Swerve s_Swerve, Elevator elevator, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, XboxController xbox, Limelight aprilTagDetection, BooleanSupplier parallelMotionsup, BooleanSupplier allowRotationSup) {
+    public TeleopSwerve(Swerve s_Swerve, Elevator elevator, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, XboxController xbox, Limelight aprilTagDetection, BooleanSupplier parallelMotionSup, BooleanSupplier allowRotationSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
