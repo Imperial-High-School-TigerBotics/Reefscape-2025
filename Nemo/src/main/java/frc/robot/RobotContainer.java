@@ -152,16 +152,16 @@ private void configureAutoSelector() {
    */
   public Command getAutonomousCommand() {
 
-    // // Get selected auto command, defaulting to a do-nothing command if null
-    // Command autoCommand = chooser.getSelected();
-    // if (autoCommand  == null) {
-    //     autoCommand = new InstantCommand(); // Default safe command
-    // }
-    // Command heading_flip = s_Swerve.flipHeading();
+    // Get selected auto command, defaulting to a do-nothing command if null
+    Command autoCommand = chooser.getSelected();
+    if (autoCommand  == null) {
+        autoCommand = new InstantCommand(); // Default safe command
+    }
+    Command heading_flip = s_Swerve.flipHeading();
 
-    // // Run initialization, then the selected auto command
-    // return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
-    return null;
+    // Run initialization, then the selected auto command
+    //return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
+    return new SequentialCommandGroup(autoCommand, heading_flip);
 }
   
 
