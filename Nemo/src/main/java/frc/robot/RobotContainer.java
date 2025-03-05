@@ -88,26 +88,26 @@ public class RobotContainer {
     limelightCmd = new LimelightCmd(limelight);
     limelight.setDefaultCommand(limelightCmd);
 
-    // elevator = new Elevator();
-    // elevatorCmd = new ElevatorCmd(elevator, operator);
-    // elevator.setDefaultCommand(elevatorCmd);
+    elevator = new Elevator();
+    elevatorCmd = new ElevatorCmd(elevator, operator);
+    elevator.setDefaultCommand(elevatorCmd);
 
-    // arm = new ArmRotation();
-    // armCmd = new ArmRotationCmd(arm, operator);
-    // arm.setDefaultCommand(armCmd);
+    arm = new ArmRotation();
+    armCmd = new ArmRotationCmd(arm, operator);
+    arm.setDefaultCommand(armCmd);
 
-    // armShootAndIntake = new ArmShootAndIntake();
-    // armButtonsCmd = new ArmShootAndIntakeCmd(armShootAndIntake, driver);
-    // armShootAndIntake.setDefaultCommand(armButtonsCmd);
+    armShootAndIntake = new ArmShootAndIntake();
+    armButtonsCmd = new ArmShootAndIntakeCmd(armShootAndIntake, driver);
+    armShootAndIntake.setDefaultCommand(armButtonsCmd);
 
     // climber = new climber();
     // climberCmd = new climberCmd(climber, operator);
     // climber.setDefaultCommand(climberCmd);
 
-    // initializePositions = new SequentialCommandGroup(
-    //     new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
-    //     new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
-    // );
+    initializePositions = new SequentialCommandGroup(
+        new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
+        new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
+    );
     
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
@@ -160,8 +160,7 @@ private void configureAutoSelector() {
     Command heading_flip = s_Swerve.flipHeading();
 
     // Run initialization, then the selected auto command
-    //return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
-    return new SequentialCommandGroup(autoCommand, heading_flip);
+    return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
 }
   
 
