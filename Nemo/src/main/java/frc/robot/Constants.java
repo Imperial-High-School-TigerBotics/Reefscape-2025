@@ -44,24 +44,28 @@ public final class Constants {
 
     public static class TeamDependentFactors {
         public static final boolean redTeam = DriverStation.getAlliance().get() == Alliance.Red;
+        public static boolean forceRedTeamForTesting = false; // Set true for testing
+        public static final double[] reefIDsBlue = {
+            18, // closeMiddleReefIDBlue
+            19, // closeLeftReefIDBlue
+            17, // closeRightReefIDBlue
+            21, // farMiddleReefIDBlue
+            20, // farLeftReefIDBlue
+            22  // farRightReefIDBlue
+        };
 
-        public static final double closeMiddleReefIDBlue = 18;
-        public static final double closeMiddleReefIDRed = 7;
+        public static final double[] reefIDsRed = {
+            7,  // closeMiddleReefIDRed
+            6,  // closeLeftReefIDRed
+            8,  // closeRightReefIDRed
+            10, // farMiddleReefIDRed
+            11, // farLeftReefIDRed
+            9   // farRightReefIDRed
+        };
 
-        public static final double closeLeftReefIDBlue = 19;
-        public static final double closeLeftReefIDRed = 6;
-
-        public static final double closeRightReefIDBlue = 17;
-        public static final double closeRightReefIDRed = 8;
-
-        public static final double farMiddleReefIDBlue = 21;
-        public static final double farMiddleReefIDRed = 10;
-
-        public static final double farLeftReefIDBlue = 20;
-        public static final double farLeftReefIDRed = 11;
-
-        public static final double farRightReefIDBlue = 22;
-        public static final double farRightReefIDRed = 9;
+        public static double[] getReefIDs() {
+            return redTeam ? reefIDsRed : reefIDsBlue;
+        }
     }
 
     public static class LimelightConstants {

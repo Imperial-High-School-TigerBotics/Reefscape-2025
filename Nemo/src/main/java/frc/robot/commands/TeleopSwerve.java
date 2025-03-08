@@ -1,6 +1,7 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
+import frc.robot.Constants.TeamDependentFactors;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Swerve;
 import frc.robot.subsystems.Elevator;
@@ -57,48 +58,71 @@ public class TeleopSwerve extends Command {
     }
 
     @Override
-public void execute() {
-    SmartDashboard.putString("pose", 
-        String.valueOf(s_Swerve.swerveOdometry.getPoseMeters().getX()) + ", " 
-        + String.valueOf(s_Swerve.swerveOdometry.getPoseMeters().getY()));
+    public void execute() {
+        SmartDashboard.putString("pose", 
+            s_Swerve.getPose().getX() + ", " + s_Swerve.getPose().getY());
 
+        // Track button states
+        boolean parallelMotionActive = parallelMotionSup.getAsBoolean(); // A button
+        boolean allowRotation = allowRotationSup.getAsBoolean(); // B button
+        boolean justPressedA = parallelMotionActive && !wasParallelModeActive;
+        boolean justReleasedA = !parallelMotionActive && wasParallelModeActive;
 
-    // NEW: detect the "just pressed" event
-    boolean justPressedLB = (parallelMotionSup.getAsBoolean() && !wasParallelModeActive);
-    // If we release LB, we want to reset heading
-    boolean returnToOriginal = !parallelMotionSup.getAsBoolean() && wasParallelModeActive;
+        // If A is just pressed, find closest AprilTag and store its heading
+        if (justPressedA) {
+            double[] validTagIds = TeamDependentFactors.getReefIDs();
+            double closestTagId = limelight.getClosestTag(validTagIds);
 
-    // NEW: If we just pressed LB for the first time, store our current heading
-    if (justPressedLB) {
-        s_Swerve.setOriginalHeading(s_Swerve.getHeading());
+            if (closestTagId != -1) {
+                double[] tagData = limelight.getTarget((int) closestTagId);
+                if (tagData != null) {
+                    lastKnownTagYaw = tagData[0]; // Extract tag yaw (adjust if needed)
+                }
+            }
+
+            // Store the original heading to return to when A is released
+            storedHeading = s_Swerve.getHeading().getDegrees();
+        }
+
+        // If A is held, force the heading to the last known AprilTag yaw
+        if (parallelMotionActive && !allowRotation) {
+            s_Swerve.setHeading(Rotation2d.fromDegrees(lastKnownTagYaw));
+        }
+
+        // If A is released, return to the stored heading
+        if (justReleasedA) {
+            s_Swerve.setHeading(Rotation2d.fromDegrees(storedHeading));
+        }
+
+        // Normal swerve drive behavior
+        double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
+        double strafeVal = MathUtil.applyDeadband(strafeSup.getAsDouble(), Constants.stickDeadband);
+        double rotationVal = MathUtil.applyDeadband(rotationSup.getAsDouble(), Constants.stickDeadband);
+
+        // If A is held and B is NOT held, lock rotation
+        if (parallelMotionActive && !allowRotation) {
+            rotationVal = 0;
+        }
+
+        // Apply speed limits based on elevator height
+        double speedLimit = Constants.Swerve.maxSpeed;
+        if (elevator.ElevatorAboveHalf()) {
+            speedLimit *= Constants.Swerve.ElevatorAboveHalfMultiplier;
+        }
+
+        // Drive the swerve
+        s_Swerve.drive(
+            new Translation2d(translationVal, strafeVal).times(speedLimit), 
+            rotationVal * Constants.Swerve.maxAngularVelocity, 
+            !robotCentricSup.getAsBoolean(), 
+            true
+        );
+
+        // Track previous state for edge detection
+        wasParallelModeActive = parallelMotionActive;
     }
 
-    s_Swerve.updateParallelMotion(parallelMotionSup.getAsBoolean(), returnToOriginal, allowRotationSup.getAsBoolean(), limelight);
 
-    wasParallelModeActive = parallelMotionSup.getAsBoolean(); // Keep track if parallel mode was active
-
-    // --- normal driving logic below ---
-    double translationVal = MathUtil.applyDeadband(translationSup.getAsDouble(), Constants.stickDeadband);
-    double strafeVal      = MathUtil.applyDeadband(strafeSup.getAsDouble(),      Constants.stickDeadband);
-    double rotationVal    = MathUtil.applyDeadband(rotationSup.getAsDouble(),    Constants.stickDeadband);
-
-    // If LB is pressed but RB is not, lock rotation
-    if (parallelMotionSup.getAsBoolean() && !allowRotationSup.getAsBoolean()) {
-        rotationVal = 0;
-    }
-
-    double speedLimit = Constants.Swerve.maxSpeed;
-    if (elevator.ElevatorAboveHalf()) {
-        speedLimit *= Constants.Swerve.ElevatorAboveHalfMultiplier;
-    }
-
-    s_Swerve.drive(
-        new Translation2d(translationVal, strafeVal).times(speedLimit), 
-        rotationVal * Constants.Swerve.maxAngularVelocity, 
-        !robotCentricSup.getAsBoolean(), 
-        true
-    );
-}
 
 
 
