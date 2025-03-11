@@ -243,8 +243,8 @@ public final class Constants {
     public static final double elevatorLimitSwitchOffset = 10;
 
 
-    public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 24;
+    public static final double min_elevator_pos = -18;
+    public static final double max_elevator_pos = 0;
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2;
