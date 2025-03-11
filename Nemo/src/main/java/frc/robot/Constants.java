@@ -244,7 +244,7 @@ public final class Constants {
 
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 8.4;
+    public static final double max_elevator_pos = 24;
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2;
@@ -269,9 +269,9 @@ public final class Constants {
     public static double ArmRotatorI = 0.0;
     public static double ArmRotatorD = 0.0;
     public static double armCoderOffset = 0.195; // Ball intake left, Coral intake right
-    public static double ArmMinPos = 0.38;
-    public static double ArmMaxPos = 0.97;
-    public static double ArmRestPos = 0.66;
+    public static double ArmMinPos = 0.0;
+    public static double ArmMaxPos = 1.0;
+    public static double ArmRestPos = 0.5;
   }
 
   public static final class PresetElevatorAndArmConstants{
