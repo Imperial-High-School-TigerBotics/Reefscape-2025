@@ -210,6 +210,9 @@ public class Elevator extends SubsystemBase {
         SmartDashboard.putNumber("Target Elevator Pos", ElevatorPos);
         SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
         SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
+
+        SmartDashboard.putNumber("Left Elevator Motor RPM", leftElevatorMotor1RPM());
+        SmartDashboard.putNumber("Right Elevator Motor RPM", rightElevatorMotor2RPM());
         nextElevatorPID();
     }
 
