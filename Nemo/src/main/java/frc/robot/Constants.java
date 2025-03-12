@@ -224,8 +224,8 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final int elevatorMotor1ID = 19;
-    public static final int elevatorMotor2ID = 21;
+    public static final int elevatorMotor1ID = 21;
+    public static final int elevatorMotor2ID = 19;
 
     public static final int elevatorCoderID = 62;
 
