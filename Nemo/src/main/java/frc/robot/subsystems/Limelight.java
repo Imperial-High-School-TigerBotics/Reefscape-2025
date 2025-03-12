@@ -165,4 +165,11 @@ public class Limelight extends SubsystemBase {
 
         return poseEstimate;
     }*/
+
+    @Override
+    public void periodic() {
+        updateValues();
+        SmartDashboard.putNumber("Nearest April Tag Red", getClosestTag(Constants.TeamDependentFactors.reefIDsRed));
+        SmartDashboard.putNumber("Nearest April Tag Blue", getClosestTag(Constants.TeamDependentFactors.reefIDsBlue));
+    }
 }
