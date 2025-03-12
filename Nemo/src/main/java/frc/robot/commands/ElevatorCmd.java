@@ -111,7 +111,7 @@ public class ElevatorCmd extends Command {
             }*/
             // Manual Elevator Control
             if (manualElevatorControl) {
-                double axis = MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
+                double axis = -MathUtil.applyDeadband(xbox.getRawAxis(1), Constants.stickDeadband);
                 if (axis != 0) {
                     elevatorPos = MathUtil.clamp(
                         elevator.getElevatorCoderPos() + (axis * Constants.ElevatorConstants.manual_elevator_speed),
