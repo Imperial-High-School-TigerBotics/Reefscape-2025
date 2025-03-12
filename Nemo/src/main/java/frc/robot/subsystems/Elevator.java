@@ -199,7 +199,7 @@ public class Elevator extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
-        // SmartDashboard.putNumber("Elevator Pos", ElevatorPos);
+        SmartDashboard.putNumber("Elevator Pos", ElevatorPos);
         SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
         SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
         nextElevatorPID();

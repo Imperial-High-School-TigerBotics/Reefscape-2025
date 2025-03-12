@@ -235,7 +235,7 @@ public final class Constants {
     public static final double manual_elevator_speed  = 0.36;
     /* ------------------------------------------------------ */
 
-    public static final double elevatorP = 0.7;
+    public static final double elevatorP = 0.1;
     public static final double elevatorI = 0.0;
     public static final double elevatorD = 0.0;
 
