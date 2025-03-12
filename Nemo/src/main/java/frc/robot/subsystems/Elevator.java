@@ -189,7 +189,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public double getElevatorCoderPos() {
-        return - elevatorCoder.getPositionSinceBoot().getValueAsDouble();
+        return -elevatorCoder.getPositionSinceBoot().getValueAsDouble();
     }
 
     public boolean ElevatorAboveHalf() {
