@@ -79,12 +79,12 @@ public class Elevator extends SubsystemBase {
 
         clampElevatorSetPos();
 
-        if(ElevatorPos > getElevatorCoderPos() && !limitSwitchTop.get() ){
+        if(ElevatorPos > getElevatorCoderPos() && limitSwitchTop.get() ){
 
             setElevatorPID(ElevatorPos); // Continue moving if safe
 
 
-        }else if(ElevatorPos < getElevatorCoderPos() && !limitSwitchBottom.get() ){
+        }else if(ElevatorPos < getElevatorCoderPos() && limitSwitchBottom.get() ){
             setElevatorPID(ElevatorPos);
         }
         else{
@@ -194,6 +194,14 @@ public class Elevator extends SubsystemBase {
 
     public boolean ElevatorAboveHalf() {
         return getElevatorCoderPos() > Constants.ElevatorConstants.max_elevator_pos / 2;
+    }
+
+    public double leftElevatorMotor1RPM(){
+        return elevatorMotor1.getRotorVelocity().getValueAsDouble();
+    }
+
+    public double rightElevatorMotor2RPM(){
+        return elevatorMotor2.getRotorVelocity().getValueAsDouble();
     }
 
     @Override
