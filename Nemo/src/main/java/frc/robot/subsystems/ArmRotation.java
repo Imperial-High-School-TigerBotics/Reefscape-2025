@@ -60,7 +60,7 @@ public class ArmRotation extends SubsystemBase {
     }
 
     public double getArmRotatorPos() {
-        double normalizedPosition = (armEncoder.get()) % 1.0;
+        double normalizedPosition = (armEncoder.get() - Constants.ArmConstants.armCoderOffset) % 1.0;
         if (normalizedPosition < 0) {
             normalizedPosition += 1.0;
         }

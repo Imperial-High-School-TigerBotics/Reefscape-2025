@@ -92,13 +92,13 @@ public class RobotContainer {
     elevatorCmd = new ElevatorCmd(elevator, operator);
     elevator.setDefaultCommand(elevatorCmd);
 
-    // arm = new ArmRotation();
-    // armCmd = new ArmRotationCmd(arm, operator);
-    // arm.setDefaultCommand(armCmd);
+    arm = new ArmRotation();
+    armCmd = new ArmRotationCmd(arm, operator);
+    arm.setDefaultCommand(armCmd);
 
-    // armShootAndIntake = new ArmShootAndIntake();
-    // armButtonsCmd = new ArmShootAndIntakeCmd(armShootAndIntake, driver);
-    // armShootAndIntake.setDefaultCommand(armButtonsCmd);
+    armShootAndIntake = new ArmShootAndIntake();
+    armButtonsCmd = new ArmShootAndIntakeCmd(armShootAndIntake, driver);
+    armShootAndIntake.setDefaultCommand(armButtonsCmd);
 
     // climber = new climber();
     // climberCmd = new climberCmd(climber, operator);
