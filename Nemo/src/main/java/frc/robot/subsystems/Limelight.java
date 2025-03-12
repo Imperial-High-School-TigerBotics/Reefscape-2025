@@ -171,5 +171,9 @@ public class Limelight extends SubsystemBase {
         updateValues();
         SmartDashboard.putNumber("Nearest April Tag Red", getClosestTag(Constants.TeamDependentFactors.reefIDsRed));
         SmartDashboard.putNumber("Nearest April Tag Blue", getClosestTag(Constants.TeamDependentFactors.reefIDsBlue));
+
+        SmartDashboard.putNumber("BotPose x", getAdjustedRobotPose().getTranslation().getX());
+        SmartDashboard.putNumber("BotPose y", getAdjustedRobotPose().getTranslation().getY());
+        SmartDashboard.putNumber("BotPose yaw", getAdjustedRobotPose().getRotation().getDegrees());
     }
 }
