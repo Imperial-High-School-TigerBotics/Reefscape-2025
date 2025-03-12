@@ -30,6 +30,10 @@ public class Elevator extends SubsystemBase {
 
     public Elevator() {
         // Initialize motors with brake mode
+
+        ElevatorP = Constants.ElevatorConstants.elevatorP;
+        ElevatorI = Constants.ElevatorConstants.elevatorI;
+        ElevatorD = Constants.ElevatorConstants.elevatorD;
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor1PID = new PIDController(
