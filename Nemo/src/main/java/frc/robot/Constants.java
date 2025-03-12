@@ -230,9 +230,9 @@ public final class Constants {
     public static final int elevatorCoderID = 62;
 
     /* -----------------Elevator Motor Speeds----------------- */
-    public static final double elevatorMotor1speed = 0.4;
-    public static final double elevatorMotor2speed = 0.4;
-    public static final double manual_elevator_speed  = 0.36;
+    public static final double elevatorMotor1speed = 1.0;
+    public static final double elevatorMotor2speed = 1.0;
+    public static final double manual_elevator_speed  = 1.0;
     /* ------------------------------------------------------ */
 
     public static final double elevatorP = 0.1;
@@ -244,7 +244,7 @@ public final class Constants {
 
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 4;
+    public static final double max_elevator_pos = 7;
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2;
@@ -253,7 +253,7 @@ public final class Constants {
 
   public static final class ArmConstants {
     /* -----------------Arm Motor Speeds----------------- */
-    public static final double manual_arm_speed  = 0.13;
+    public static final double manual_arm_speed  = 0.3;
     public static double BallIntakeSpeed = 0.3;
     public static double CoralIntakeSpeed = 0.4;
     public static double ArmRotatorSpeed = 0.3;

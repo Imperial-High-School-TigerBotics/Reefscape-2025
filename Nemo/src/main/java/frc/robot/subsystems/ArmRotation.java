@@ -52,7 +52,7 @@ public class ArmRotation extends SubsystemBase {
         double setValue = armRotatorPID.calculate(getArmRotatorPos(), position);
         double speedLimit = Constants.ArmConstants.ArmRotatorSpeed;
         setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
-        armRotator.set(setValue);
+        armRotator.set(-setValue);
     }
 
     public void rotateArmMotor(double speed) {
