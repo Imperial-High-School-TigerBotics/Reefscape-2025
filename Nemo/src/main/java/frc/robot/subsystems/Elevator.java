@@ -22,32 +22,24 @@ public class Elevator extends SubsystemBase {
     private DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.limitSwitchTop);
     private DigitalInput limitSwitchBottom = new DigitalInput(Constants.ElevatorConstants.limitSwitchBottom);
 
-    private double ElevatorP;
-    private double ElevatorI;
-    private double ElevatorD;
-
     public double ElevatorPos;
 
     public Elevator() {
         // Initialize motors with brake mode
-
-        ElevatorP = Constants.ElevatorConstants.elevatorP;
-        ElevatorI = Constants.ElevatorConstants.elevatorI;
-        ElevatorD = Constants.ElevatorConstants.elevatorD;
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor1PID = new PIDController(
-            ElevatorP,
-            ElevatorI,
-            ElevatorD
+            Constants.ElevatorConstants.elevatorP,
+            Constants.ElevatorConstants.elevatorI,
+            Constants.ElevatorConstants.elevatorD
         );
 
         elevatorMotor2 = new TalonFX(Constants.ElevatorConstants.elevatorMotor2ID);
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor2PID = new PIDController(
-            ElevatorP,
-            ElevatorI,
-            ElevatorD
+            Constants.ElevatorConstants.elevatorP,
+            Constants.ElevatorConstants.elevatorI,
+            Constants.ElevatorConstants.elevatorD
         );
 
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
@@ -221,19 +213,6 @@ public class Elevator extends SubsystemBase {
 
         SmartDashboard.putNumber("Left Elevator Motor RPM", leftElevatorMotor1RPM());
         SmartDashboard.putNumber("Right Elevator Motor RPM", rightElevatorMotor2RPM());
-         
-        double newP = SmartDashboard.getNumber("Elevator P", ElevatorP);
-        double newI = SmartDashboard.getNumber("Elevator I", ElevatorI);
-        double newD = SmartDashboard.getNumber("Elevator D", ElevatorD);
-
-        if (newP != ElevatorP || newI != ElevatorI || newD != ElevatorD) {
-            ElevatorP = newP;
-            ElevatorI = newI;
-            ElevatorD = newD;
-            
-            elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
-            elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
-        }
         nextElevatorPID();
     }
 
