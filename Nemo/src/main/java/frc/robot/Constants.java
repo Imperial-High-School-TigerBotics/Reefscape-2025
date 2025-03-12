@@ -269,9 +269,9 @@ public final class Constants {
     public static double ArmRotatorI = 0.0;
     public static double ArmRotatorD = 0.0;
     public static double armCoderOffset = 0.195; // Ball intake left, Coral intake right
-    public static double ArmMinPos = 0.2; //originally 0.1
-    public static double ArmMaxPos = 0.85;
-    public static double ArmRestPos = 0.602;
+    public static double ArmMinPos = 0.19; //Physical Minimum 0.17
+    public static double ArmMaxPos = 0.9; //Physical Maximum 0.92
+    public static double ArmRestPos = 0.6;
   }
 
   public static final class PresetElevatorAndArmConstants{
