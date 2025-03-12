@@ -221,15 +221,19 @@ public class Elevator extends SubsystemBase {
 
         SmartDashboard.putNumber("Left Elevator Motor RPM", leftElevatorMotor1RPM());
         SmartDashboard.putNumber("Right Elevator Motor RPM", rightElevatorMotor2RPM());
-
-        // Read values from SmartDashboard
-        ElevatorP = SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.elevatorP);
-        ElevatorI = SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.elevatorI);
-        ElevatorD = SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.elevatorD);
-
          
-        elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
-        elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
+        double newP = SmartDashboard.getNumber("Elevator P", ElevatorP);
+        double newI = SmartDashboard.getNumber("Elevator I", ElevatorI);
+        double newD = SmartDashboard.getNumber("Elevator D", ElevatorD);
+
+        if (newP != ElevatorP || newI != ElevatorI || newD != ElevatorD) {
+            ElevatorP = newP;
+            ElevatorI = newI;
+            ElevatorD = newD;
+            
+            elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
+            elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
+        }
         nextElevatorPID();
     }
 
