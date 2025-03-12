@@ -79,12 +79,12 @@ public class Elevator extends SubsystemBase {
 
         clampElevatorSetPos();
 
-        if(ElevatorPos > getElevatorCoderPos() && limitSwitchTop.get() ){
+        if(ElevatorPos > getElevatorCoderPos() && !limitSwitchTop.get() ){
 
             setElevatorPID(ElevatorPos); // Continue moving if safe
 
 
-        }else if(ElevatorPos < getElevatorCoderPos() && limitSwitchBottom.get() ){
+        }else if(ElevatorPos < getElevatorCoderPos() && !limitSwitchBottom.get() ){
             setElevatorPID(ElevatorPos);
         }
         else{
