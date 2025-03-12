@@ -22,6 +22,10 @@ public class Elevator extends SubsystemBase {
     private DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.limitSwitchTop);
     private DigitalInput limitSwitchBottom = new DigitalInput(Constants.ElevatorConstants.limitSwitchBottom);
 
+    private double ElevatorP;
+    private double ElevatorI;
+    private double ElevatorD;
+
     public double ElevatorPos;
 
     public Elevator() {
@@ -29,17 +33,17 @@ public class Elevator extends SubsystemBase {
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor1PID = new PIDController(
-            Constants.ElevatorConstants.elevatorP,
-            Constants.ElevatorConstants.elevatorI,
-            Constants.ElevatorConstants.elevatorD
+            ElevatorP,
+            ElevatorI,
+            ElevatorD
         );
 
         elevatorMotor2 = new TalonFX(Constants.ElevatorConstants.elevatorMotor2ID);
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor2PID = new PIDController(
-            Constants.ElevatorConstants.elevatorP,
-            Constants.ElevatorConstants.elevatorI,
-            Constants.ElevatorConstants.elevatorD
+            ElevatorP,
+            ElevatorI,
+            ElevatorD
         );
 
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
@@ -213,6 +217,15 @@ public class Elevator extends SubsystemBase {
 
         SmartDashboard.putNumber("Left Elevator Motor RPM", leftElevatorMotor1RPM());
         SmartDashboard.putNumber("Right Elevator Motor RPM", rightElevatorMotor2RPM());
+
+        // Read values from SmartDashboard
+        ElevatorP = SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.elevatorP);
+        ElevatorI = SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.elevatorI);
+        ElevatorD = SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.elevatorD);
+
+         
+        elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
+        elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
         nextElevatorPID();
     }
 
