@@ -235,9 +235,18 @@ public final class Constants {
     public static final double manual_elevator_speed  = 1.0;
     /* ------------------------------------------------------ */
 
+    /*-------------------PID and FEEDFORWARD------------------ */
+
     public static final double elevatorP = 0.5;
     public static final double elevatorI = 0.0003;
     public static final double elevatorD = 0.015;
+
+    public static final double elevatorFeedforwardKs = 0.0;
+    public static final double elevatorFeedforwardKg = 0.0;
+    public static final double elevatorFeedforwardKv = 0.0;
+    public static final double elevatorFeedforwardKa = 0.0;
+
+    /* ------------------------------------------------------ */
 
     public static final double elevatorSafety = 0.25;
     public static final double elevatorLimitSwitchOffset = 10;

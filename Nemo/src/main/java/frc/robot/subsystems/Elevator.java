@@ -10,6 +10,8 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
+import edu.wpi.first.math.controller.ElevatorFeedforward;
+
 public class Elevator extends SubsystemBase {
     private TalonFX elevatorMotor1;
     private TalonFX elevatorMotor2;
@@ -23,6 +25,8 @@ public class Elevator extends SubsystemBase {
     private DigitalInput limitSwitchBottom = new DigitalInput(Constants.ElevatorConstants.limitSwitchBottom);
 
     public double ElevatorPos;
+
+    private ElevatorFeedforward elevatorFeedforward;
 
     public Elevator() {
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
@@ -39,6 +43,13 @@ public class Elevator extends SubsystemBase {
             Constants.ElevatorConstants.elevatorP,
             Constants.ElevatorConstants.elevatorI,
             Constants.ElevatorConstants.elevatorD
+        );
+
+        elevatorFeedforward = new ElevatorFeedforward(
+            Constants.ElevatorConstants.elevatorFeedforwardKs,
+            Constants.ElevatorConstants.elevatorFeedforwardKg,
+            Constants.ElevatorConstants.elevatorFeedforwardKv,
+            Constants.ElevatorConstants.elevatorFeedforwardKa
         );
 
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
@@ -101,7 +112,14 @@ public class Elevator extends SubsystemBase {
     }
 
     public void setElevatorPID(double position) {
-        double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
+        double velocity = leftElevatorMotor1RPM();
+        double acceleration = (velocity - leftElevatorMotor1RPM()) / Constants.ElevatorConstants.elevatorMotor1speed;
+
+        double feedforward = elevatorFeedforward.calculate(velocity, acceleration);
+        double pidOutput = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
+
+        double setValue = pidOutput + feedforward;
+        
         double speedLimit = Constants.ElevatorConstants.elevatorMotor1speed;
         if (setValue > speedLimit) {
             setValue = speedLimit;
