@@ -201,6 +201,11 @@ public class Elevator extends SubsystemBase {
         return elevatorMotor2.getRotorVelocity().getValueAsDouble();
     }
 
+    public void elevatorSetVoltage(double voltage){
+        elevatorMotor1.setVoltage(-voltage);
+        elevatorMotor2.setVoltage(voltage);
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
