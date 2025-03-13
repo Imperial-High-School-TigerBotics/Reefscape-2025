@@ -119,18 +119,19 @@ public class Elevator extends SubsystemBase {
         double pidOutput = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
 
         double setValue = pidOutput + feedforward;
-        
+
         double speedLimit = Constants.ElevatorConstants.elevatorMotor1speed;
-        if (setValue > speedLimit) {
-            setValue = speedLimit;
-        } else if (setValue < -speedLimit) {
-            setValue = -speedLimit;
-        }
+
+        // if (setValue > speedLimit) {
+        //     setValue = speedLimit;
+        // } else if (setValue < -speedLimit) {
+        //     setValue = -speedLimit;
+        // }
 
         
 
-        elevatorMotor1.set(-setValue);
-        elevatorMotor2.set(setValue);
+        elevatorMotor1.setVoltage(-setValue);
+        elevatorMotor2.setVoltage(setValue);
     }
 
     public void setElevatorPID1(double position){

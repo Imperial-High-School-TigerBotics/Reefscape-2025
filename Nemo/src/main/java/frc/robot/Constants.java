@@ -241,9 +241,9 @@ public final class Constants {
     public static final double elevatorI = 0.0003;
     public static final double elevatorD = 0.015;
 
-    public static final double elevatorFeedforwardKs = 0.0;
-    public static final double elevatorFeedforwardKg = 0.0;
-    public static final double elevatorFeedforwardKv = 0.0;
+    public static final double elevatorFeedforwardKs = 0.0; // Minimum voltage that gets the elevator moving
+    public static final double elevatorFeedforwardKg = 0.0; // Voltage that holds the elevator in place
+    public static final double elevatorFeedforwardKv = 0.0; // From the slope of voltage vs. velocity
     public static final double elevatorFeedforwardKa = 0.0;
 
     /* ------------------------------------------------------ */
