@@ -25,7 +25,6 @@ public class Elevator extends SubsystemBase {
     public double ElevatorPos;
 
     public Elevator() {
-        // Initialize motors with brake mode
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor1PID = new PIDController(
@@ -50,7 +49,6 @@ public class Elevator extends SubsystemBase {
     public void setElevatorPosition(double position) {
         ElevatorPos = position;
         clampElevatorSetPos();
-       // nextElevatorPID();
     }
 
     public void clampElevatorSetPos() {
@@ -89,27 +87,7 @@ public class Elevator extends SubsystemBase {
         }
         else{
             limitSwitchCap();
-           // elevatorStop();
         }
-
-        // if ((!limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) ||
-        // (!limitSwitchBottom.get() && ElevatorPos <= Constants.ElevatorConstants.min_elevator_pos)) 
-        // {
-        //     return; // Stop movement if at limits
-        // // }
-        // if(ElevatorPos > getElevatorCoderPos() && limitSwitchTop.get()){
-
-        //     setElevatorPID(ElevatorPos); // Continue moving if safe
-
-
-        // }
-        // else if(ElevatorPos < getElevatorCoderPos() && limitSwitchBottom.get()){
-
-        //     setElevatorPID(ElevatorPos); // Continue moving if safe
-
-
-        // }
-        // setElevatorPID(ElevatorPos); // Continue moving if safe
     }
     
     public void setElevatorCoast(){
