@@ -44,7 +44,7 @@ public final class Constants {
 
     public static class TeamDependentFactors {
         public static final boolean redTeam = DriverStation.getAlliance().get() == Alliance.Red;
-        public static boolean forceRedTeamForTesting = false; // Set true for testing
+        public static boolean forceRedTeamForTesting = true; // Set true for testing
         public static final double[] reefIDsBlue = {
             18, // closeMiddleReefIDBlue
             19, // closeLeftReefIDBlue
@@ -230,21 +230,21 @@ public final class Constants {
     public static final int elevatorCoderID = 62;
 
     /* -----------------Elevator Motor Speeds----------------- */
-    public static final double elevatorMotor1speed = 1.0;
-    public static final double elevatorMotor2speed = 1.0;
+    public static final double elevatorMotor1speed = 0.3;
+    public static final double elevatorMotor2speed = 0.3;
     public static final double manual_elevator_speed  = 1.0;
     /* ------------------------------------------------------ */
 
-    public static final double elevatorP = 0.1;
-    public static final double elevatorI = 0.0;
-    public static final double elevatorD = 0.0;
+    public static final double elevatorP = 0.5;
+    public static final double elevatorI = 0.0003;
+    public static final double elevatorD = 0.015;
 
     public static final double elevatorSafety = 0.25;
     public static final double elevatorLimitSwitchOffset = 10;
 
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 7;
+    public static final double max_elevator_pos = 7.7;
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2;
@@ -278,38 +278,38 @@ public final class Constants {
 
     /*--------------------Coral Intake From Source-------------------*/
     //Mapped to Buttoon B on operator controller
-    public static final double armCoralIntakeFromSourcePos = 0.37;
-    public static final double elevatorCoralIntakeFromSourcePos = 1.1;
+    public static final double armCoralIntakeFromSourcePos = 0.89;
+    public static final double elevatorCoralIntakeFromSourcePos = 0.68;
     /*--------------------------------------------------------------*/
 
     /*--------------------Score Coral L2-------------------*/
     //Mapped to Button Y on operator controller
-    public static final double armScoreCoralL2Pos = 0.92;
-    public static final double elevatorScoreCoralL2Pos = 2.21;
+    public static final double armScoreCoralL2Pos = 0.38;
+    public static final double elevatorScoreCoralL2Pos = 2.3;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L3-------------------*/
     //Mapped to Button X on operator controller
-    public static final double armScoreCoralL3Pos = 0.944;
+    public static final double armScoreCoralL3Pos = 0.37;
     public static final double elevatorScoreCoralL3Pos = 4.06;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L4-------------------*/
     //Mapped to Button A on operator controller
-    public static final double armScoreCoralL4Pos = 0.9;
-    public static final double elevatorScoreCoralL4Pos = 8.343;
+    public static final double armScoreCoralL4Pos = 0.39;
+    public static final double elevatorScoreCoralL4Pos = 7.65;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Algae In Processor-------------------*/
     //Mapped to Right Trigger on operator controller
-    public static final double armScoreAlgaeInProcessorPos = 0.38;
-    public static final double elevatorScoreAlgaeInProcessorPos = 0.53;
+    public static final double armScoreAlgaeInProcessorPos = 0.86;
+    public static final double elevatorScoreAlgaeInProcessorPos = 0;
     /*--------------------------------------------------------------*/
     
     /*--------------------Pick Up Algae From Lower Reef In Between L2-L3 -------------------*/
     //Mapped to Right Bumper on operator controller
-    public static final double armPickUpAlgaeFromLowerReefPos = 0.48;
-    public static final double elevatorPickUpAlgaeFromLowerReefPos = 2.0;
+    public static final double armPickUpAlgaeFromLowerReefPos = 0.74;
+    public static final double elevatorPickUpAlgaeFromLowerReefPos = 0.82;
     /*--------------------------------------------------------------------*/
 
     /*--------------------Pick Up Algae From Upper Reef In Between L3-L4-------------------*/
@@ -320,8 +320,8 @@ public final class Constants {
 
     /*----------------------Score Into Barge--------------------*/
     //Mapped to Left Trigger on operator controller
-    public static final double armScoreIntoBargePos = 0.6;
-    public static final double elevatorScoreIntoBargePos = 8.3;
+    public static final double armScoreIntoBargePos = 0.42;
+    public static final double elevatorScoreIntoBargePos = 7.55;
     /*----------------------------------------------------------*/
   }
 
