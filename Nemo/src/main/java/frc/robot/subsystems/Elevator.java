@@ -10,8 +10,6 @@ import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
 
-import edu.wpi.first.math.controller.ElevatorFeedforward;
-
 public class Elevator extends SubsystemBase {
     private TalonFX elevatorMotor1;
     private TalonFX elevatorMotor2;
@@ -26,9 +24,8 @@ public class Elevator extends SubsystemBase {
 
     public double ElevatorPos;
 
-    private ElevatorFeedforward elevatorFeedforward;
-
     public Elevator() {
+        // Initialize motors with brake mode
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor1PID = new PIDController(
@@ -45,13 +42,6 @@ public class Elevator extends SubsystemBase {
             Constants.ElevatorConstants.elevatorD
         );
 
-        elevatorFeedforward = new ElevatorFeedforward(
-            Constants.ElevatorConstants.elevatorFeedforwardKs,
-            Constants.ElevatorConstants.elevatorFeedforwardKg,
-            Constants.ElevatorConstants.elevatorFeedforwardKv,
-            Constants.ElevatorConstants.elevatorFeedforwardKa
-        );
-
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
 
         ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
@@ -60,6 +50,7 @@ public class Elevator extends SubsystemBase {
     public void setElevatorPosition(double position) {
         ElevatorPos = position;
         clampElevatorSetPos();
+       // nextElevatorPID();
     }
 
     public void clampElevatorSetPos() {
@@ -98,7 +89,27 @@ public class Elevator extends SubsystemBase {
         }
         else{
             limitSwitchCap();
+           // elevatorStop();
         }
+
+        // if ((!limitSwitchTop.get() && ElevatorPos >= Constants.ElevatorConstants.max_elevator_pos) ||
+        // (!limitSwitchBottom.get() && ElevatorPos <= Constants.ElevatorConstants.min_elevator_pos)) 
+        // {
+        //     return; // Stop movement if at limits
+        // // }
+        // if(ElevatorPos > getElevatorCoderPos() && limitSwitchTop.get()){
+
+        //     setElevatorPID(ElevatorPos); // Continue moving if safe
+
+
+        // }
+        // else if(ElevatorPos < getElevatorCoderPos() && limitSwitchBottom.get()){
+
+        //     setElevatorPID(ElevatorPos); // Continue moving if safe
+
+
+        // }
+        // setElevatorPID(ElevatorPos); // Continue moving if safe
     }
     
     public void setElevatorCoast(){
@@ -112,26 +123,18 @@ public class Elevator extends SubsystemBase {
     }
 
     public void setElevatorPID(double position) {
-        double velocity = leftElevatorMotor1RPM();
-        double acceleration = (velocity - leftElevatorMotor1RPM()) / Constants.ElevatorConstants.elevatorMotor1speed;
-
-        double feedforward = elevatorFeedforward.calculate(velocity, acceleration);
-        double pidOutput = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
-
-        double setValue = pidOutput + feedforward;
-
+        double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
         double speedLimit = Constants.ElevatorConstants.elevatorMotor1speed;
-
-        // if (setValue > speedLimit) {
-        //     setValue = speedLimit;
-        // } else if (setValue < -speedLimit) {
-        //     setValue = -speedLimit;
-        // }
+        if (setValue > speedLimit) {
+            setValue = speedLimit;
+        } else if (setValue < -speedLimit) {
+            setValue = -speedLimit;
+        }
 
         
 
-        elevatorMotor1.setVoltage(-setValue);
-        elevatorMotor2.setVoltage(setValue);
+        elevatorMotor1.set(-setValue);
+        elevatorMotor2.set(setValue);
     }
 
     public void setElevatorPID1(double position){
@@ -199,11 +202,6 @@ public class Elevator extends SubsystemBase {
 
     public double rightElevatorMotor2RPM(){
         return elevatorMotor2.getRotorVelocity().getValueAsDouble();
-    }
-
-    public void elevatorSetVoltage(double voltage){
-        elevatorMotor1.setVoltage(-voltage);
-        elevatorMotor2.setVoltage(voltage);
     }
 
     @Override

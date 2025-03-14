@@ -103,11 +103,11 @@ public class ArmRotationCmd extends Command {
             }
 
             //Score Into Barge
-            /*if (ltPressed) {
+            if (ltPressed) {
                 manualArmControl = false;
                 armPos = Constants.PresetElevatorAndArmConstants.armScoreIntoBargePos;
                 armRotation.setArmRotatorPosition(armPos);
-            }*/
+            }
 
             // Manual Arm Control
             if (manualArmControl) {
