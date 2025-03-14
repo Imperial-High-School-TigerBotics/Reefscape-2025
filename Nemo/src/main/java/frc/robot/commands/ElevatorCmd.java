@@ -47,11 +47,17 @@ public class ElevatorCmd extends Command {
 
             boolean aPressed = xbox.getAButton();
             boolean bPressed = xbox.getBButton();
+            boolean xPressed = xbox.getXButton();
+            boolean yPressed = xbox.getYButton();
 
             if (aPressed) {
                 elevatorVoltage += 0.05;
             } else if (bPressed) {
                 elevatorVoltage -= 0.05;
+            } else if (xPressed) {
+                elevatorVoltage += 0.2;
+            } else if (yPressed) {
+                elevatorVoltage -= 0.2;
             }
 
             elevator.setElevatorPosition(elevatorVoltage);
