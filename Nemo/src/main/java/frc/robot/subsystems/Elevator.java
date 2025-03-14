@@ -48,8 +48,58 @@ public class Elevator extends SubsystemBase {
 
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
 
-        ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
-    }
+            ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
+        }
+   //TODO #2 for alex check if until line 96 is correct
+    public void adjustPIDValues() {
+        boolean increaseP = SmartDashboard.getBoolean("Increase P", false);
+        boolean decreaseP = SmartDashboard.getBoolean("Decrease P", false);
+        boolean increaseI = SmartDashboard.getBoolean("Increase I", false);
+        boolean decreaseI = SmartDashboard.getBoolean("Decrease I", false);
+        boolean increaseD = SmartDashboard.getBoolean("Increase D", false);
+        boolean decreaseD = SmartDashboard.getBoolean("Decrease D", false);
+        SmartDashboard.putBoolean("Increase P", false);
+        SmartDashboard.putBoolean("Decrease P", false);
+        SmartDashboard.putBoolean("Increase I", false);
+        SmartDashboard.putBoolean("Decrease I", false);
+        SmartDashboard.putBoolean("Increase D", false);
+        SmartDashboard.putBoolean("Decrease D", false);
+
+        if (increaseP) {
+            ElevatorP += 0.05;
+        } else if (decreaseP) {
+            ElevatorP -= 0.05;
+        }
+
+        if (increaseI) {
+            ElevatorI += 0.005;
+        } else if (decreaseI) {
+            ElevatorI -= 0.005;
+        }
+
+        if (increaseD) {
+            ElevatorD += 0.01;
+        } else if (decreaseD) {
+            ElevatorD -= 0.01;
+        }
+
+        elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
+        elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
+
+        SmartDashboard.putNumber("Elevator P", ElevatorP);
+        SmartDashboard.putNumber("Elevator I", ElevatorI);
+    SmartDashboard.putNumber("Elevator D", ElevatorD);
+        SmartDashboard.putNumber("Elevator D", ElevatorD);
+    {
+        System.out.println("Elevator P: " + ElevatorP);
+        System.out.println("Elevator I: " + ElevatorI);
+        System.out.println("Elevator D: " + ElevatorD);
+        }
+
+        elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
+
+        ElevatorPos = Constants.ElevatorConstants.min_elevator_pos; }
+    
 
     public void setElevatorPosition(double position) {
         ElevatorPos = position;
