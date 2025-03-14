@@ -50,7 +50,8 @@ public class Elevator extends SubsystemBase {
 
             ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
         }
-   //TODO #2 for alex check if until line 96 is correct
+   //TODO #2 for alex check if until line 98 is correct
+   //Does this allow for us to click a button and have the pid tuning change? and then is this the correct method to do this?
     public void adjustPIDValues() {
         boolean increaseP = SmartDashboard.getBoolean("Increase P", false);
         boolean decreaseP = SmartDashboard.getBoolean("Decrease P", false);

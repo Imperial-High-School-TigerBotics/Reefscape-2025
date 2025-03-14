@@ -11,11 +11,6 @@ import frc.robot.Constants;
 import edu.wpi.first.hal.simulation.ConstBufferCallback;
 import edu.wpi.first.net.PortForwarder;
 import java.util.List;
-
-import org.photonvision.PhotonCamera;
-import org.photonvision.targeting.PhotonPipelineResult;
-import org.photonvision.targeting.PhotonTrackedTarget;
-import org.photonvision.targeting.TargetCorner;
 import frc.robot.LimelightHelpers;
 
 public class Limelight extends SubsystemBase {
