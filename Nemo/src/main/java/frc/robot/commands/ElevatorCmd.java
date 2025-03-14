@@ -14,6 +14,7 @@ public class ElevatorCmd extends Command {
     private final XboxController xbox;
 
     private double elevatorPos;
+    private double elevatorVoltage;
     private boolean manualElevatorControl;
 
     private final SendableChooser<Boolean> manualControlChooser;
@@ -26,6 +27,8 @@ public class ElevatorCmd extends Command {
         manualElevatorControl = false;
 
         elevatorPos = elevator.getElevatorCoderPos();
+
+        elevatorVoltage = 1.0;
 
         // Initialize SendableChooser
         manualControlChooser = new SendableChooser<>();
@@ -42,9 +45,20 @@ public class ElevatorCmd extends Command {
     public void execute() {
         if (DriverStation.isTeleop()) {
 
-            elevator.elevatorSetVoltage(1.0);
+            boolean aPressed = xbox.getAButton();
+            boolean bPressed = xbox.getBButton();
 
-            
+            if (aPressed) {
+                elevatorVoltage += 0.05;
+            } else if (bPressed) {
+                elevatorVoltage -= 0.05;
+            }
+
+            elevator.setElevatorPosition(elevatorVoltage);
+
+            SmartDashboard.putNumber("Elevator Voltage", elevatorVoltage);
+
+
             // // Get the selected control mode from the SendableChooser
             // manualElevatorControl = manualControlChooser.getSelected();
 
