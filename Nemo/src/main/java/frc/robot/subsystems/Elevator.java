@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
+import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -16,8 +17,7 @@ public class Elevator extends SubsystemBase {
 
     private CANcoder elevatorCoder;
 
-    private PIDController elevatorMotor1PID;
-    private PIDController elevatorMotor2PID;
+    Slot0Configs slot0 = new Slot0Configs();
 
     private DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.limitSwitchTop);
     private DigitalInput limitSwitchBottom = new DigitalInput(Constants.ElevatorConstants.limitSwitchBottom);
@@ -26,21 +26,20 @@ public class Elevator extends SubsystemBase {
 
     public Elevator() {
         // Initialize motors with brake mode
+        slot0.kP = Constants.ElevatorConstants.elevatorP;
+        slot0.kI = Constants.ElevatorConstants.elevatorI;
+        slot0.kD = Constants.ElevatorConstants.elevatorD;
+        slot0.kG = Constants.ElevatorConstants.elevatorG;
+        slot0.kS = Constants.ElevatorConstants.elevatorS;
+
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
-        elevatorMotor1PID = new PIDController(
-            Constants.ElevatorConstants.elevatorP,
-            Constants.ElevatorConstants.elevatorI,
-            Constants.ElevatorConstants.elevatorD
-        );
+        elevatorMotor1.getConfigurator().apply(slot0);
 
         elevatorMotor2 = new TalonFX(Constants.ElevatorConstants.elevatorMotor2ID);
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
-        elevatorMotor2PID = new PIDController(
-            Constants.ElevatorConstants.elevatorP,
-            Constants.ElevatorConstants.elevatorI,
-            Constants.ElevatorConstants.elevatorD
-        );
+        elevatorMotor2.getConfigurator().apply(slot0);
+        
 
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
 
@@ -81,11 +80,11 @@ public class Elevator extends SubsystemBase {
 
         if(ElevatorPos > getElevatorCoderPos() && limitSwitchTop.get() ){
 
-            setElevatorPID(ElevatorPos); // Continue moving if safe
+            PositionDutyCycle(ElevatorPos);; // Continue moving if safe
 
 
         }else if(ElevatorPos < getElevatorCoderPos() && limitSwitchBottom.get() ){
-            setElevatorPID(ElevatorPos);
+            PositionDutyCycle(ElevatorPos);
         }
         else{
             limitSwitchCap();
@@ -122,37 +121,12 @@ public class Elevator extends SubsystemBase {
         elevatorMotor2.setNeutralMode(NeutralModeValue.Brake);
     }
 
-    public void setElevatorPID(double position) {
-        double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
-        double speedLimit = Constants.ElevatorConstants.elevatorMotor1speed;
-        if (setValue > speedLimit) {
-            setValue = speedLimit;
-        } else if (setValue < -speedLimit) {
-            setValue = -speedLimit;
-        }
-
+    public void PositionDutyCycle(double position) {
+        double setValue = ElevatorPos;
         
-
-        elevatorMotor1.set(-setValue);
-        elevatorMotor2.set(setValue);
+        elevatorMotor1.setPosition(-setValue);
+        elevatorMotor2.setPosition(setValue);
     }
-
-    public void setElevatorPID1(double position){
-        double setValue = elevatorMotor1PID.calculate(getElevatorCoderPos(), position);
-        double speedLimit = Constants.ElevatorConstants.elevatorMotor1speed;
-        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
-
-        elevatorMotor1.set(-setValue); // Ensure synchronization with motor 2
-    }
-
-    public void setElevator2PID(double position) {
-        double setValue = elevatorMotor2PID.calculate(getElevatorCoderPos(), position);
-        double speedLimit = Constants.ElevatorConstants.elevatorMotor2speed;
-        setValue = Math.max(-speedLimit, Math.min(speedLimit, setValue));
-
-        elevatorMotor2.set(setValue); // Ensure synchronization with motor 1
-    }
-
 
     public void elevatorUp(double percent) {
         double speed = percent * Constants.ElevatorConstants.elevatorMotor1speed;
