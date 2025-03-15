@@ -235,9 +235,11 @@ public final class Constants {
     public static final double manual_elevator_speed  = 1.0;
     /* ------------------------------------------------------ */
 
-    public static final double elevatorP = 0.48;
-    public static final double elevatorI = 0.005;
-    public static final double elevatorD = 0.015;
+    public static final double elevatorP = 0.1;
+    public static final double elevatorI = 0.0;
+    public static final double elevatorD = 0.0;
+    public static final double elevatorG = 0.0;
+    public static final double elevatorS = 0.0;
 
     public static final double elevatorSafety = 0.25;
     public static final double elevatorLimitSwitchOffset = 10;
