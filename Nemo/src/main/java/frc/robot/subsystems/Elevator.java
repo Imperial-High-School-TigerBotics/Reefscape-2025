@@ -135,6 +135,8 @@ public class Elevator extends SubsystemBase {
 
         elevatorMotor1.set(-setValue);
         elevatorMotor2.set(setValue);
+
+        SmartDashboard.putNumber("Set Value", setValue);
     }
 
     public void setElevatorPID1(double position){
