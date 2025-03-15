@@ -279,7 +279,7 @@ public final class Constants {
     /*--------------------Coral Intake From Source-------------------*/
     //Mapped to Buttoon B on operator controller
     public static final double armCoralIntakeFromSourcePos = 0.89;
-    public static final double elevatorCoralIntakeFromSourcePos = 0.68;
+    public static final double elevatorCoralIntakeFromSourcePos = 0.69;
     /*--------------------------------------------------------------*/
 
     /*--------------------Score Coral L2-------------------*/
