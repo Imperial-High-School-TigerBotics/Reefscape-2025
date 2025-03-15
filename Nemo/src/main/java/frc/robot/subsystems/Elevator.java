@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -41,8 +43,10 @@ public class Elevator extends SubsystemBase {
             Constants.ElevatorConstants.elevatorI,
             Constants.ElevatorConstants.elevatorD
         );
-
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
+
+        NetworkTable = NetworkTable.getInstance()
+        NetworkTable table = Robot.getInstance();
 
         ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
     }
