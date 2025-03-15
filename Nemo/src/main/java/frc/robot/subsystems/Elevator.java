@@ -220,8 +220,8 @@ public class Elevator extends SubsystemBase {
 
         SmartDashboard.putNumber("Left Elevator Motor RPM", leftElevatorMotor1RPM());
         SmartDashboard.putNumber("Right Elevator Motor RPM", rightElevatorMotor2RPM());
-        double pTerm = SmartDashboard.getNumber("p term");
-        
+        double pTerm = SmartDashboard.getNumber("p term",   Constants.ElevatorConstants.elevatorP);
+        elevatorMotor1PID.setP(pTerm);
         
         nextElevatorPID();
     }
