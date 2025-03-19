@@ -161,7 +161,7 @@ private void configureAutoSelector() {
 
     // Run initialization, then the selected auto command
    // return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
-    return initializePositions.andThen(autoCommand.andThen(heading_flip));
+    return initializePositions.andThen(autoCommand);//.andThen(heading_flip));
 }
   
 
