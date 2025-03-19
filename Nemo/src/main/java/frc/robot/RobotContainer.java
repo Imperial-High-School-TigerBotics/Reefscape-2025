@@ -157,7 +157,7 @@ private void configureAutoSelector() {
     if (autoCommand  == null) {
         autoCommand = new InstantCommand(); // Default safe command
     }
-    Command heading_flip = s_Swerve.flipHeading();
+    Command heading_flip = new InstantCommand(()-> s_Swerve.flipHeading()); //s_Swerve.flipHeading(); // new InstantCommand(()-> s_Swerve.flipHeading());
 
     // Run initialization, then the selected auto command
    // return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
