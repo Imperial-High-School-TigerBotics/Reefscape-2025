@@ -160,7 +160,8 @@ private void configureAutoSelector() {
     Command heading_flip = s_Swerve.flipHeading();
 
     // Run initialization, then the selected auto command
-    return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
+   // return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
+    return initializePositions.andThen(autoCommand.andThen(heading_flip));
 }
   
 
