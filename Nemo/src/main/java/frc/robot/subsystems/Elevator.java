@@ -1,10 +1,12 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -21,11 +23,13 @@ public class Elevator extends SubsystemBase {
 
     private DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.limitSwitchTop);
     private DigitalInput limitSwitchBottom = new DigitalInput(Constants.ElevatorConstants.limitSwitchBottom);
-
+    
     public double ElevatorPos;
 
     public Elevator() {
         // Initialize motors with brake mode
+        SmartDashboard.setDefaultNumber("p term",   Constants.ElevatorConstants.elevatorP );
+        
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor1PID = new PIDController(
@@ -41,8 +45,9 @@ public class Elevator extends SubsystemBase {
             Constants.ElevatorConstants.elevatorI,
             Constants.ElevatorConstants.elevatorD
         );
-
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
+
+        //NetworkTable table = Robot.getInstance();
 
         ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
     }
@@ -215,6 +220,9 @@ public class Elevator extends SubsystemBase {
 
         SmartDashboard.putNumber("Left Elevator Motor RPM", leftElevatorMotor1RPM());
         SmartDashboard.putNumber("Right Elevator Motor RPM", rightElevatorMotor2RPM());
+        double pTerm = SmartDashboard.getNumber("p term",   Constants.ElevatorConstants.elevatorP);
+        elevatorMotor1PID.setP(pTerm);
+        
         nextElevatorPID();
     }
 
