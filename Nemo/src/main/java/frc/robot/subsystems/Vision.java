@@ -39,15 +39,24 @@ public class Vision extends SubsystemBase {
     public void periodic() {
 
         updatePoseEstimator();
-        
-        var epose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
-        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
-        poseEstimator.addVisionMeasurement(epose.pose, epose.timestampSeconds);
 
-        SmartDashboard.putNumber("vision estimatex", poseEstimator.getEstimatedPosition().getX());
-        SmartDashboard.putNumber("vision estimatey", poseEstimator.getEstimatedPosition().getY());
-        //SmartDashboard.putNumber("vision !!!", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
-        estimatedPosition = poseEstimator.getEstimatedPosition();
+        LimelightHelpers.PoseEstimate epose;
+
+        var alliance = edu.wpi.first.wpilibj.DriverStation.getAlliance();
+        if (alliance.isPresent() && alliance.get() == edu.wpi.first.wpilibj.DriverStation.Alliance.Red) {
+            epose = LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2("");
+        } else {
+            epose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
+        }
+
+        if (epose.tagCount > 0 && epose.pose != null) {
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
+            poseEstimator.addVisionMeasurement(epose.pose, epose.timestampSeconds);
+            estimatedPosition = poseEstimator.getEstimatedPosition();
+        }
+
+        SmartDashboard.putNumber("vision estimatex", estimatedPosition.getX());
+        SmartDashboard.putNumber("vision estimatey", estimatedPosition.getY());
     }
 
     public Pose2d getPoseEstimation() {

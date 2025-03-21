@@ -139,9 +139,19 @@ public class Swerve extends SubsystemBase {
         autonMovingEnabled = false;
     }
 
-    public Pose2d getPose() {
-        return swerveOdometry.getPoseMeters();
+    private Vision vision;
+
+    public void setVision(Vision vision) {
+        this.vision = vision;
     }
+
+    public Pose2d getPose() {
+        if (vision != null) {
+            return vision.getPoseEstimation(); // Fused pose
+        }
+        return swerveOdometry.getPoseMeters(); // Fallback
+    }
+
 
     public void setPose(Pose2d pose) {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);

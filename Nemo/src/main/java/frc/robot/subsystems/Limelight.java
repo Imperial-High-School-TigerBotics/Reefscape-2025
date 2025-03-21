@@ -4,6 +4,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableValue;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -50,32 +51,23 @@ public class Limelight extends SubsystemBase {
     }
 
     public Pose2d getAdjustedRobotPose() {
-        double[] botPose = LimelightHelpers.getBotPose(Constants.LimelightConstants.limelightName);
-        if (botPose.length < 6) {
-            return new Pose2d(); // Return default if data is invalid
+        LimelightHelpers.PoseEstimate poseEstimate;
+
+        // Use correct tag layout based on alliance
+        var alliance = DriverStation.getAlliance();
+        if (alliance.isPresent() && alliance.get() == DriverStation.Alliance.Red) {
+            poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2("limelight");
+        } else {
+            poseEstimate = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
         }
 
-        // Extract X, Y, and Rotation (Yaw) in **robot's coordinate space**
-        double x = botPose[0];  // X Position (meters)
-        double y = botPose[1];  // Y Position (meters)
-        double yaw = botPose[5]; // Rotation in **degrees**
+        // Make sure we have a valid detection
+        if (poseEstimate.tagCount > 0 && poseEstimate.pose != null) {
+            return poseEstimate.pose;
+        }
 
-        // Convert yaw to Rotation2d
-        Rotation2d heading = Rotation2d.fromDegrees(yaw);
-
-        // Apply offsets from Limelight's position relative to robot
-        Translation2d offset = new Translation2d(
-            Constants.LimelightConstants.XOffset, 
-            Constants.LimelightConstants.YOffset
-        );
-
-        // Adjust the robot’s position based on Limelight offsets
-        Translation2d adjustedTranslation = new Translation2d(x, y).plus(offset);
-
-        // Since your Limelight faces 180° backward, **rotate the heading by 180°**
-        Rotation2d adjustedHeading = heading.rotateBy(Rotation2d.fromDegrees(Constants.LimelightConstants.limelightHeadingOffset));
-
-        return new Pose2d(adjustedTranslation, adjustedHeading);
+        // No valid pose detected
+        return null;
     }
 
 
