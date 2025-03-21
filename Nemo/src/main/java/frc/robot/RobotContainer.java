@@ -137,8 +137,10 @@ public class RobotContainer {
 }
 
 private void configureAutoSelector() {
-  chooser.setDefaultOption("Back", new PathPlannerAuto("monkey"));
-  chooser.setDefaultOption("Auto Score Coral L2", new PathPlannerAuto("Score L2 Auto"));
+  chooser.setDefaultOption("Middle to H, Score L4", new PathPlannerAuto("Score L4 Auto"));
+  chooser.addOption("Leave", new PathPlannerAuto("Leave"));
+  chooser.addOption("L4 No Score", new PathPlannerAuto("L4 No Score"));
+  chooser.addOption("L4 then Source", new PathPlannerAuto("Source"));
 
 
   SmartDashboard.putData("Auto Mode", chooser);
@@ -160,8 +162,7 @@ private void configureAutoSelector() {
     Command heading_flip = new InstantCommand(()-> s_Swerve.flipHeading()); //s_Swerve.flipHeading(); // new InstantCommand(()-> s_Swerve.flipHeading());
 
     // Run initialization, then the selected auto command
-   // return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
-    return initializePositions.andThen(autoCommand);//.andThen(heading_flip));
+   return new SequentialCommandGroup(initializePositions, autoCommand, heading_flip);
 }
   
 

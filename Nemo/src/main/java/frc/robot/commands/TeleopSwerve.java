@@ -76,7 +76,7 @@ public class TeleopSwerve extends Command {
             if (closestTagId != -1) {
                 double[] tagData = limelight.getTarget((int) closestTagId);
                 if (tagData != null) {
-                    lastKnownTagYaw = tagData[0]; // Extract tag yaw (adjust if needed)
+                    lastKnownTagYaw = tagData[0]; // Extract tag yaw (adjust if needed) 
                 }
             }
 
@@ -86,7 +86,8 @@ public class TeleopSwerve extends Command {
 
         // If A is held, force the heading to the last known AprilTag yaw
         if (parallelMotionActive && !allowRotation) {
-            s_Swerve.setHeading(Rotation2d.fromDegrees(lastKnownTagYaw));
+            s_Swerve.setHeading(Rotation2d.fromDegrees(lastKnownTagYaw - storedHeading)); //adjust if necessary
+            
         }
 
         // If A is released, return to the stored heading

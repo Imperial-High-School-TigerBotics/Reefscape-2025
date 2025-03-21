@@ -48,7 +48,7 @@ public class Autos {
             swerve::getChassisSpeeds, // ChassisSpeeds supplier (must be robot-relative)
             swerve::drive, // Drive method
             new PPHolonomicDriveController( // Built-in holonomic path controller
-                new PIDConstants(0.8, 0.0, 0.0), // Translation PID
+                new PIDConstants(0.5, 0.0, 0.0), // Translation PID
                 new PIDConstants(0.35, 0.0, 0.0)  // Rotation PID
             ),
             config, // Pass the loaded RobotConfig
@@ -64,6 +64,9 @@ public class Autos {
 
 
         // Register Named Commands and print them
+        NamedCommands.registerCommand("setRest" , autoController.setRest());
+
+        NamedCommands.registerCommand("setL4", autoController.setL4());
         NamedCommands.registerCommand("Score L2", autoController.scoreCoralL2());
 
         NamedCommands.registerCommand("Score L4", autoController.scoreCoralL4());

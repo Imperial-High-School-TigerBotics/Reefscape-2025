@@ -4,7 +4,9 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableValue;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -168,9 +170,11 @@ public class Limelight extends SubsystemBase {
 
     @Override
     public void periodic() {
+       if (RobotBase.isReal()) { 
         updateValues();
         SmartDashboard.putNumber("Nearest April Tag Red", getClosestTag(Constants.TeamDependentFactors.reefIDsRed));
         SmartDashboard.putNumber("Nearest April Tag Blue", getClosestTag(Constants.TeamDependentFactors.reefIDsBlue));
+       }
 
         SmartDashboard.putNumber("BotPose x", getAdjustedRobotPose().getTranslation().getX());
         SmartDashboard.putNumber("BotPose y", getAdjustedRobotPose().getTranslation().getY());

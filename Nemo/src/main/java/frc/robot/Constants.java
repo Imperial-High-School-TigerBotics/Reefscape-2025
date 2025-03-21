@@ -118,9 +118,9 @@ public final class Constants {
       public static final double angleCurrentThresholdTime = 0.1;
       public static final boolean angleEnableCurrentLimit = true;
 
-      public static final int driveCurrentLimit = 35;
-      public static final int driveCurrentThreshold = 60;
-      public static final int driveStatorCurrentLimit = 50;
+      public static final int driveCurrentLimit = 60;
+      public static final int driveCurrentThreshold = 70;
+      public static final int driveStatorCurrentLimit = 80;
       public static final double driveCurrentThresholdTime = 0.1;
       public static final boolean driveEnableCurrentLimit = true;
 
@@ -255,7 +255,7 @@ public final class Constants {
     /* -----------------Arm Motor Speeds----------------- */
     public static final double manual_arm_speed  = 0.3;
     public static double BallIntakeSpeed = 0.3;
-    public static double CoralIntakeSpeed = 0.4;
+    public static double CoralIntakeSpeed = 0.8;
     public static double ArmRotatorSpeed = 0.3;
     /* ------------------------------------------------ */
 
@@ -278,7 +278,7 @@ public final class Constants {
 
     /*--------------------Coral Intake From Source-------------------*/
     //Mapped to Buttoon B on operator controller
-    public static final double armCoralIntakeFromSourcePos = 0.87;
+    public static final double armCoralIntakeFromSourcePos = 0.89;
     public static final double elevatorCoralIntakeFromSourcePos = 0.9;
     /*--------------------------------------------------------------*/
 
@@ -314,8 +314,8 @@ public final class Constants {
 
     /*--------------------Pick Up Algae From Upper Reef In Between L3-L4-------------------*/
     //Mapped to Left Bumper on operator controller
-    public static final double armPickUpAlgaeFromUpperReefPos = 0.46;
-    public static final double elevatorPickUpAlgaeFromUpperReefPos = 4.71;
+    public static final double armPickUpAlgaeFromUpperReefPos = 0.70;
+    public static final double elevatorPickUpAlgaeFromUpperReefPos = 2.44;
     /*--------------------------------------------------------------------*/
 
     /*----------------------Score Into Barge--------------------*/

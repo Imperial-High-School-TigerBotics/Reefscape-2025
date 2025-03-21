@@ -1,0 +1,67 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Middle to SetL4"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "setL4"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SetL4 to H"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Score L2"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 2.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "H to SetRest"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "setRest"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Align With Source"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
