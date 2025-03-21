@@ -46,9 +46,9 @@ public class AutoController {
     public Command scoreCoralL2(){
         return new SequentialCommandGroup(
             new WaitCommand(0.25),
-            new InstantCommand(() -> armShootAndIntake.BallIntakeOut(), armShootAndIntake),
+            new InstantCommand(() -> armShootAndIntake.CoralIntakeOut(), armShootAndIntake),
             new WaitCommand(1),
-            new InstantCommand(() -> armShootAndIntake.BallIntakeStop(), armShootAndIntake)
+            new InstantCommand(() -> armShootAndIntake.CoralIntakeStop(), armShootAndIntake)
         );
     }
 
