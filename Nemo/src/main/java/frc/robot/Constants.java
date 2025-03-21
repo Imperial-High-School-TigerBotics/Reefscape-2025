@@ -260,8 +260,8 @@ public final class Constants {
     /* ------------------------------------------------ */
 
     public static final int ArmRotator = 14;
-    public static final int BallIntake = 18;
-    public static final int CoralIntake = 20;
+    public static final int BallIntake = 20;
+    public static final int CoralIntake = 18;
 
     public static final int ArmEncoder = 0;
 
