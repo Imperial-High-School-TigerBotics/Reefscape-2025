@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import frc.robot.Constants.ArmConstants;
+
 import com.revrobotics.spark.SparkLowLevel.MotorType;
 import com.revrobotics.spark.SparkMax;
 
@@ -12,9 +14,12 @@ public class ArmShootAndIntake extends SubsystemBase {
     private SparkMax BallIntake;
     private SparkMax CoralIntake;
 
+    private double BallSpeed = Constants.ArmConstants.BallIntakeSpeed;
+
     public ArmShootAndIntake() {
         BallIntake = new SparkMax(Constants.ArmConstants.BallIntake, MotorType.kBrushless);
         CoralIntake = new SparkMax(Constants.ArmConstants.CoralIntake, MotorType.kBrushless);
+        
     }
 
     public void updateDashboard(){
@@ -57,5 +62,12 @@ public class ArmShootAndIntake extends SubsystemBase {
 
     public void CoralIntakeBusVoltage(){
         CoralIntake.getBusVoltage();
+    }
+
+    @Override
+    public void periodic(){
+        if (BallIntake.getOutputCurrent() > 25){
+            BallSpeed = 0.3;
+        }
     }
 }
