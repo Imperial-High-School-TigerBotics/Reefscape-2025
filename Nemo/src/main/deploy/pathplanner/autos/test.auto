@@ -11,21 +11,27 @@
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "SetL4 to H"
+            "waitTime": 1.0
           }
         },
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "H to SetRest"
+            "name": "setL4"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "Align With Source"
+            "waitTime": 10.0
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "setRest"
           }
         }
       ]

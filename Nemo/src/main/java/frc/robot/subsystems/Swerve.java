@@ -143,6 +143,10 @@ public class Swerve extends SubsystemBase {
         return swerveOdometry.getPoseMeters();
     }
 
+    public void resetOdometryAuto(Pose2d pose){
+        return;
+    }
+
     public void setPose(Pose2d pose) {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }

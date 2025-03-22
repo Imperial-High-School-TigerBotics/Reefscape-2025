@@ -35,12 +35,10 @@ public class AutoController {
     }
 
     public Command setRest(){
-        return new SequentialCommandGroup(
-            new ParallelCommandGroup(
+            return new ParallelCommandGroup(
                 new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos), elevator),
                 new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos), armRotation)
-            )
-        );
+            );
     }
 
     public Command scoreCoralL2(){
@@ -53,12 +51,10 @@ public class AutoController {
     }
 
     public Command setL4(){
-        return new SequentialCommandGroup(
-            new ParallelCommandGroup(
+            return new ParallelCommandGroup(
                 new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL4Pos), elevator),
                 new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armScoreCoralL4Pos), armRotation)
-            )
-        );
+            );
     }
 
     public Command scoreCoralL4(){

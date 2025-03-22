@@ -3,6 +3,7 @@
   "robotLength": 0.95,
   "holonomicMode": true,
   "pathFolders": [
+    "Source",
     "Score L4 Path"
   ],
   "autoFolders": [],

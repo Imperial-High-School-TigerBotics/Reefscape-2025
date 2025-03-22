@@ -44,7 +44,7 @@ public final class Constants {
 
     public static class TeamDependentFactors {
         public static final boolean redTeam = DriverStation.getAlliance().get() == Alliance.Red;
-        public static boolean forceRedTeamForTesting = true; // Set true for testing
+        public static boolean forceRedTeamForTesting = false; // Set true for testing
         public static final double[] reefIDsBlue = {
             18, // closeMiddleReefIDBlue
             19, // closeLeftReefIDBlue
@@ -254,8 +254,8 @@ public final class Constants {
   public static final class ArmConstants {
     /* -----------------Arm Motor Speeds----------------- */
     public static final double manual_arm_speed  = 0.3;
-    public static double BallIntakeSpeed = 0.3;
-    public static double CoralIntakeSpeed = 0.8;
+    public static double BallIntakeSpeed = 0.8;
+    public static double CoralIntakeSpeed = 0.3;
     public static double ArmRotatorSpeed = 0.3;
     /* ------------------------------------------------ */
 

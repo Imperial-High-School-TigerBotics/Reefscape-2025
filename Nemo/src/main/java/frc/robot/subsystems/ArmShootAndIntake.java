@@ -23,11 +23,11 @@ public class ArmShootAndIntake extends SubsystemBase {
     }
 
     public void BallIntakeIn() {
-        BallIntake.set(Constants.ArmConstants.BallIntakeSpeed);
+        BallIntake.set(-Constants.ArmConstants.BallIntakeSpeed);
     }
 
     public void BallIntakeOut() {
-        BallIntake.set(-Constants.ArmConstants.BallIntakeSpeed);
+        BallIntake.set(Constants.ArmConstants.BallIntakeSpeed);
     }
 
     public void BallIntakeStop() {

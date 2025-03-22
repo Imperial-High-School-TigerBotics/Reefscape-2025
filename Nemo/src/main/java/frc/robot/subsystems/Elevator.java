@@ -3,10 +3,13 @@ package frc.robot.subsystems;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Robot;
+
+import java.sql.Driver;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -71,7 +74,7 @@ public class Elevator extends SubsystemBase {
             elevatorStop(); // Stop movement immediately
             ElevatorPos = Constants.ElevatorConstants.max_elevator_pos - Constants.ElevatorConstants.elevatorLimitSwitchOffset;
         } 
-        if (!limitSwitchBottom.get()) {
+        if (limitSwitchBottom.get()) {
             elevatorStop(); // Stop movement immediately
             ElevatorPos = Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorLimitSwitchOffset;
         }
@@ -215,8 +218,8 @@ public class Elevator extends SubsystemBase {
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
         SmartDashboard.putNumber("Target Elevator Pos", ElevatorPos);
-        SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
-        SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
+        SmartDashboard.putBoolean("Top Limit Switch", limitSwitchTop.get());
+        SmartDashboard.putBoolean("Bottom Limit Switch", limitSwitchBottom.get());
 
         SmartDashboard.putNumber("Left Elevator Motor RPM", leftElevatorMotor1RPM());
         SmartDashboard.putNumber("Right Elevator Motor RPM", rightElevatorMotor2RPM());

@@ -11,33 +11,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "setL4"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "SetL4 to H"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Score L2"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 2.0
           }
         },
         {
@@ -47,15 +23,9 @@
           }
         },
         {
-          "type": "named",
-          "data": {
-            "name": "setRest"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Align With Source"
+            "pathName": "Align With Source(Right)"
           }
         }
       ]
