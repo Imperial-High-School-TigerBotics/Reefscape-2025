@@ -39,6 +39,7 @@ public class Swerve extends SubsystemBase {
     public PathPlannerAuto a1;
     private Rotation2d lastKnownTagHeading;
     private Rotation2d originalHeading;
+    private Vision vision;
 
     public Swerve(){
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -139,13 +140,17 @@ public class Swerve extends SubsystemBase {
         autonMovingEnabled = false;
     }
 
-    public Pose2d getPose() {
-        return swerveOdometry.getPoseMeters();
+    public void setVision(Vision vision) {
+        this.vision = vision;
     }
 
-    public void resetOdometryAuto(Pose2d pose){
-        return;
+    public Pose2d getPose() {
+        if (vision != null) {
+            return vision.getPoseEstimation(); // Fused pose
+        }
+        return swerveOdometry.getPoseMeters(); // Fallback
     }
+
 
     public void setPose(Pose2d pose) {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);

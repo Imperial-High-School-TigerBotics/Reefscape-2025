@@ -100,6 +100,9 @@ public class RobotContainer {
     armButtonsCmd = new ArmShootAndIntakeCmd(armShootAndIntake, driver);
     armShootAndIntake.setDefaultCommand(armButtonsCmd);
 
+    vision = new Vision(s_Swerve);
+    s_Swerve.setVision(vision);
+
     // climber = new climber();
     // climberCmd = new climberCmd(climber, operator);
     // climber.setDefaultCommand(climberCmd);
