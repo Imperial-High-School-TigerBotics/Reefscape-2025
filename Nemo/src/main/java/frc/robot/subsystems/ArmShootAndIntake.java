@@ -66,8 +66,5 @@ public class ArmShootAndIntake extends SubsystemBase {
 
     @Override
     public void periodic(){
-        if (BallIntake.getOutputCurrent() > 25){
-            BallSpeed = 0.3;
-        }
     }
 }
