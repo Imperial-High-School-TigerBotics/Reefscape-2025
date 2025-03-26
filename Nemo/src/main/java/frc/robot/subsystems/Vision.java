@@ -1,57 +1,60 @@
 package frc.robot.subsystems;
 
-import com.ctre.phoenix6.hardware.Pigeon2;
-
-import edu.wpi.first.math.VecBuilder;
-import edu.wpi.first.math.estimator.DifferentialDrivePoseEstimator;
-import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
-import edu.wpi.first.math.geometry.Pose2d;
-import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.LimelightHelpers.PoseEstimate;
+import frc.robot.Constants;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+/**
+ * Vision subsystem, periodically pulls the robot’s estimated pose from Limelight,
+ * then feeds that measurement into the Swerve subsystem’s SwerveDrivePoseEstimator.
+ */
 public class Vision extends SubsystemBase {
 
-    private Swerve swerve;
-    private SwerveDrivePoseEstimator poseEstimator;
-    private Pose2d estimatedPosition;
-    
+    private final Swerve swerve;
+    private final String limelightName = "limelight"; // change if needed
+
     public Vision(Swerve swerve) {
-        LimelightHelpers.SetRobotOrientation("", swerve.gyro.getYaw().getValueAsDouble(), 0, 0, 0, 0, 0);
         this.swerve = swerve;
-
-        poseEstimator = new SwerveDrivePoseEstimator(
-            Constants.Swerve.swerveKinematics,
-            swerve.gyro.getRotation2d(),
-            swerve.getModulePositions(),
-            new Pose2d(0, 0, new Rotation2d(0))
-        );
-    }
-
-    public void updatePoseEstimator() {
-        poseEstimator.update(swerve.gyro.getRotation2d(), swerve.getModulePositions());
     }
 
     @Override
     public void periodic() {
+        // 1) Check alliance color
+        // 2) Retrieve the MegaTag2 pose estimate from either the Red or Blue “botpose_orb”
+        //    coordinate system
 
-        updatePoseEstimator();
-        
-        var epose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
-        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
-        poseEstimator.addVisionMeasurement(epose.pose, epose.timestampSeconds);
+        LimelightHelpers.PoseEstimate epose;
 
-        SmartDashboard.putNumber("vision estimatex", poseEstimator.getEstimatedPosition().getX());
-        SmartDashboard.putNumber("vision estimatey", poseEstimator.getEstimatedPosition().getY());
-        //SmartDashboard.putNumber("vision !!!", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
-        estimatedPosition = poseEstimator.getEstimatedPosition();
+        var alliance = edu.wpi.first.wpilibj.DriverStation.getAlliance();
+        if (alliance.isPresent() && alliance.get() == edu.wpi.first.wpilibj.DriverStation.Alliance.Red) {
+            epose = LimelightHelpers.getBotPoseEstimate_wpiRed_MegaTag2("limelight");
+        } else {
+            epose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("limelight");
+        }
+
+        // 3) If we got a valid estimate (tagCount > 0, etc.), feed it to our Swerve estimator
+        if (epose != null && epose.tagCount > 0) {
+            // Add the vision measurement to the swerve’s pose estimator:
+            swerve.addVisionMeasurement(epose.pose, epose.timestampSeconds);
+
+            // Debug printouts:
+            SmartDashboard.putNumber("Vision Alliance Pose X", epose.pose.getX());
+            SmartDashboard.putNumber("Vision Alliance Pose Y", epose.pose.getY());
+            SmartDashboard.putNumber("Vision Alliance Heading", epose.pose.getRotation().getDegrees());
+            SmartDashboard.putNumber("Vision TagCount", epose.tagCount);
+        }
     }
 
-    public Pose2d getPoseEstimation() {
-        return estimatedPosition == null ? swerve.getPose() : estimatedPosition;
+    /**
+     * Optional convenience if other code wants the latest “fused” robot pose
+     * from the Swerve subsystem’s estimator.
+     */
+    public Pose2d getEstimatedGlobalPose() {
+        return swerve.getPose();
     }
-
 }

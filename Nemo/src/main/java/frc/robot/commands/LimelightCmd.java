@@ -18,11 +18,9 @@ public class LimelightCmd extends Command {
 
     @Override
     public void execute() {
-        limelight.updateValues();
     }
 
     @Override
     public void end(boolean interrupted) {
-        limelight.stopAprilTagDetector();
     }
 }

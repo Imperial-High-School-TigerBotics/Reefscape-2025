@@ -109,17 +109,17 @@ public class RobotContainer {
         new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
     );
     
-    s_Swerve.setDefaultCommand(
+      s_Swerve.setDefaultCommand(
         new TeleopSwerve(
             s_Swerve,
-            elevator, 
-            () -> -driver.getRawAxis(translationAxis), 
-            () -> -driver.getRawAxis(strafeAxis), 
-            () -> -driver.getRawAxis(rotationAxis), 
-            () -> false,
-            driver, limelight,
-            () -> driver.getBButtonPressed(),
-            () -> driver.getAButtonPressed()
+            elevator,
+            () -> -driver.getLeftY(),
+            () -> -driver.getLeftX(),
+            () -> -driver.getRightX(),
+            () -> false,  // robotCentricSup
+            driver,
+            limelight,
+            () -> driver.getAButton() // "Aim to Tag" on A
         )
     );
 
