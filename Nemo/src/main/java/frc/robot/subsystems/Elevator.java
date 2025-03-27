@@ -54,66 +54,10 @@ public class Elevator extends SubsystemBase {
         );
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
 
-<<<<<<< HEAD
-            ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
-        }
-   //TODO #2 for alex check if until line 98 is correct
-   //Does this allow for us to click a button and have the pid tuning change? and then is this the correct method to do this?
-    public void adjustPIDValues() {
-        boolean increaseP = SmartDashboard.getBoolean("Increase P", false);
-        boolean decreaseP = SmartDashboard.getBoolean("Decrease P", false);
-        boolean increaseI = SmartDashboard.getBoolean("Increase I", false);
-        boolean decreaseI = SmartDashboard.getBoolean("Decrease I", false);
-        boolean increaseD = SmartDashboard.getBoolean("Increase D", false);
-        boolean decreaseD = SmartDashboard.getBoolean("Decrease D", false);
-        SmartDashboard.putBoolean("Increase P", false);
-        SmartDashboard.putBoolean("Decrease P", false);
-        SmartDashboard.putBoolean("Increase I", false);
-        SmartDashboard.putBoolean("Decrease I", false);
-        SmartDashboard.putBoolean("Increase D", false);
-        SmartDashboard.putBoolean("Decrease D", false);
-
-        if (increaseP) {
-            ElevatorP += 0.05;
-        } else if (decreaseP) {
-            ElevatorP -= 0.05;
-        }
-
-        if (increaseI) {
-            ElevatorI += 0.005;
-        } else if (decreaseI) {
-            ElevatorI -= 0.005;
-        }
-
-        if (increaseD) {
-            ElevatorD += 0.01;
-        } else if (decreaseD) {
-            ElevatorD -= 0.01;
-        }
-
-        elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
-        elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
-
-        SmartDashboard.putNumber("Elevator P", ElevatorP);
-        SmartDashboard.putNumber("Elevator I", ElevatorI);
-    SmartDashboard.putNumber("Elevator D", ElevatorD);
-        SmartDashboard.putNumber("Elevator D", ElevatorD);
-    {
-        System.out.println("Elevator P: " + ElevatorP);
-        System.out.println("Elevator I: " + ElevatorI);
-        System.out.println("Elevator D: " + ElevatorD);
-        }
-
-        elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
-
-        ElevatorPos = Constants.ElevatorConstants.min_elevator_pos; }
-    
-=======
         //NetworkTable table = Robot.getInstance();
 
         ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
     }
->>>>>>> 31890724fcbe45015bba4716d30b7426d253d154
 
     public void setElevatorPosition(double position) {
         ElevatorPos = position;
@@ -277,19 +221,6 @@ public class Elevator extends SubsystemBase {
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
-<<<<<<< HEAD
-        SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
-        SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
-
-        // Read values from SmartDashboard
-        ElevatorP = SmartDashboard.getNumber("Elevator P", Constants.ElevatorConstants.elevatorP);
-        ElevatorI = SmartDashboard.getNumber("Elevator I", Constants.ElevatorConstants.elevatorI);
-        ElevatorD = SmartDashboard.getNumber("Elevator D", Constants.ElevatorConstants.elevatorD);
-
-        elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
-        elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
-
-=======
         SmartDashboard.putNumber("Target Elevator Pos", ElevatorPos);
         SmartDashboard.putBoolean("Top Limit Switch", limitSwitchTop.get());
         SmartDashboard.putBoolean("Bottom Limit Switch", limitSwitchBottom.get());
@@ -299,7 +230,6 @@ public class Elevator extends SubsystemBase {
         double pTerm = SmartDashboard.getNumber("p term",   Constants.ElevatorConstants.elevatorP);
         elevatorMotor1PID.setP(pTerm);
         
->>>>>>> 31890724fcbe45015bba4716d30b7426d253d154
         nextElevatorPID();
     }
 
