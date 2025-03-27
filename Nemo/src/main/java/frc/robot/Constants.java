@@ -44,8 +44,28 @@ public final class Constants {
 
     public static class TeamDependentFactors {
         public static final boolean redTeam = DriverStation.getAlliance().get() == Alliance.Red;
+        public static boolean forceRedTeamForTesting = false; // Set true for testing
+        public static final double[] reefIDsBlue = {
+            18, // closeMiddleReefIDBlue
+            19, // closeLeftReefIDBlue
+            17, // closeRightReefIDBlue
+            21, // farMiddleReefIDBlue
+            20, // farLeftReefIDBlue
+            22  // farRightReefIDBlue
+        };
 
-        public static final int middleAprilTagId = 8;//redTeam ? 4 : 7;
+        public static final double[] reefIDsRed = {
+            7,  // closeMiddleReefIDRed
+            6,  // closeLeftReefIDRed
+            8,  // closeRightReefIDRed
+            10, // farMiddleReefIDRed
+            11, // farLeftReefIDRed
+            9   // farRightReefIDRed
+        };
+
+        public static double[] getReefIDs() {
+            return redTeam ? reefIDsRed : reefIDsBlue;
+        }
     }
 
     public static class LimelightConstants {
@@ -54,11 +74,11 @@ public final class Constants {
         public static final double XOffset = 0.635;
         public static final double YOffset = 0;
         public static final double ZOffset = -0.8382;
+
+        //Offset if limelight from set robot heading
+        public static final double limelightHeadingOffset = 180;
     }
 
-    public static class SpeedScaleFactors {
-        public static final double autoTurnSpeed = 0.27;
-    }
 
     public static final class Swerve {
       public static final int pigeonID = 49;
@@ -98,9 +118,9 @@ public final class Constants {
       public static final double angleCurrentThresholdTime = 0.1;
       public static final boolean angleEnableCurrentLimit = true;
 
-      public static final int driveCurrentLimit = 35;
-      public static final int driveCurrentThreshold = 60;
-      public static final int driveStatorCurrentLimit = 50;
+      public static final int driveCurrentLimit = 60;
+      public static final int driveCurrentThreshold = 70;
+      public static final int driveStatorCurrentLimit = 80;
       public static final double driveCurrentThresholdTime = 0.1;
       public static final boolean driveEnableCurrentLimit = true;
 
@@ -204,19 +224,19 @@ public final class Constants {
   }
 
   public static final class ElevatorConstants {
-    public static final int elevatorMotor1ID = 19;
-    public static final int elevatorMotor2ID = 21;
+    public static final int elevatorMotor1ID = 21;
+    public static final int elevatorMotor2ID = 19;
 
     public static final int elevatorCoderID = 62;
 
     /* -----------------Elevator Motor Speeds----------------- */
-    public static final double elevatorMotor1speed = 0.4;
-    public static final double elevatorMotor2speed = 0.4;
-    public static final double manual_elevator_speed  = 0.36;
+    public static final double elevatorMotor1speed = 0.5;
+    public static final double elevatorMotor2speed = 0.5;
+    public static final double manual_elevator_speed  = 1.0;
     /* ------------------------------------------------------ */
 
-    public static final double elevatorP = 0.7;
-    public static final double elevatorI = 0.0;
+    public static final double elevatorP = 0.50;
+    public static final double elevatorI = 0.002;
     public static final double elevatorD = 0.0;
 
     public static final double elevatorSafety = 0.25;
@@ -224,24 +244,24 @@ public final class Constants {
 
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 8.4;
+    public static final double max_elevator_pos = 7.7;
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
-    public static final int limitSwitchTop = 2;
+    public static final int limitSwitchTop = 2; 
     public static final int limitSwitchBottom = 1;
   }
 
   public static final class ArmConstants {
     /* -----------------Arm Motor Speeds----------------- */
-    public static final double manual_arm_speed  = 0.13;
-    public static double BallIntakeSpeed = 0.3;
-    public static double CoralIntakeSpeed = 0.4;
+    public static final double manual_arm_speed  = 0.3;
+    public static double BallIntakeSpeed = 0.8;
+    public static double CoralIntakeSpeed = 0.3;
     public static double ArmRotatorSpeed = 0.3;
     /* ------------------------------------------------ */
 
     public static final int ArmRotator = 14;
-    public static final int BallIntake = 18;
-    public static final int CoralIntake = 20;
+    public static final int BallIntake = 20;
+    public static final int CoralIntake = 18;
 
     public static final int ArmEncoder = 0;
 
@@ -249,59 +269,59 @@ public final class Constants {
     public static double ArmRotatorI = 0.0;
     public static double ArmRotatorD = 0.0;
     public static double armCoderOffset = 0.195; // Ball intake left, Coral intake right
-    public static double ArmMinPos = 0.38;
-    public static double ArmMaxPos = 0.97;
-    public static double ArmRestPos = 0.66;
+    public static double ArmMinPos = 0.19; //Physical Minimum 0.17
+    public static double ArmMaxPos = 0.9; //Physical Maximum 0.92
+    public static double ArmRestPos = 0.6;
   }
 
   public static final class PresetElevatorAndArmConstants{
 
     /*--------------------Coral Intake From Source-------------------*/
     //Mapped to Buttoon B on operator controller
-    public static final double armCoralIntakeFromSourcePos = 0.37;
-    public static final double elevatorCoralIntakeFromSourcePos = 1.1;
+    public static final double armCoralIntakeFromSourcePos = 0.89;
+    public static final double elevatorCoralIntakeFromSourcePos = 0.9;
     /*--------------------------------------------------------------*/
 
     /*--------------------Score Coral L2-------------------*/
     //Mapped to Button Y on operator controller
-    public static final double armScoreCoralL2Pos = 0.92;
-    public static final double elevatorScoreCoralL2Pos = 2.21;
+    public static final double armScoreCoralL2Pos = 0.369;
+    public static final double elevatorScoreCoralL2Pos = 2.36;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L3-------------------*/
     //Mapped to Button X on operator controller
-    public static final double armScoreCoralL3Pos = 0.944;
-    public static final double elevatorScoreCoralL3Pos = 4.06;
+    public static final double armScoreCoralL3Pos = 0.36;
+    public static final double elevatorScoreCoralL3Pos = 4.11;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L4-------------------*/
     //Mapped to Button A on operator controller
-    public static final double armScoreCoralL4Pos = 0.9;
-    public static final double elevatorScoreCoralL4Pos = 8.343;
+    public static final double armScoreCoralL4Pos = 0.37;
+    public static final double elevatorScoreCoralL4Pos = 7.65;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Algae In Processor-------------------*/
     //Mapped to Right Trigger on operator controller
-    public static final double armScoreAlgaeInProcessorPos = 0.38;
-    public static final double elevatorScoreAlgaeInProcessorPos = 0.53;
+    public static final double armScoreAlgaeInProcessorPos = 0.86;
+    public static final double elevatorScoreAlgaeInProcessorPos = 0;
     /*--------------------------------------------------------------*/
     
     /*--------------------Pick Up Algae From Lower Reef In Between L2-L3 -------------------*/
     //Mapped to Right Bumper on operator controller
-    public static final double armPickUpAlgaeFromLowerReefPos = 0.48;
-    public static final double elevatorPickUpAlgaeFromLowerReefPos = 2.0;
+    public static final double armPickUpAlgaeFromLowerReefPos = 0.74;
+    public static final double elevatorPickUpAlgaeFromLowerReefPos = 0.82;
     /*--------------------------------------------------------------------*/
 
     /*--------------------Pick Up Algae From Upper Reef In Between L3-L4-------------------*/
     //Mapped to Left Bumper on operator controller
-    public static final double armPickUpAlgaeFromUpperReefPos = 0.46;
-    public static final double elevatorPickUpAlgaeFromUpperReefPos = 4.71;
+    public static final double armPickUpAlgaeFromUpperReefPos = 0.70;
+    public static final double elevatorPickUpAlgaeFromUpperReefPos = 2.44;
     /*--------------------------------------------------------------------*/
 
     /*----------------------Score Into Barge--------------------*/
     //Mapped to Left Trigger on operator controller
-    public static final double armScoreIntoBargePos = 0.6;
-    public static final double elevatorScoreIntoBargePos = 8.3;
+    public static final double armScoreIntoBargePos = 0.42;
+    public static final double elevatorScoreIntoBargePos = 7.55;
     /*----------------------------------------------------------*/
   }
 

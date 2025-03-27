@@ -25,39 +25,44 @@ public class AutoController {
         return new WaitCommand(seconds);
     }
 
-    public Command scoreCoralL2(){
+    public Command setL2(){
         return new SequentialCommandGroup(
             new ParallelCommandGroup(
                 new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL2Pos), elevator),
                 new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armScoreCoralL2Pos), armRotation)
-            ),
-            new InstantCommand(() -> armShootAndIntake.CoralIntakeOut(), armShootAndIntake),
-            new InstantCommand(() -> {
-                armShootAndIntake.CoralIntakeStop();
-                elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos);
-                armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
-            }, 
-                armShootAndIntake, elevator, armRotation
             )
         );
     }
 
-    public Command scoreCoralL4(){
+    public Command setRest(){
+            return new ParallelCommandGroup(
+                new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos), elevator),
+                new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos), armRotation)
+            );
+    }
+
+    public Command scoreCoralL2(){
         return new SequentialCommandGroup(
-            new ParallelCommandGroup(
+            new WaitCommand(0.25),
+            new InstantCommand(() -> armShootAndIntake.CoralIntakeOut(), armShootAndIntake),
+            new WaitCommand(1),
+            new InstantCommand(() -> armShootAndIntake.CoralIntakeStop(), armShootAndIntake)
+        );
+    }
+
+    public Command setL4(){
+            return new ParallelCommandGroup(
                 new InstantCommand(() -> elevator.setElevatorPosition(Constants.PresetElevatorAndArmConstants.elevatorScoreCoralL4Pos), elevator),
                 new InstantCommand(() -> armRotation.setArmRotatorPosition(Constants.PresetElevatorAndArmConstants.armScoreCoralL4Pos), armRotation)
-            ),
-            new WaitCommand(1.5),
+            );
+    }
+
+    public Command scoreCoralL4(){
+        return new SequentialCommandGroup(
+            new WaitCommand(0.25),
             new InstantCommand(() -> armShootAndIntake.CoralIntakeOut(), armShootAndIntake),
-            new WaitCommand(0.5),
-            new InstantCommand(() -> {
-                armShootAndIntake.CoralIntakeStop();
-                elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos);
-                armRotation.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos);
-            }, 
-                armShootAndIntake, elevator, armRotation
-            )
+            new WaitCommand(1),
+            new InstantCommand(() -> armShootAndIntake.CoralIntakeStop(), armShootAndIntake)
         );
     }
 

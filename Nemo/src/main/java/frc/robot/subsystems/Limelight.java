@@ -4,11 +4,16 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.NetworkTableValue;
+import edu.wpi.first.wpilibj.RobotBase;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.simulation.DriverStationSim;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import edu.wpi.first.hal.simulation.ConstBufferCallback;
+import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.net.PortForwarder;
 import java.util.List;
 import frc.robot.LimelightHelpers;
@@ -41,6 +46,36 @@ public class Limelight extends SubsystemBase {
         };
     }
 
+    public Pose2d getAdjustedRobotPose() {
+        double[] botPose = LimelightHelpers.getBotPose(Constants.LimelightConstants.limelightName);
+        if (botPose.length < 6) {
+            return new Pose2d(); // Return default if data is invalid
+        }
+
+        // Extract X, Y, and Rotation (Yaw) in **robot's coordinate space**
+        double x = botPose[0];  // X Position (meters)
+        double y = botPose[1];  // Y Position (meters)
+        double yaw = botPose[5]; // Rotation in **degrees**
+
+        // Convert yaw to Rotation2d
+        Rotation2d heading = Rotation2d.fromDegrees(yaw);
+
+        // Apply offsets from Limelight's position relative to robot
+        Translation2d offset = new Translation2d(
+            Constants.LimelightConstants.XOffset, 
+            Constants.LimelightConstants.YOffset
+        );
+
+        // Adjust the robot’s position based on Limelight offsets
+        Translation2d adjustedTranslation = new Translation2d(x, y).plus(offset);
+
+        // Since your Limelight faces 180° backward, **rotate the heading by 180°**
+        Rotation2d adjustedHeading = heading.rotateBy(Rotation2d.fromDegrees(Constants.LimelightConstants.limelightHeadingOffset));
+
+        return new Pose2d(adjustedTranslation, adjustedHeading);
+    }
+
+
     public void updateValues() {
 
         /*LimelightHelpers.LimelightTarget_Fiducial[] targets = LimelightHelpers.getLatestResults(name).targets_Fiducials;
@@ -56,13 +91,6 @@ public class Limelight extends SubsystemBase {
         SmartDashboard.putNumberArray("ids", ids);*/
     }
 
-    public double getDeadBandedPosition() {
-        double[] ppos = percentPosition(getTarget(Constants.TeamDependentFactors.middleAprilTagId));
-        if (ppos == null) {
-            return 2;
-        }
-        return -(ppos[0] * 2 - 1) * Constants.SpeedScaleFactors.autoTurnSpeed; // value between -1 and 1, slowing it down by autoTurnSpeed
-    }
 
     public void portForward() { // we dont need this but dont delete it in case we actually do need this
         for (int port = 5800; port <= 5807; port++) {
@@ -71,6 +99,29 @@ public class Limelight extends SubsystemBase {
     }
 
     public void stopAprilTagDetector() {}
+
+    public double getClosestTag(double[] validTagIds) {
+        double[] targets = NetworkTableInstance.getDefault().getTable(name)
+                                               .getEntry("rawfiducials")
+                                               .getDoubleArray(new double[] {-1, 0, 0, 0, 0, 0, 0});
+        
+        double closestTag = -1;
+        double closestDistance = Double.MAX_VALUE;
+    
+        for (int i = 0; i < targets.length; i += 7) {
+            double tagId = targets[i];
+            double distanceToCamera = targets[i + 5]; // Distance to the robot
+    
+            for (double validId : validTagIds) {
+                if (tagId == validId && distanceToCamera < closestDistance) {
+                    closestTag = tagId;
+                    closestDistance = distanceToCamera;
+                }
+            }
+        }
+        return closestTag;
+    }
+    
 
     public double[] getTarget(int id) {
         //var lresults = LimelightHelpers.getLatestResults(name);
@@ -111,4 +162,17 @@ public class Limelight extends SubsystemBase {
 
         return poseEstimate;
     }*/
+
+    @Override
+    public void periodic() {
+       if (RobotBase.isReal()) { 
+        updateValues();
+        SmartDashboard.putNumber("Nearest April Tag Red", getClosestTag(Constants.TeamDependentFactors.reefIDsRed));
+        SmartDashboard.putNumber("Nearest April Tag Blue", getClosestTag(Constants.TeamDependentFactors.reefIDsBlue));
+       }
+
+        SmartDashboard.putNumber("BotPose x", getAdjustedRobotPose().getTranslation().getX());
+        SmartDashboard.putNumber("BotPose y", getAdjustedRobotPose().getTranslation().getY());
+        SmartDashboard.putNumber("BotPose yaw", getAdjustedRobotPose().getRotation().getDegrees());
+    }
 }

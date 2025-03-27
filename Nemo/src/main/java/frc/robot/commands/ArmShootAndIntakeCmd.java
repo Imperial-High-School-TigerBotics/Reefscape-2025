@@ -32,18 +32,18 @@ public class ArmShootAndIntakeCmd extends Command{
 
 
             // Intake / Outtake Coral
-            if(ltPressed){
+            if(lbPressed){
                 arm.CoralIntakeIn();
-            }else if(rtPressed){
+            }else if(rbPressed){
                 arm.CoralIntakeOut();
             }else{
                 arm.CoralIntakeStop();
             }
 
             // Intake / Outtake Ball
-            if(lbPressed){
+            if(rtPressed){
                 arm.BallIntakeIn();
-            }else if(rbPressed){
+            }else if(ltPressed){
                 arm.BallIntakeOut();
             }else{
                 arm.BallIntakeStop();

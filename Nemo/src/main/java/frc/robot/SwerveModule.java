@@ -97,7 +97,7 @@ public class SwerveModule {
 
     public Rotation2d getCANcoder() {
         return Rotation2d.fromRotations(angleEncoder.getAbsolutePosition().getValueAsDouble());
-    }
+    }// Hi this is a test
 
     public void resetToAbsolute() {
         double absolutePosition = getCANcoder().getRotations() - angleOffset.getRotations();

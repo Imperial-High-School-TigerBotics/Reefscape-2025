@@ -25,6 +25,8 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
@@ -35,22 +37,26 @@ public class Swerve extends SubsystemBase {
     public Pigeon2 gyro;
     public boolean autonMovingEnabled;
     public PathPlannerAuto a1;
+    private Rotation2d lastKnownTagHeading;
+    private Rotation2d originalHeading;
 
-    public Swerve()
-         {
-            gyro = new Pigeon2(Constants.Swerve.pigeonID);
-            gyro.getConfigurator().apply(new Pigeon2Configuration());
-            gyro.setYaw(Constants.Swerve.SwerveStartHeading);
+    public Swerve(){
+        gyro = new Pigeon2(Constants.Swerve.pigeonID);
+        gyro.getConfigurator().apply(new Pigeon2Configuration());
+        gyro.setYaw(Constants.Swerve.SwerveStartHeading);
     
-            mSwerveMods = new SwerveModule[] {
-                new SwerveModule(0, Constants.Swerve.Mod0.constants),
-                new SwerveModule(1, Constants.Swerve.Mod1.constants),
-                new SwerveModule(2, Constants.Swerve.Mod2.constants),
-                new SwerveModule(3, Constants.Swerve.Mod3.constants)
+        mSwerveMods = new SwerveModule[] {
+            new SwerveModule(0, Constants.Swerve.Mod0.constants),
+            new SwerveModule(1, Constants.Swerve.Mod1.constants),
+            new SwerveModule(2, Constants.Swerve.Mod2.constants),
+            new SwerveModule(3, Constants.Swerve.Mod3.constants)
             };
         
         swerveOdometry = new SwerveDriveOdometry(Constants.Swerve.swerveKinematics, getGyroYaw(), getModulePositions());
         autonMovingEnabled = true;
+
+        lastKnownTagHeading = new Rotation2d(); 
+        originalHeading = new Rotation2d();
         }
                     
     public ChassisSpeeds getChassisSpeeds() {
@@ -137,6 +143,10 @@ public class Swerve extends SubsystemBase {
         return swerveOdometry.getPoseMeters();
     }
 
+    public void resetOdometryAuto(Pose2d pose){
+        return;
+    }
+
     public void setPose(Pose2d pose) {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), pose);
     }
@@ -157,8 +167,8 @@ public class Swerve extends SubsystemBase {
         swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), new Rotation2d()));
     }
 
-    public void flipHeading(){
-        swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), getHeading().rotateBy(Rotation2d.fromDegrees(180))));
+    public Command flipHeading(){
+        return new InstantCommand(() -> swerveOdometry.resetPosition(getGyroYaw(), getModulePositions(), new Pose2d(getPose().getTranslation(), getHeading().rotateBy(Rotation2d.fromDegrees(180)))));
     }
 
     public Rotation2d getGyroYaw() {
@@ -170,6 +180,40 @@ public class Swerve extends SubsystemBase {
             mod.resetToAbsolute();
         }
     }
+
+    public void setOriginalHeading(Rotation2d heading) {
+        originalHeading = heading;
+    }
+
+    public void updateParallelMotion(boolean parallelModeActive,
+                                 boolean returnToOriginal,
+                                 boolean allowRotation,
+                                 Limelight limelight) {
+
+        // Attempt to get a fresh detected Pose from the limelight
+        Pose2d detectedPose = limelight.getAdjustedRobotPose();
+
+        // 1) If we see a new valid pose, update lastKnownTagHeading
+        //    (only do this if we actually got a detection!)
+        if (detectedPose != null) {
+            lastKnownTagHeading = detectedPose.getRotation();
+        }
+
+        // 2) If the driver is holding LB (parallelModeActive),
+        //    and not holding RB (which would allow rotation),
+        //    then forcibly lock heading to the last known tag heading (if we have one).
+        if (parallelModeActive && !allowRotation && lastKnownTagHeading != null) {
+            setHeading(lastKnownTagHeading);
+        }
+
+        // 3) If LB has just been released, revert to the stored original heading
+        if (returnToOriginal) {
+            setHeading(originalHeading);
+        }
+    }
+
+
+
 
     @Override
     public void periodic(){

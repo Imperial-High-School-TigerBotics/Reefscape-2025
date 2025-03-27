@@ -52,7 +52,7 @@ public class RobotContainer {
   private final int rotationAxis = XboxController.Axis.kRightX.value;
 
   /* Driver Buttons */
-  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kA.value);
+  private final JoystickButton zeroGyro = new JoystickButton(driver, XboxController.Button.kX.value);
 
   /* Subsystems */
   private final Swerve s_Swerve = new Swerve();
@@ -77,8 +77,12 @@ public class RobotContainer {
 
   private climberCmd climberCmd;
 
+  private Command initializePositions;
+
+
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
 
     limelight = new Limelight();
     limelightCmd = new LimelightCmd(limelight);
@@ -99,6 +103,11 @@ public class RobotContainer {
     // climber = new climber();
     // climberCmd = new climberCmd(climber, operator);
     // climber.setDefaultCommand(climberCmd);
+
+    initializePositions = new SequentialCommandGroup(
+        new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
+        new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
+    );
     
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
@@ -108,7 +117,9 @@ public class RobotContainer {
             () -> -driver.getRawAxis(strafeAxis), 
             () -> -driver.getRawAxis(rotationAxis), 
             () -> false,
-            driver, limelight
+            driver, limelight,
+            () -> driver.getBButtonPressed(),
+            () -> driver.getAButtonPressed()
         )
     );
 
@@ -126,8 +137,13 @@ public class RobotContainer {
 }
 
 private void configureAutoSelector() {
-  chooser.setDefaultOption("Back", new PathPlannerAuto("monkey"));
-  chooser.setDefaultOption("Auto Score Coral L2", new PathPlannerAuto("Score L2 Auto"));
+  chooser.setDefaultOption("Middle to H, Score L4", new PathPlannerAuto("Score L4 Auto"));
+  chooser.addOption("Leave", new PathPlannerAuto("Leave"));
+  chooser.addOption("L4 No Score(Right)", new PathPlannerAuto("L4 No Score(Right)"));
+  chooser.addOption("L4 then Source(Right)", new PathPlannerAuto("Source(Right)"));
+  chooser.addOption("L4 No Score(Left)", new PathPlannerAuto("L4 No Score(Left)"));
+  chooser.addOption("L4 then Source(Left)", new PathPlannerAuto("Source(Left)"));
+  chooser.addOption("Test", new PathPlannerAuto("test"));
 
 
   SmartDashboard.putData("Auto Mode", chooser);
@@ -140,22 +156,16 @@ private void configureAutoSelector() {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    // Ensure initial positions are part of a command
-    Command initializePositions = new SequentialCommandGroup(
-        new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
-        new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
-    );
 
     // Get selected auto command, defaulting to a do-nothing command if null
     Command autoCommand = chooser.getSelected();
-    if (autoCommand == null) {
+    if (autoCommand  == null) {
         autoCommand = new InstantCommand(); // Default safe command
     }
-
-    Command flipHeading = new InstantCommand(() -> s_Swerve.flipHeading());
+    Command heading_flip = new InstantCommand(()-> s_Swerve.flipHeading()); //s_Swerve.flipHeading(); // new InstantCommand(()-> s_Swerve.flipHeading());
 
     // Run initialization, then the selected auto command
-    return new SequentialCommandGroup(initializePositions, autoCommand, flipHeading);
+   return new SequentialCommandGroup(initializePositions, autoCommand);
 }
   
 

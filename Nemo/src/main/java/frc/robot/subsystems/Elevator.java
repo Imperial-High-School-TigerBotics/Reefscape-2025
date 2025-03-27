@@ -1,10 +1,15 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Robot;
+
+import java.sql.Driver;
 
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -21,7 +26,7 @@ public class Elevator extends SubsystemBase {
 
     private DigitalInput limitSwitchTop = new DigitalInput(Constants.ElevatorConstants.limitSwitchTop);
     private DigitalInput limitSwitchBottom = new DigitalInput(Constants.ElevatorConstants.limitSwitchBottom);
-
+    
     public double ElevatorPos;
 
     public double ElevatorP;
@@ -30,6 +35,8 @@ public class Elevator extends SubsystemBase {
 
     public Elevator() {
         // Initialize motors with brake mode
+        SmartDashboard.setDefaultNumber("p term",   Constants.ElevatorConstants.elevatorP );
+        
         elevatorMotor1 = new TalonFX(Constants.ElevatorConstants.elevatorMotor1ID);
         elevatorMotor1.setNeutralMode(NeutralModeValue.Brake);
         elevatorMotor1PID = new PIDController(
@@ -45,9 +52,9 @@ public class Elevator extends SubsystemBase {
             Constants.ElevatorConstants.elevatorI,
             Constants.ElevatorConstants.elevatorD
         );
-
         elevatorCoder = new CANcoder(Constants.ElevatorConstants.elevatorCoderID);
 
+<<<<<<< HEAD
             ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
         }
    //TODO #2 for alex check if until line 98 is correct
@@ -101,6 +108,12 @@ public class Elevator extends SubsystemBase {
 
         ElevatorPos = Constants.ElevatorConstants.min_elevator_pos; }
     
+=======
+        //NetworkTable table = Robot.getInstance();
+
+        ElevatorPos = Constants.ElevatorConstants.min_elevator_pos;
+    }
+>>>>>>> 31890724fcbe45015bba4716d30b7426d253d154
 
     public void setElevatorPosition(double position) {
         ElevatorPos = position;
@@ -121,7 +134,7 @@ public class Elevator extends SubsystemBase {
             elevatorStop(); // Stop movement immediately
             ElevatorPos = Constants.ElevatorConstants.max_elevator_pos - Constants.ElevatorConstants.elevatorLimitSwitchOffset;
         } 
-        if (!limitSwitchBottom.get()) {
+        if (limitSwitchBottom.get()) {
             elevatorStop(); // Stop movement immediately
             ElevatorPos = Constants.ElevatorConstants.min_elevator_pos + Constants.ElevatorConstants.elevatorLimitSwitchOffset;
         }
@@ -190,6 +203,8 @@ public class Elevator extends SubsystemBase {
 
         elevatorMotor1.set(-setValue);
         elevatorMotor2.set(setValue);
+
+        SmartDashboard.putNumber("Set Value", setValue);
     }
 
     public void setElevatorPID1(double position){
@@ -244,16 +259,25 @@ public class Elevator extends SubsystemBase {
     }
 
     public double getElevatorCoderPos() {
-        return elevatorCoder.getPositionSinceBoot().getValueAsDouble();
+        return -elevatorCoder.getPositionSinceBoot().getValueAsDouble();
     }
 
     public boolean ElevatorAboveHalf() {
         return getElevatorCoderPos() > Constants.ElevatorConstants.max_elevator_pos / 2;
     }
 
+    public double leftElevatorMotor1RPM(){
+        return elevatorMotor1.getRotorVelocity().getValueAsDouble();
+    }
+
+    public double rightElevatorMotor2RPM(){
+        return elevatorMotor2.getRotorVelocity().getValueAsDouble();
+    }
+
     @Override
     public void periodic() {
         SmartDashboard.putNumber("Elevator Encoder Pos", getElevatorCoderPos());
+<<<<<<< HEAD
         SmartDashboard.putBoolean("Top Limit Switch", !limitSwitchTop.get());
         SmartDashboard.putBoolean("Bottom Limit Switch", !limitSwitchBottom.get());
 
@@ -265,6 +289,17 @@ public class Elevator extends SubsystemBase {
         elevatorMotor1PID.setPID(ElevatorP, ElevatorI, ElevatorD);
         elevatorMotor2PID.setPID(ElevatorP, ElevatorI, ElevatorD);
 
+=======
+        SmartDashboard.putNumber("Target Elevator Pos", ElevatorPos);
+        SmartDashboard.putBoolean("Top Limit Switch", limitSwitchTop.get());
+        SmartDashboard.putBoolean("Bottom Limit Switch", limitSwitchBottom.get());
+
+        SmartDashboard.putNumber("Left Elevator Motor RPM", leftElevatorMotor1RPM());
+        SmartDashboard.putNumber("Right Elevator Motor RPM", rightElevatorMotor2RPM());
+        double pTerm = SmartDashboard.getNumber("p term",   Constants.ElevatorConstants.elevatorP);
+        elevatorMotor1PID.setP(pTerm);
+        
+>>>>>>> 31890724fcbe45015bba4716d30b7426d253d154
         nextElevatorPID();
     }
 
