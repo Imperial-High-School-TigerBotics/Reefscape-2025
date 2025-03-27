@@ -8,10 +8,12 @@ import edu.wpi.first.math.estimator.SwerveDrivePoseEstimator;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.LimelightHelpers;
+import frc.robot.Constants.TeamDependentFactors;
 
 public class Vision extends SubsystemBase {
 
@@ -37,18 +39,26 @@ public class Vision extends SubsystemBase {
 
     @Override
     public void periodic() {
-
         updatePoseEstimator();
-        
-        var epose = LimelightHelpers.getBotPoseEstimate_wpiBlue_MegaTag2("");
-        poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(.7,.7,9999999));
-        poseEstimator.addVisionMeasurement(epose.pose, epose.timestampSeconds);
 
-        SmartDashboard.putNumber("vision estimatex", poseEstimator.getEstimatedPosition().getX());
-        SmartDashboard.putNumber("vision estimatey", poseEstimator.getEstimatedPosition().getY());
-        //SmartDashboard.putNumber("vision !!!", NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0));
+        LimelightHelpers.PoseEstimate epose = null;
+
+        if(TeamDependentFactors.getAlliance() == Alliance.Red){
+            epose = LimelightHelpers.getBotPoseEstimate_wpiRed("limelight");
+        } else if (TeamDependentFactors.getAlliance() == Alliance.Blue){
+            epose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+        }
+
+        if (epose != null && epose.pose != null && epose.tagCount > 0) {
+            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
+            poseEstimator.addVisionMeasurement(epose.pose, epose.timestampSeconds);
+        }
+
         estimatedPosition = poseEstimator.getEstimatedPosition();
+        SmartDashboard.putNumber("vision estimate x", estimatedPosition.getX());
+        SmartDashboard.putNumber("vision estimate y", estimatedPosition.getY());
     }
+
 
     public Pose2d getPoseEstimation() {
         return estimatedPosition == null ? swerve.getPose() : estimatedPosition;

@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj2.command.button.Trigger;
 
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
+import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DigitalSource;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -157,15 +158,24 @@ private void configureAutoSelector() {
    */
   public Command getAutonomousCommand() {
 
-    // Get selected auto command, defaulting to a do-nothing command if null
     Command autoCommand = chooser.getSelected();
-    if (autoCommand  == null) {
-        autoCommand = new InstantCommand(); // Default safe command
+    if (autoCommand == null) {
+        autoCommand = new InstantCommand();
     }
-    Command heading_flip = new InstantCommand(()-> s_Swerve.flipHeading()); //s_Swerve.flipHeading(); // new InstantCommand(()-> s_Swerve.flipHeading());
 
-    // Run initialization, then the selected auto command
-   return new SequentialCommandGroup(initializePositions, autoCommand);
+    Pose2d visionPose = vision.getPoseEstimation();
+    Command resetPoseFromVision = new InstantCommand(() -> {
+        if (visionPose != null && visionPose.getX() != 0.0 && visionPose.getY() != 0.0) {
+            s_Swerve.setPose(visionPose);
+        }
+    });
+
+    return new SequentialCommandGroup(
+        initializePositions,
+        resetPoseFromVision,   // Set pose from vision here
+        autoCommand
+    );
+
 }
   
 

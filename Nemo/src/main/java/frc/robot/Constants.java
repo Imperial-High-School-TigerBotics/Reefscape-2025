@@ -66,6 +66,10 @@ public final class Constants {
         public static double[] getReefIDs() {
             return redTeam ? reefIDsRed : reefIDsBlue;
         }
+
+        public static Alliance getAlliance(){
+          return redTeam ? Alliance.Red : Alliance.Blue;
+        }
     }
 
     public static class LimelightConstants {
