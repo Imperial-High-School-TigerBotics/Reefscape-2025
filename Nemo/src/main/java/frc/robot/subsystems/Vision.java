@@ -22,7 +22,7 @@ public class Vision extends SubsystemBase {
     private Pose2d estimatedPosition;
     
     public Vision(Swerve swerve) {
-        LimelightHelpers.SetRobotOrientation("", swerve.gyro.getYaw().getValueAsDouble(), 0, 0, 0, 0, 0);
+        LimelightHelpers.SetRobotOrientation("limelight", swerve.gyro.getYaw().getValueAsDouble(), 0, 0, 0, 0, 0);
         this.swerve = swerve;
 
         poseEstimator = new SwerveDrivePoseEstimator(

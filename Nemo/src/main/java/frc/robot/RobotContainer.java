@@ -93,6 +93,9 @@ public class RobotContainer {
     elevatorCmd = new ElevatorCmd(elevator, operator);
     elevator.setDefaultCommand(elevatorCmd);
 
+    vision = new Vision(s_Swerve);
+    s_Swerve.setVision(vision);
+
     arm = new ArmRotation();
     armCmd = new ArmRotationCmd(arm, operator);
     arm.setDefaultCommand(armCmd);

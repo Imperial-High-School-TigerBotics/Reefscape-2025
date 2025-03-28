@@ -39,6 +39,7 @@ public class Swerve extends SubsystemBase {
     public PathPlannerAuto a1;
     private Rotation2d lastKnownTagHeading;
     private Rotation2d originalHeading;
+    private Vision vision;
 
     public Swerve(){
         gyro = new Pigeon2(Constants.Swerve.pigeonID);
@@ -61,6 +62,10 @@ public class Swerve extends SubsystemBase {
                     
     public ChassisSpeeds getChassisSpeeds() {
         return Constants.Swerve.swerveKinematics.toChassisSpeeds(getModuleStates());
+    }
+
+    public void setVision(Vision vision){
+        this.vision = vision;
     }
 
     public void drive(ChassisSpeeds speeds) {
@@ -140,8 +145,8 @@ public class Swerve extends SubsystemBase {
     }
 
     public Pose2d getPose() {
-        return swerveOdometry.getPoseMeters();
-    }
+        return (vision != null) ? vision.getPoseEstimation() : swerveOdometry.getPoseMeters();
+    }    
 
     public void resetOdometryAuto(Pose2d pose){
         return;
@@ -226,7 +231,7 @@ public class Swerve extends SubsystemBase {
 
             // SmartDashboard.putNumber("Pigeon ang vel", gyro.getAngularVelocityXDevice().getValueAsDouble());
             SmartDashboard.putNumber("Pigeon Yaw", gyro.getYaw().getValueAsDouble());
-
+        
                 
         }
     }
