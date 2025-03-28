@@ -43,21 +43,32 @@ public class Vision extends SubsystemBase {
 
         LimelightHelpers.PoseEstimate epose = null;
 
-        if(TeamDependentFactors.getAlliance() == Alliance.Red){
-            epose = LimelightHelpers.getBotPoseEstimate_wpiRed("limelight");
-        } else if (TeamDependentFactors.getAlliance() == Alliance.Blue){
-            epose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
-        }
+        try {
+            if (TeamDependentFactors.getAlliance() == Alliance.Red) {
+                epose = LimelightHelpers.getBotPoseEstimate_wpiRed("limelight");
+            } else if (TeamDependentFactors.getAlliance() == Alliance.Blue) {
+                epose = LimelightHelpers.getBotPoseEstimate_wpiBlue("limelight");
+            }
 
-        if (epose != null && epose.pose != null && epose.tagCount > 0) {
-            poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
-            poseEstimator.addVisionMeasurement(epose.pose, epose.timestampSeconds);
+            if (epose != null 
+                && epose.pose != null 
+                && epose.tagCount > 0 
+                && !Double.isNaN(epose.pose.getX()) 
+                && !Double.isNaN(epose.pose.getY()) 
+                && epose.timestampSeconds > 0) {
+
+                poseEstimator.setVisionMeasurementStdDevs(VecBuilder.fill(0.7, 0.7, 9999999));
+                poseEstimator.addVisionMeasurement(epose.pose, epose.timestampSeconds);
+            }
+        } catch (Exception e) {
+            SmartDashboard.putString("Vision Error", e.toString());
         }
 
         estimatedPosition = poseEstimator.getEstimatedPosition();
         SmartDashboard.putNumber("vision estimate x", estimatedPosition.getX());
         SmartDashboard.putNumber("vision estimate y", estimatedPosition.getY());
     }
+
 
 
     public Pose2d getPoseEstimation() {
