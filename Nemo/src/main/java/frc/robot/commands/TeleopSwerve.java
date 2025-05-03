@@ -107,9 +107,9 @@ public class TeleopSwerve extends Command {
 
         // Apply speed limits based on elevator height
         double speedLimit = Constants.Swerve.maxSpeed;
-        if (elevator.ElevatorAboveHalf()) {
-            speedLimit *= Constants.Swerve.ElevatorAboveHalfMultiplier;
-        }
+        // if (elevator.ElevatorAboveHalf()) {
+        //     speedLimit *= Constants.Swerve.ElevatorAboveHalfMultiplier;
+        // }
 
         // Drive the swerve
         s_Swerve.drive(

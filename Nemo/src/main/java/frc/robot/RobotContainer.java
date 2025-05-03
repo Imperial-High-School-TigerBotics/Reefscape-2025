@@ -104,10 +104,10 @@ public class RobotContainer {
     // climberCmd = new climberCmd(climber, operator);
     // climber.setDefaultCommand(climberCmd);
 
-    initializePositions = new SequentialCommandGroup(
-        new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
-        new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
-    );
+    // initializePositions = new SequentialCommandGroup(
+    //     new InstantCommand(() -> elevator.setElevatorPosition(Constants.ElevatorConstants.elevatorRestPos)),
+    //     new InstantCommand(() -> arm.setArmRotatorPosition(Constants.ArmConstants.ArmRestPos))
+    // );
     
     s_Swerve.setDefaultCommand(
         new TeleopSwerve(
