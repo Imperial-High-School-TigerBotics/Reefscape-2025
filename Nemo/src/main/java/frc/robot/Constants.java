@@ -230,21 +230,21 @@ public final class Constants {
     public static final int elevatorCoderID = 62;
 
     /* -----------------Elevator Motor Speeds----------------- */
-    public static final double elevatorMotor1speed = 0.25;
-    public static final double elevatorMotor2speed = 0.25;
-    public static final double manual_elevator_speed  = 0.5;
+    public static final double elevatorMotor1speed = 0.3;
+    public static final double elevatorMotor2speed = 0.3;
+    public static final double manual_elevator_speed  = .75;
     /* ------------------------------------------------------ */
 
-    public static final double elevatorP = 0.50;
+    public static final double elevatorP = .45;
     public static final double elevatorI = 0.002;
     public static final double elevatorD = 0.0;
 
-    public static final double elevatorSafety = 0.25;
+    public static final double elevatorSafety = 2;
     public static final double elevatorLimitSwitchOffset = 10;
 
 
     public static final double min_elevator_pos = 0.0;
-    public static final double max_elevator_pos = 7.7;
+    public static final double max_elevator_pos = 56;
     public static final double elevatorRestPos = min_elevator_pos + elevatorSafety;
 
     public static final int limitSwitchTop = 2; 
@@ -285,7 +285,7 @@ public final class Constants {
     /*--------------------Score Coral L2-------------------*/
     //Mapped to Button Y on operator controller
     public static final double armScoreCoralL2Pos = 0.37;
-    public static final double elevatorScoreCoralL2Pos = 14.2;
+    public static final double elevatorScoreCoralL2Pos = 16.7;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L3-------------------*/
