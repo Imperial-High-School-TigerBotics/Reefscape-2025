@@ -21,8 +21,10 @@ public class ElevatorCmd extends Command {
         // Get the Y-axis value of the left joystick
         double joystickValue = -MathUtil.applyDeadband(xbox.getLeftY(), Constants.stickDeadband);
 
-        // Scale the joystick value to control the elevator motors
-        double motorPercent = joystickValue * Constants.ElevatorConstants.manual_elevator_speed;
+        // Apply a deadzone to the joystick value and scale it to control the elevator motors
+        double motorPercent = Math.abs(joystickValue) > Constants.stickDeadband 
+            ? joystickValue * Constants.ElevatorConstants.manual_elevator_speed 
+            : 0;
 
         // Set the elevator motor speeds
         elevator.setElevatorPercent(motorPercent);
