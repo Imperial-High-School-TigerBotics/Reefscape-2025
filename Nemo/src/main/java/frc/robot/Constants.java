@@ -230,9 +230,9 @@ public final class Constants {
     public static final int elevatorCoderID = 62;
 
     /* -----------------Elevator Motor Speeds----------------- */
-    public static final double elevatorMotor1speed = 0.5;
-    public static final double elevatorMotor2speed = 0.5;
-    public static final double manual_elevator_speed  = 1.0;
+    public static final double elevatorMotor1speed = 0.25;
+    public static final double elevatorMotor2speed = 0.25;
+    public static final double manual_elevator_speed  = 0.5;
     /* ------------------------------------------------------ */
 
     public static final double elevatorP = 0.50;
@@ -284,20 +284,20 @@ public final class Constants {
 
     /*--------------------Score Coral L2-------------------*/
     //Mapped to Button Y on operator controller
-    public static final double armScoreCoralL2Pos = 0.369;
-    public static final double elevatorScoreCoralL2Pos = 2.36;
+    public static final double armScoreCoralL2Pos = 0.37;
+    public static final double elevatorScoreCoralL2Pos = 14.2;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L3-------------------*/
     //Mapped to Button X on operator controller
-    public static final double armScoreCoralL3Pos = 0.36;
-    public static final double elevatorScoreCoralL3Pos = 4.11;
+    public static final double armScoreCoralL3Pos = 0.37;
+    public static final double elevatorScoreCoralL3Pos = 31.528;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Coral L4-------------------*/
     //Mapped to Button A on operator controller
-    public static final double armScoreCoralL4Pos = 0.37;
-    public static final double elevatorScoreCoralL4Pos = 7.65;
+    public static final double armScoreCoralL4Pos = 0.396;
+    public static final double elevatorScoreCoralL4Pos = 56.348;
     /*-----------------------------------------------------*/
 
     /*--------------------Score Algae In Processor-------------------*/
@@ -308,8 +308,8 @@ public final class Constants {
     
     /*--------------------Pick Up Algae From Lower Reef In Between L2-L3 -------------------*/
     //Mapped to Right Bumper on operator controller
-    public static final double armPickUpAlgaeFromLowerReefPos = 0.74;
-    public static final double elevatorPickUpAlgaeFromLowerReefPos = 0.82;
+    public static final double armPickUpAlgaeFromLowerReefPos = 0.763;
+    public static final double elevatorPickUpAlgaeFromLowerReefPos = 7.288;
     /*--------------------------------------------------------------------*/
 
     /*--------------------Pick Up Algae From Upper Reef In Between L3-L4-------------------*/
