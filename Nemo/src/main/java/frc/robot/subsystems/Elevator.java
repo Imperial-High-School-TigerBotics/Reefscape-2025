@@ -49,7 +49,7 @@ public class Elevator extends SubsystemBase {
     }
 
     public double getElevatorEncoderPosition() {
-        return elevatorMotor1.getPosition().getValueAsDouble();
+        return -elevatorMotor1.getPosition().getValueAsDouble();
     }
 
     public void clampElevatorSetPos() {
