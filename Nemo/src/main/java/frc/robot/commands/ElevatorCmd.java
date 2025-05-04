@@ -22,6 +22,8 @@ public class ElevatorCmd extends Command {
         this.elevator = elevator;
         addRequirements(this.elevator);
 
+        this.elevator.resetElevatorMotorEncoder();
+
         this.xbox = xbox;
         manualElevatorControl = false;
 

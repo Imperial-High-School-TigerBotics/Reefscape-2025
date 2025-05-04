@@ -52,6 +52,11 @@ public class Elevator extends SubsystemBase {
         return -elevatorMotor1.getPosition().getValueAsDouble();
     }
 
+    public void resetElevatorMotorEncoder(){
+        elevatorMotor1.setPosition(0.0);
+        elevatorMotor2.setPosition(0.0);
+    }
+
     public void clampElevatorSetPos() {
         ElevatorPos = Math.max(
             Constants.ElevatorConstants.min_elevator_pos, // Ensure minimum position
