@@ -25,6 +25,11 @@ public class Elevator extends SubsystemBase {
         elevatorMotor2.set(-speed); // Opposite direction for synchronization
     }
 
+    public void resetElevatorMotorEncoder(){
+        elevatorMotor1.setPosition(0.0);
+        elevatorMotor2.setPosition(0.0);
+    }
+
     @Override
     public void periodic() {
         // Output encoder values to SmartDashboard
